@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "patchtriage"
+version = "0.1.0"
+description = "Patch-Diff and Patch-Triage CLI for binary analysis"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+]
+
+[project.optional-dependencies]
+llm = ["openai>=1.0"]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+patchtriage = "patchtriage.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["patchtriage*"]

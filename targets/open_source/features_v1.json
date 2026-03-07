@@ -1,0 +1,728 @@
+{
+  "binary": "/Users/marty/patchdiff-cli/targets/open_source/server_v1",
+  "arch": "AARCH64",
+  "num_functions": 9,
+  "functions": [
+    {
+      "name": "_format_log_entry",
+      "entry": "100000460",
+      "size": 44,
+      "instr_count": 11,
+      "block_count": 1,
+      "mnemonic_hist": {
+        "sub": 1,
+        "stp": 2,
+        "add": 3,
+        "str": 1,
+        "adrp": 1,
+        "bl": 1,
+        "ldp": 1,
+        "ret": 1
+      },
+      "mnemonic_bigrams": {
+        "sub,stp": 1,
+        "stp,add": 1,
+        "add,stp": 1,
+        "stp,str": 1,
+        "str,adrp": 1,
+        "adrp,add": 1,
+        "add,bl": 1,
+        "bl,ldp": 1,
+        "ldp,add": 1,
+        "add,ret": 1
+      },
+      "strings": [
+        "[%d] %s %s"
+      ],
+      "constants": [],
+      "called_functions": [
+        {
+          "name": "_sprintf",
+          "is_external": true
+        }
+      ],
+      "callers": []
+    },
+    {
+      "name": "_parse_header_line",
+      "entry": "10000048c",
+      "size": 124,
+      "instr_count": 31,
+      "block_count": 6,
+      "mnemonic_hist": {
+        "stp": 3,
+        "add": 2,
+        "mov": 11,
+        "bl": 3,
+        "cbz": 1,
+        "sub": 1,
+        "sxtw": 1,
+        "strb": 1,
+        "ldrb": 1,
+        "cmp": 1,
+        "b.eq": 1,
+        "b": 1,
+        "ldp": 3,
+        "ret": 1
+      },
+      "mnemonic_bigrams": {
+        "stp,stp": 2,
+        "stp,add": 1,
+        "add,mov": 2,
+        "mov,mov": 5,
+        "mov,bl": 3,
+        "bl,cbz": 1,
+        "cbz,mov": 1,
+        "mov,sub": 1,
+        "sub,sxtw": 1,
+        "sxtw,mov": 1,
+        "bl,strb": 1,
+        "strb,ldrb": 1,
+        "ldrb,cmp": 1,
+        "cmp,b.eq": 1,
+        "b.eq,add": 1,
+        "bl,mov": 1,
+        "mov,b": 1,
+        "b,mov": 1,
+        "mov,ldp": 1,
+        "ldp,ldp": 2,
+        "ldp,ret": 1
+      },
+      "strings": [],
+      "constants": [],
+      "called_functions": [
+        {
+          "name": "_strchr",
+          "is_external": true
+        },
+        {
+          "name": "_strcpy",
+          "is_external": true
+        },
+        {
+          "name": "___strncpy_chk",
+          "is_external": true
+        }
+      ],
+      "callers": []
+    },
+    {
+      "name": "_parse_request_line",
+      "entry": "10000050c",
+      "size": 196,
+      "instr_count": 49,
+      "block_count": 5,
+      "mnemonic_hist": {
+        "stp": 4,
+        "add": 5,
+        "mov": 19,
+        "bl": 5,
+        "cbz": 2,
+        "sub": 2,
+        "cmp": 1,
+        "csel": 1,
+        "sxtw": 2,
+        "strb": 2,
+        "b": 1,
+        "ldp": 4,
+        "ret": 1
+      },
+      "mnemonic_bigrams": {
+        "stp,stp": 3,
+        "stp,add": 1,
+        "add,mov": 3,
+        "mov,mov": 11,
+        "mov,bl": 5,
+        "bl,cbz": 2,
+        "cbz,sub": 2,
+        "sub,mov": 1,
+        "mov,cmp": 1,
+        "cmp,csel": 1,
+        "csel,sxtw": 1,
+        "sxtw,mov": 2,
+        "bl,strb": 2,
+        "strb,add": 2,
+        "sub,add": 1,
+        "add,sxtw": 1,
+        "add,add": 1,
+        "bl,mov": 1,
+        "mov,b": 1,
+        "b,mov": 1,
+        "mov,ldp": 1,
+        "ldp,ldp": 3,
+        "ldp,ret": 1
+      },
+      "strings": [],
+      "constants": [],
+      "called_functions": [
+        {
+          "name": "_strchr",
+          "is_external": true
+        },
+        {
+          "name": "___strcpy_chk",
+          "is_external": true
+        },
+        {
+          "name": "___strncpy_chk",
+          "is_external": true
+        }
+      ],
+      "callers": [
+        "_parse_http_request"
+      ]
+    },
+    {
+      "name": "_log_request",
+      "entry": "1000005d0",
+      "size": 24,
+      "instr_count": 6,
+      "block_count": 1,
+      "mnemonic_hist": {
+        "stp": 1,
+        "mov": 2,
+        "bl": 1,
+        "ldp": 1,
+        "b": 1
+      },
+      "mnemonic_bigrams": {
+        "stp,mov": 1,
+        "mov,bl": 1,
+        "bl,mov": 1,
+        "mov,ldp": 1,
+        "ldp,b": 1
+      },
+      "strings": [],
+      "constants": [],
+      "called_functions": [
+        {
+          "name": "_printf",
+          "is_external": true
+        },
+        {
+          "name": "_putchar",
+          "is_external": true
+        }
+      ],
+      "callers": []
+    },
+    {
+      "name": "_url_decode",
+      "entry": "1000005e8",
+      "size": 232,
+      "instr_count": 58,
+      "block_count": 17,
+      "mnemonic_hist": {
+        "sub": 1,
+        "stp": 3,
+        "add": 8,
+        "mov": 7,
+        "adrp": 1,
+        "ldr": 3,
+        "b": 5,
+        "strb": 5,
+        "ldrb": 1,
+        "cmp": 3,
+        "b.eq": 3,
+        "cbnz": 3,
+        "ldrsb": 2,
+        "tbnz": 2,
+        "ubfx": 2,
+        "cbz": 2,
+        "ldurh": 1,
+        "sturh": 1,
+        "bl": 1,
+        "ldp": 3,
+        "ret": 1
+      },
+      "mnemonic_bigrams": {
+        "sub,stp": 1,
+        "stp,stp": 2,
+        "stp,add": 1,
+        "add,mov": 2,
+        "mov,mov": 2,
+        "mov,adrp": 1,
+        "adrp,ldr": 1,
+        "ldr,mov": 1,
+        "mov,b": 1,
+        "b,strb": 2,
+        "strb,add": 3,
+        "add,ldrb": 1,
+        "ldrb,cmp": 1,
+        "cmp,b.eq": 3,
+        "b.eq,cmp": 1,
+        "b.eq,cbnz": 1,
+        "cbnz,b": 2,
+        "b,ldrsb": 1,
+        "ldrsb,tbnz": 2,
+        "tbnz,add": 2,
+        "add,ldr": 2,
+        "ldr,ubfx": 2,
+        "ubfx,cbnz": 1,
+        "b,mov": 2,
+        "mov,cbz": 1,
+        "cbz,ldrsb": 1,
+        "ubfx,cbz": 1,
+        "cbz,ldurh": 1,
+        "ldurh,sturh": 1,
+        "sturh,strb": 1,
+        "mov,bl": 1,
+        "bl,strb": 1,
+        "add,b": 1,
+        "mov,cbnz": 1,
+        "cbnz,cmp": 1,
+        "b.eq,add": 1,
+        "add,strb": 1,
+        "strb,b": 1,
+        "strb,ldp": 1,
+        "ldp,ldp": 2,
+        "ldp,add": 1,
+        "add,ret": 1
+      },
+      "strings": [],
+      "constants": [],
+      "called_functions": [
+        {
+          "name": "_strtol",
+          "is_external": true
+        }
+      ],
+      "callers": []
+    },
+    {
+      "name": "_parse_http_request",
+      "entry": "1000006d0",
+      "size": 456,
+      "instr_count": 114,
+      "block_count": 24,
+      "mnemonic_hist": {
+        "stp": 6,
+        "add": 12,
+        "mov": 32,
+        "bl": 17,
+        "cbz": 10,
+        "adrp": 5,
+        "ldp": 6,
+        "ret": 1,
+        "b": 3,
+        "str": 4,
+        "ldrb": 2,
+        "ldrsw": 2,
+        "cmp": 3,
+        "b.gt": 1,
+        "smaddl": 2,
+        "sub": 1,
+        "sxtw": 1,
+        "strb": 2,
+        "b.eq": 1,
+        "cbnz": 1,
+        "ldr": 1,
+        "b.lt": 1
+      },
+      "mnemonic_bigrams": {
+        "stp,stp": 5,
+        "stp,add": 1,
+        "add,mov": 7,
+        "mov,mov": 9,
+        "mov,bl": 14,
+        "bl,mov": 5,
+        "mov,cbz": 2,
+        "cbz,mov": 6,
+        "bl,cbz": 6,
+        "cbz,adrp": 1,
+        "adrp,add": 5,
+        "mov,ldp": 1,
+        "ldp,ldp": 5,
+        "ldp,ret": 1,
+        "ret,adrp": 1,
+        "mov,add": 2,
+        "mov,adrp": 2,
+        "add,b": 1,
+        "b,add": 1,
+        "add,str": 1,
+        "str,mov": 2,
+        "cbz,ldrb": 1,
+        "ldrb,cbz": 1,
+        "cbz,ldrsw": 1,
+        "ldrsw,cmp": 1,
+        "cmp,b.gt": 1,
+        "b.gt,mov": 1,
+        "mov,smaddl": 1,
+        "smaddl,sub": 1,
+        "sub,sxtw": 1,
+        "sxtw,mov": 1,
+        "bl,strb": 2,
+        "strb,ldrb": 1,
+        "ldrb,cmp": 1,
+        "cmp,b.eq": 1,
+        "b.eq,add": 1,
+        "bl,ldrsw": 1,
+        "ldrsw,smaddl": 1,
+        "smaddl,mov": 1,
+        "add,bl": 3,
+        "bl,cbnz": 1,
+        "cbnz,add": 1,
+        "bl,str": 2,
+        "str,b": 1,
+        "b,ldr": 1,
+        "ldr,cmp": 1,
+        "cmp,b.lt": 1,
+        "b.lt,adrp": 1,
+        "str,cbz": 1,
+        "cbz,add": 1,
+        "strb,str": 1,
+        "mov,b": 1
+      },
+      "strings": [
+        "\r\n",
+        "\r\n",
+        "\r\n",
+        "Content-Length",
+        "\r\n\r\n"
+      ],
+      "constants": [],
+      "called_functions": [
+        {
+          "name": "_strtok",
+          "is_external": true
+        },
+        {
+          "name": "_malloc",
+          "is_external": true
+        },
+        {
+          "name": "_bzero",
+          "is_external": true
+        },
+        {
+          "name": "___strncpy_chk",
+          "is_external": true
+        },
+        {
+          "name": "_strchr",
+          "is_external": true
+        },
+        {
+          "name": "_strdup",
+          "is_external": true
+        },
+        {
+          "name": "_free",
+          "is_external": true
+        },
+        {
+          "name": "_strcasecmp",
+          "is_external": true
+        },
+        {
+          "name": "_atoi",
+          "is_external": true
+        },
+        {
+          "name": "_parse_request_line",
+          "is_external": false
+        },
+        {
+          "name": "_strstr",
+          "is_external": true
+        },
+        {
+          "name": "_strcpy",
+          "is_external": true
+        },
+        {
+          "name": "_memcpy",
+          "is_external": true
+        }
+      ],
+      "callers": [
+        "entry"
+      ]
+    },
+    {
+      "name": "_free_request",
+      "entry": "100000898",
+      "size": 52,
+      "instr_count": 13,
+      "block_count": 3,
+      "mnemonic_hist": {
+        "cbz": 1,
+        "stp": 2,
+        "add": 1,
+        "ldr": 1,
+        "mov": 3,
+        "bl": 1,
+        "ldp": 2,
+        "b": 1,
+        "ret": 1
+      },
+      "mnemonic_bigrams": {
+        "cbz,stp": 1,
+        "stp,stp": 1,
+        "stp,add": 1,
+        "add,ldr": 1,
+        "ldr,mov": 1,
+        "mov,mov": 1,
+        "mov,bl": 1,
+        "bl,mov": 1,
+        "mov,ldp": 1,
+        "ldp,ldp": 1,
+        "ldp,b": 1,
+        "b,ret": 1
+      },
+      "strings": [],
+      "constants": [],
+      "called_functions": [
+        {
+          "name": "_free",
+          "is_external": true
+        }
+      ],
+      "callers": []
+    },
+    {
+      "name": "_print_request",
+      "entry": "1000008cc",
+      "size": 320,
+      "instr_count": 80,
+      "block_count": 8,
+      "mnemonic_hist": {
+        "stp": 7,
+        "add": 17,
+        "sub": 2,
+        "mov": 6,
+        "adrp": 10,
+        "ldr": 8,
+        "stur": 1,
+        "str": 6,
+        "bl": 9,
+        "cmp": 3,
+        "b.lt": 2,
+        "ldrsw": 1,
+        "cbz": 1,
+        "ldur": 1,
+        "b.ne": 1,
+        "ldp": 4,
+        "ret": 1
+      },
+      "mnemonic_bigrams": {
+        "stp,stp": 3,
+        "stp,add": 1,
+        "add,sub": 2,
+        "sub,mov": 1,
+        "mov,adrp": 2,
+        "adrp,ldr": 2,
+        "ldr,ldr": 2,
+        "ldr,stur": 1,
+        "stur,add": 1,
+        "add,stp": 1,
+        "stp,mov": 2,
+        "adrp,add": 8,
+        "add,str": 2,
+        "str,add": 1,
+        "add,add": 1,
+        "add,mov": 1,
+        "mov,mov": 1,
+        "mov,bl": 2,
+        "bl,str": 3,
+        "str,adrp": 5,
+        "add,bl": 6,
+        "bl,add": 2,
+        "bl,ldr": 2,
+        "ldr,str": 1,
+        "ldr,cmp": 2,
+        "cmp,b.lt": 2,
+        "b.lt,mov": 1,
+        "mov,add": 1,
+        "add,adrp": 1,
+        "sub,stp": 1,
+        "add,ldrsw": 1,
+        "ldrsw,add": 1,
+        "add,cmp": 1,
+        "b.lt,ldr": 1,
+        "ldr,cbz": 1,
+        "cbz,ldr": 1,
+        "ldr,stp": 1,
+        "stp,adrp": 1,
+        "bl,ldur": 1,
+        "ldur,adrp": 1,
+        "cmp,b.ne": 1,
+        "b.ne,add": 1,
+        "add,ldp": 1,
+        "ldp,ldp": 3,
+        "ldp,ret": 1,
+        "ret,bl": 1
+      },
+      "strings": [
+        "[%d] %s %s",
+        "Log: %s\n",
+        "Method: %s\n",
+        "Path: %s\n",
+        "Version: %s\n",
+        "Headers (%d):\n",
+        "  %s: %s\n",
+        "Body (%d bytes): %s\n"
+      ],
+      "constants": [],
+      "called_functions": [
+        {
+          "name": "_printf",
+          "is_external": true
+        },
+        {
+          "name": "___sprintf_chk",
+          "is_external": true
+        },
+        {
+          "name": "___stack_chk_fail",
+          "is_external": true
+        }
+      ],
+      "callers": [
+        "entry"
+      ]
+    },
+    {
+      "name": "entry",
+      "entry": "100000a0c",
+      "size": 412,
+      "instr_count": 103,
+      "block_count": 22,
+      "mnemonic_hist": {
+        "sub": 1,
+        "stp": 4,
+        "add": 17,
+        "adrp": 10,
+        "ldr": 8,
+        "stur": 1,
+        "bl": 12,
+        "cbz": 3,
+        "mov": 9,
+        "b": 6,
+        "strb": 7,
+        "ldrb": 1,
+        "cmp": 4,
+        "b.eq": 3,
+        "cbnz": 3,
+        "ldrsb": 2,
+        "tbnz": 2,
+        "ubfx": 2,
+        "str": 1,
+        "ldur": 1,
+        "b.ne": 1,
+        "ldp": 4,
+        "ret": 1
+      },
+      "mnemonic_bigrams": {
+        "sub,stp": 1,
+        "stp,stp": 3,
+        "stp,add": 1,
+        "add,adrp": 2,
+        "adrp,ldr": 3,
+        "ldr,ldr": 2,
+        "ldr,stur": 1,
+        "stur,adrp": 1,
+        "adrp,add": 7,
+        "add,bl": 6,
+        "bl,adrp": 3,
+        "bl,cbz": 1,
+        "cbz,mov": 1,
+        "mov,bl": 4,
+        "bl,mov": 2,
+        "bl,ldr": 1,
+        "ldr,bl": 1,
+        "bl,b": 1,
+        "b,adrp": 1,
+        "bl,add": 1,
+        "ldr,mov": 1,
+        "mov,adrp": 1,
+        "add,b": 2,
+        "b,strb": 2,
+        "strb,add": 4,
+        "add,ldrb": 1,
+        "ldrb,cmp": 1,
+        "cmp,b.eq": 3,
+        "b.eq,cmp": 1,
+        "b.eq,cbnz": 1,
+        "cbnz,b": 2,
+        "b,ldrsb": 1,
+        "ldrsb,tbnz": 2,
+        "tbnz,add": 2,
+        "add,ldr": 2,
+        "ldr,ubfx": 2,
+        "ubfx,cbnz": 1,
+        "b,mov": 2,
+        "mov,cbz": 1,
+        "cbz,ldrsb": 1,
+        "ubfx,cbz": 1,
+        "cbz,strb": 1,
+        "strb,strb": 2,
+        "add,mov": 1,
+        "mov,mov": 1,
+        "bl,strb": 1,
+        "mov,cbnz": 1,
+        "cbnz,cmp": 1,
+        "b.eq,add": 1,
+        "add,strb": 1,
+        "strb,b": 1,
+        "add,str": 1,
+        "str,adrp": 1,
+        "bl,ldur": 1,
+        "ldur,adrp": 1,
+        "ldr,cmp": 1,
+        "cmp,b.ne": 1,
+        "b.ne,mov": 1,
+        "mov,ldp": 1,
+        "ldp,ldp": 3,
+        "ldp,add": 1,
+        "add,ret": 1,
+        "ret,bl": 1
+      },
+      "strings": [
+        "=== mini_server v1.0 ===",
+        "Parsing test request...",
+        "GET /index.html HTTP/1.1\r\nHost: example.com\r\nUser-Agent: TestClient/1.0\r\nContent-Length: 13\r\n\r\nHello, World!",
+        "Client connected from 127.0.0.1",
+        "Failed to parse request",
+        "/path%20with%20spaces?q=hello+world",
+        "Decoded URL: %s\n"
+      ],
+      "constants": [],
+      "called_functions": [
+        {
+          "name": "_parse_http_request",
+          "is_external": false
+        },
+        {
+          "name": "_printf",
+          "is_external": true
+        },
+        {
+          "name": "_free",
+          "is_external": true
+        },
+        {
+          "name": "_strtol",
+          "is_external": true
+        },
+        {
+          "name": "_puts",
+          "is_external": true
+        },
+        {
+          "name": "_print_request",
+          "is_external": false
+        },
+        {
+          "name": "_putchar",
+          "is_external": true
+        },
+        {
+          "name": "___stack_chk_fail",
+          "is_external": true
+        }
+      ],
+      "callers": []
+    }
+  ]
+}

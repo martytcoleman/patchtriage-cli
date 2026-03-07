@@ -1,0 +1,244 @@
+{
+  "binary_a": "example_server_v1.0",
+  "binary_b": "example_server_v1.1",
+  "total_matches": 5,
+  "unmatched_a": [],
+  "unmatched_b": [
+    "validate_length"
+  ],
+  "functions": [
+    {
+      "name_a": "parse_request",
+      "name_b": "parse_request",
+      "entry_a": "0x00401000",
+      "entry_b": "0x00401000",
+      "match_score": 0.6373,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 23.5,
+      "signals": {
+        "size_a": 200,
+        "size_b": 280,
+        "size_delta": 80,
+        "size_delta_pct": 40.0,
+        "blocks_a": 8,
+        "blocks_b": 14,
+        "blocks_delta": 6,
+        "instr_a": 70,
+        "instr_b": 95,
+        "instr_delta": 25,
+        "strings_added": [
+          "invalid header",
+          "request too large"
+        ],
+        "strings_removed": [],
+        "ext_calls_added": [
+          "snprintf"
+        ],
+        "ext_calls_removed": [
+          "sprintf"
+        ],
+        "calls_added": [
+          "snprintf",
+          "validate_length"
+        ],
+        "calls_removed": [
+          "sprintf"
+        ],
+        "constants_added": [
+          4096,
+          8192
+        ],
+        "constants_removed": [],
+        "branch_delta": 5,
+        "compare_delta": 3
+      },
+      "triage_label": "security_fix_likely",
+      "triage_rationale": [
+        "Replaced unsafe `sprintf` with `snprintf`",
+        "Added bounds constant(s) ['0x1000', '0x2000'] with 3 new comparison(s)",
+        "Added error/validation string(s): ['invalid header']",
+        "Added 6 blocks, 3 cmp(s), 5 branch(es) \u2014 possible new validation paths"
+      ],
+      "triage_confidence": 1.0
+    },
+    {
+      "name_a": "handle_auth",
+      "name_b": "handle_auth",
+      "entry_a": "0x00401200",
+      "entry_b": "0x00401300",
+      "match_score": 0.6156,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 20.5,
+      "signals": {
+        "size_a": 150,
+        "size_b": 200,
+        "size_delta": 50,
+        "size_delta_pct": 33.3,
+        "blocks_a": 6,
+        "blocks_b": 9,
+        "blocks_delta": 3,
+        "instr_a": 50,
+        "instr_b": 68,
+        "instr_delta": 18,
+        "strings_added": [
+          "authentication failed"
+        ],
+        "strings_removed": [],
+        "ext_calls_added": [
+          "__stack_chk_fail",
+          "strncpy"
+        ],
+        "ext_calls_removed": [
+          "strcpy"
+        ],
+        "calls_added": [
+          "__stack_chk_fail",
+          "strncpy"
+        ],
+        "calls_removed": [
+          "strcpy"
+        ],
+        "constants_added": [
+          64
+        ],
+        "constants_removed": [],
+        "branch_delta": 4,
+        "compare_delta": 2
+      },
+      "triage_label": "security_fix_likely",
+      "triage_rationale": [
+        "Replaced unsafe `strcpy` with `strncpy`",
+        "Added stack protection (`__stack_chk_fail`)",
+        "Added bounds constant(s) ['0x40'] with 2 new comparison(s)",
+        "Added error/validation string(s): ['authentication failed']",
+        "Added 3 blocks, 2 cmp(s), 4 branch(es) \u2014 possible new validation paths"
+      ],
+      "triage_confidence": 1.0
+    },
+    {
+      "name_a": "main",
+      "name_b": "main",
+      "entry_a": "0x00401800",
+      "entry_b": "0x00401900",
+      "match_score": 0.9694,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 2.4,
+      "signals": {
+        "size_a": 300,
+        "size_b": 320,
+        "size_delta": 20,
+        "size_delta_pct": 6.7,
+        "blocks_a": 12,
+        "blocks_b": 13,
+        "blocks_delta": 1,
+        "instr_a": 100,
+        "instr_b": 105,
+        "instr_delta": 5,
+        "strings_added": [],
+        "strings_removed": [],
+        "ext_calls_added": [],
+        "ext_calls_removed": [],
+        "calls_added": [
+          "validate_length"
+        ],
+        "calls_removed": [],
+        "constants_added": [],
+        "constants_removed": [],
+        "branch_delta": 1,
+        "compare_delta": 0
+      },
+      "triage_label": "unknown",
+      "triage_rationale": [
+        "No strong signals detected"
+      ],
+      "triage_confidence": 0.0
+    },
+    {
+      "name_a": "send_response",
+      "name_b": "send_response",
+      "entry_a": "0x00401400",
+      "entry_b": "0x00401500",
+      "match_score": 0.9292,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 1.8,
+      "signals": {
+        "size_a": 120,
+        "size_b": 125,
+        "size_delta": 5,
+        "size_delta_pct": 4.2,
+        "blocks_a": 4,
+        "blocks_b": 4,
+        "blocks_delta": 0,
+        "instr_a": 40,
+        "instr_b": 42,
+        "instr_delta": 2,
+        "strings_added": [
+          "500 Internal Server Error"
+        ],
+        "strings_removed": [],
+        "ext_calls_added": [],
+        "ext_calls_removed": [],
+        "calls_added": [],
+        "calls_removed": [],
+        "constants_added": [
+          500
+        ],
+        "constants_removed": [],
+        "branch_delta": 0,
+        "compare_delta": 0
+      },
+      "triage_label": "behavior_change",
+      "triage_rationale": [
+        "Added error/validation string(s): ['500 Internal Server Error']"
+      ],
+      "triage_confidence": 0.19
+    },
+    {
+      "name_a": "log_access",
+      "name_b": "log_access",
+      "entry_a": "0x00401600",
+      "entry_b": "0x00401700",
+      "match_score": 1.0,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 0.0,
+      "signals": {
+        "size_a": 80,
+        "size_b": 80,
+        "size_delta": 0,
+        "size_delta_pct": 0.0,
+        "blocks_a": 3,
+        "blocks_b": 3,
+        "blocks_delta": 0,
+        "instr_a": 25,
+        "instr_b": 25,
+        "instr_delta": 0,
+        "strings_added": [],
+        "strings_removed": [],
+        "ext_calls_added": [],
+        "ext_calls_removed": [],
+        "calls_added": [],
+        "calls_removed": [],
+        "constants_added": [],
+        "constants_removed": [],
+        "branch_delta": 0,
+        "compare_delta": 0
+      },
+      "triage_label": "unchanged",
+      "triage_rationale": [
+        "No strong signals detected"
+      ],
+      "triage_confidence": 0.0
+    }
+  ],
+  "triage_summary": {
+    "security_fix_likely": 2,
+    "unknown": 1,
+    "behavior_change": 1,
+    "unchanged": 1
+  }
+}

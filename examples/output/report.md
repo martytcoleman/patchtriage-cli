@@ -1,0 +1,100 @@
+# PatchTriage Diff Report
+
+**Generated:** 2026-03-06 23:57:07
+**Binary A:** `example_server_v1.0`
+**Binary B:** `example_server_v1.1`
+
+## Summary
+
+| Metric | Value |
+|--------|-------|
+| Matched functions | 5 |
+| Unmatched in A | 0 |
+| Unmatched in B | 1 |
+
+### Triage Breakdown
+
+| Label | Count |
+|-------|-------|
+| **[SEC-LIKELY]** | 2 |
+| [BEHAVIOR] | 1 |
+| [UNCHANGED] | 1 |
+| [UNKNOWN] | 1 |
+
+## Top 4 Changed Functions
+
+### 1. `parse_request` **[SEC-LIKELY]**
+
+- **Interestingness:** 23.5
+- **Match score:** 0.6373 (name_exact)
+- **Triage confidence:** 1.0
+- **Size:** 200 -> 280 (+40.0%)
+- **Blocks:** 8 -> 14 (+6)
+- **Instructions:** 70 -> 95 (+25)
+
+**Rationale:**
+- Replaced unsafe `sprintf` with `snprintf`
+- Added bounds constant(s) ['0x1000', '0x2000'] with 3 new comparison(s)
+- Added error/validation string(s): ['invalid header']
+- Added 6 blocks, 3 cmp(s), 5 branch(es) — possible new validation paths
+
+  Ext calls added: `snprintf`
+  Ext calls removed: `sprintf`
+  Strings added: ['invalid header', 'request too large']
+
+---
+
+### 2. `handle_auth` **[SEC-LIKELY]**
+
+- **Interestingness:** 20.5
+- **Match score:** 0.6156 (name_exact)
+- **Triage confidence:** 1.0
+- **Size:** 150 -> 200 (+33.3%)
+- **Blocks:** 6 -> 9 (+3)
+- **Instructions:** 50 -> 68 (+18)
+
+**Rationale:**
+- Replaced unsafe `strcpy` with `strncpy`
+- Added stack protection (`__stack_chk_fail`)
+- Added bounds constant(s) ['0x40'] with 2 new comparison(s)
+- Added error/validation string(s): ['authentication failed']
+- Added 3 blocks, 2 cmp(s), 4 branch(es) — possible new validation paths
+
+  Ext calls added: `__stack_chk_fail`, `strncpy`
+  Ext calls removed: `strcpy`
+  Strings added: ['authentication failed']
+
+---
+
+### 3. `main` [UNKNOWN]
+
+- **Interestingness:** 2.4
+- **Match score:** 0.9694 (name_exact)
+- **Triage confidence:** 0.0
+- **Size:** 300 -> 320 (+6.7%)
+- **Blocks:** 12 -> 13 (+1)
+- **Instructions:** 100 -> 105 (+5)
+
+
+---
+
+### 4. `send_response` [BEHAVIOR]
+
+- **Interestingness:** 1.8
+- **Match score:** 0.9292 (name_exact)
+- **Triage confidence:** 0.19
+- **Size:** 120 -> 125 (+4.2%)
+- **Blocks:** 4 -> 4 (+0)
+- **Instructions:** 40 -> 42 (+2)
+
+**Rationale:**
+- Added error/validation string(s): ['500 Internal Server Error']
+
+  Strings added: ['500 Internal Server Error']
+
+---
+
+## Unmatched Functions
+
+### New in B (1)
+- `validate_length`
