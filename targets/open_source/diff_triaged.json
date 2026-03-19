@@ -403,7 +403,7 @@
       },
       "triage_label": "unchanged",
       "triage_rationale": [
-        "No strong signals detected"
+        "Primarily structural churn without semantic evidence"
       ],
       "triage_confidence": 0.0
     }

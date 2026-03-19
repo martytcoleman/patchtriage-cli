@@ -1,8 +1,7 @@
 """Function matching between two feature sets."""
 
 import math
-import sys
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 from scipy.optimize import linear_sum_assignment
 
@@ -77,6 +76,16 @@ def _ratio_sim(a: int, b: int) -> float:
     return min(a, b) / max(a, b)
 
 
+def _update_top2(slot: list[tuple[float, int]], score: float, other_idx: int):
+    """Track the two best scores and their paired indices for a row/column."""
+    if score > slot[0][0]:
+        if other_idx != slot[0][1]:
+            slot[1] = slot[0]
+        slot[0] = (score, other_idx)
+    elif other_idx != slot[0][1] and score > slot[1][0]:
+        slot[1] = (score, other_idx)
+
+
 def compute_similarity(fa: dict, fb: dict, *, stripped: bool = False) -> float:
     """Compute weighted similarity score between two function feature dicts."""
     name_sim = _name_similarity(fa, fb, stripped)
@@ -115,6 +124,7 @@ def compute_similarity(fa: dict, fb: dict, *, stripped: bool = False) -> float:
 
     api_family_sim = _jaccard(set(fa.get("api_families", [])), set(fb.get("api_families", [])))
     const_bucket_sim = _jaccard(set(fa.get("constant_buckets", [])), set(fb.get("constant_buckets", [])))
+    role_sim = _jaccard(set(fa.get("function_roles", [])), set(fb.get("function_roles", [])))
 
     ctx_a = fa.get("callgraph_context", {})
     ctx_b = fb.get("callgraph_context", {})
@@ -134,7 +144,8 @@ def compute_similarity(fa: dict, fb: dict, *, stripped: bool = False) -> float:
         + 0.14 * mnem_sim
         + 0.08 * group_sim
         + 0.05 * bigram_sim
-        + 0.06 * api_family_sim
+        + 0.05 * api_family_sim
+        + 0.06 * role_sim
         + 0.04 * const_bucket_sim
         + 0.05 * ctx_sim
         + 0.025 * size_pen
@@ -228,8 +239,14 @@ def match_functions(features_a: dict, features_b: dict,
         row_index = {i: idx for idx, (i, _) in enumerate(remaining_a)}
         col_index = {j: idx for idx, (j, _) in enumerate(remaining_b)}
         score_matrix = [[0.0 for _ in remaining_b] for _ in remaining_a]
+        row_top2 = [[(0.0, -1), (0.0, -1)] for _ in remaining_a]
+        col_top2 = [[(0.0, -1), (0.0, -1)] for _ in remaining_b]
         for score, i, j in scored_pairs:
-            score_matrix[row_index[i]][col_index[j]] = score
+            row = row_index[i]
+            col = col_index[j]
+            score_matrix[row][col] = score
+            _update_top2(row_top2[row], score, col)
+            _update_top2(col_top2[col], score, row)
 
         rows, cols = linear_sum_assignment([[-score for score in row] for row in score_matrix])
         if large_match:
@@ -243,15 +260,11 @@ def match_functions(features_a: dict, features_b: dict,
             if i in used_a or j in used_b:
                 continue
 
-            alternatives_i = sorted(
-                (s for s, ii, jj in scored_pairs if ii == i and jj != j),
-                reverse=True,
-            )
-            alternatives_j = sorted(
-                (s for s, ii, jj in scored_pairs if jj == j and ii != i),
-                reverse=True,
-            )
-            second_best = max(alternatives_i[:1] + alternatives_j[:1], default=0.0)
+            row_best = row_top2[row]
+            col_best = col_top2[col]
+            alt_row = row_best[1][0] if row_best[0][1] == col else row_best[0][0]
+            alt_col = col_best[1][0] if col_best[0][1] == row else col_best[0][0]
+            second_best = max(alt_row, alt_col)
             uncertain = bool(second_best and score - second_best < uncertain_gap)
 
             matches.append(MatchResult(

@@ -53,6 +53,29 @@ def _normalize_set(names: set[str]) -> dict[str, str]:
     return {_normalize_symbol(n): n for n in names}
 
 
+ROLE_HINTS: dict[str, tuple[str, ...]] = {
+    "parser": ("parse", "decode", "read_", "load_", "lex", "scan"),
+    "validator": ("valid", "check", "verify", "guard", "sanitize", "bounds"),
+    "codec": ("compress", "decompress", "encode", "decode", "zstd", "huf", "fse"),
+    "benchmark": ("bench", "bmk", "lorem", "datagen"),
+}
+
+
+def _context_roles(func_diff: dict) -> set[str]:
+    """Use recorded roles when present and fall back to name-based hints."""
+    roles = set(func_diff.get("roles_a", [])) | set(func_diff.get("roles_b", []))
+    if roles:
+        return roles
+
+    hinted = set()
+    for key in ("name_a", "name_b"):
+        name = _normalize_symbol(str(func_diff.get(key, "")))
+        for role, markers in ROLE_HINTS.items():
+            if any(marker in name for marker in markers):
+                hinted.add(role)
+    return hinted
+
+
 def triage_function(func_diff: dict) -> dict:
     """Apply triage heuristics to a single function diff entry.
 
@@ -70,6 +93,39 @@ def triage_function(func_diff: dict) -> dict:
     consts_added = set(signals.get("constants_added", []))
     api_families_added = set(signals.get("api_families_added", []))
     string_categories_added = set(signals.get("string_categories_added", []))
+    roles = _context_roles(func_diff)
+
+    security_semantic_evidence = any([
+        signals.get("strings_added"),
+        signals.get("strings_removed"),
+        signals.get("ext_calls_added"),
+        signals.get("ext_calls_removed"),
+        signals.get("api_families_added"),
+        signals.get("api_families_removed"),
+        signals.get("string_categories_added"),
+        signals.get("string_categories_removed"),
+    ])
+    semantic_evidence = any([
+        signals.get("strings_added"),
+        signals.get("strings_removed"),
+        signals.get("ext_calls_added"),
+        signals.get("ext_calls_removed"),
+        signals.get("api_families_added"),
+        signals.get("api_families_removed"),
+        signals.get("string_categories_added"),
+        signals.get("string_categories_removed"),
+        signals.get("constants_added"),
+        signals.get("constants_removed"),
+        signals.get("constant_buckets_added"),
+        signals.get("constant_buckets_removed"),
+    ])
+    security_context = bool(
+        security_semantic_evidence
+        or {"parser", "validator"} & roles
+        or "validation" in api_families_added
+        or {"error", "bounds", "path", "http"} & string_categories_added
+    )
+    algorithmic_context = bool({"codec", "benchmark"} & roles) and not security_context
 
     # Build normalized lookup for symbol matching across platforms
     norm_added = _normalize_set(ext_added | calls_added)
@@ -91,13 +147,13 @@ def triage_function(func_diff: dict) -> dict:
 
     # --- Heuristic 2: stack protection added ---
     for pf in STACK_PROTECTION_FUNCS:
-        if pf in norm_added:
+        if pf in norm_added and not algorithmic_context:
             rationale.append(f"Added stack protection (`{pf}`)")
             sec_score += 2.5
 
     # --- Heuristic 3: new bounds-like constants + new checks ---
     bounds_added = consts_added & BOUNDS_CONSTANTS
-    if bounds_added and signals.get("compare_delta", 0) > 0:
+    if bounds_added and signals.get("compare_delta", 0) > 0 and security_context:
         rationale.append(
             f"Added bounds constant(s) {[hex(c) for c in sorted(bounds_added)]} "
             f"with {signals['compare_delta']} new comparison(s)"
@@ -127,6 +183,7 @@ def triage_function(func_diff: dict) -> dict:
     if (
         signals.get("compare_delta", 0) > 0
         and signals.get("branch_delta", 0) > 0
+        and security_context
         and (
             VALIDATION_STRING_CATEGORIES & string_categories_added
             or "validation" in api_families_added
@@ -143,6 +200,7 @@ def triage_function(func_diff: dict) -> dict:
         and signals.get("instr_delta", 0) > 0
         and signals.get("compare_delta", 0) > 0
         and abs(signals.get("size_delta_pct", 0)) >= 5
+        and security_context
     ):
         rationale.append("Control-flow and comparison growth suggests new guard or parser logic")
         sec_score += 0.75
@@ -150,7 +208,8 @@ def triage_function(func_diff: dict) -> dict:
     # --- Heuristic 5: new error-return paths (block growth + compare growth) ---
     if (signals.get("blocks_delta", 0) > 2
             and signals.get("compare_delta", 0) > 0
-            and signals.get("branch_delta", 0) > 0):
+            and signals.get("branch_delta", 0) > 0
+            and security_context):
         rationale.append(
             f"Added {signals['blocks_delta']} blocks, "
             f"{signals['compare_delta']} cmp(s), "
@@ -172,6 +231,21 @@ def triage_function(func_diff: dict) -> dict:
         signals.get("branch_delta", 0),
         signals.get("compare_delta", 0),
     ])
+    size_pct = abs(signals.get("size_delta_pct", 0))
+    block_delta = abs(signals.get("blocks_delta", 0))
+    instr_delta = abs(signals.get("instr_delta", 0))
+    branch_positive = signals.get("branch_delta", 0) > 0
+    structure_only_modest = (
+        not semantic_evidence
+        and not branch_positive
+        and size_pct < 15
+        and block_delta <= 4
+        and instr_delta <= 25
+    )
+    structure_only_large = (
+        not semantic_evidence
+        and size_pct >= 15
+    )
     synthetic_scope = any(
         str(func_diff.get(key, "")).startswith(("section:", "imports:", "__binary__"))
         for key in ("name_a", "name_b")
@@ -184,6 +258,12 @@ def triage_function(func_diff: dict) -> dict:
         label = "security_fix_possible"
     elif sec_score >= 0.5:
         label = "behavior_change"
+    elif structure_only_modest:
+        label = "unchanged"
+        rationale.append("Primarily structural churn without semantic evidence")
+    elif structure_only_large:
+        label = "refactor"
+        rationale.append("Large structural change without semantic evidence")
     elif func_diff.get("interestingness", 0) < 0.5:
         label = "unchanged"
     elif abs_pct > 20 and not rationale:
@@ -205,6 +285,14 @@ def triage_function(func_diff: dict) -> dict:
         label = "unchanged"
     else:
         label = "unknown"
+
+    if label == "behavior_change" and roles and roles <= {"formatter", "logger"} and not sec_score:
+        if not semantic_evidence or set(signals.get("string_categories_added", [])) <= {"format"}:
+            label = "unchanged" if abs_pct < 15 else "refactor"
+            rationale = ["Formatter/logging-oriented churn without security evidence"]
+    if label.startswith("security_fix") and algorithmic_context and not security_context:
+        label = "behavior_change" if abs_pct < 20 else "refactor"
+        rationale = ["Algorithmic/codec change with structural growth but no direct security evidence"]
 
     confidence = min(sec_score / 8.0, 1.0)
 

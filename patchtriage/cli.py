@@ -30,6 +30,7 @@ def _run_pipeline(binary_a: str, binary_b: str, *,
     from .classify import classify_binary
     from .extract import run_extract
     from .light import run_light_extract
+    from .native import run_native_extract
     from .matcher import match_functions
     from .analyzer import analyze_diff
     from .triage import triage_diff
@@ -55,12 +56,11 @@ def _run_pipeline(binary_a: str, binary_b: str, *,
     class_b = classify_binary(binary_b)
     selected_backend = backend
     if backend == "auto":
-        if (
-            class_a["language"] in {"go", "rust"}
-            or class_b["language"] in {"go", "rust"}
-            or class_a["challenging"]
-            or class_b["challenging"]
-        ):
+        if class_a["language"] in {"go", "rust"} or class_b["language"] in {"go", "rust"}:
+            selected_backend = "light"
+        elif class_a["symbolized"] and class_b["symbolized"] and not (class_a["challenging"] or class_b["challenging"]):
+            selected_backend = "native"
+        elif class_a["challenging"] or class_b["challenging"]:
             selected_backend = "light"
         else:
             selected_backend = "ghidra"
@@ -70,6 +70,9 @@ def _run_pipeline(binary_a: str, binary_b: str, *,
     if selected_backend == "light":
         feat_a = run_light_extract(binary_a, feat_a_path, reuse_cached=not force_extract)
         feat_b = run_light_extract(binary_b, feat_b_path, reuse_cached=not force_extract)
+    elif selected_backend == "native":
+        feat_a = run_native_extract(binary_a, feat_a_path, reuse_cached=not force_extract)
+        feat_b = run_native_extract(binary_b, feat_b_path, reuse_cached=not force_extract)
     else:
         feat_a = run_extract(
             binary_a, feat_a_path, ghidra_path=ghidra,
@@ -138,6 +141,7 @@ def cmd_extract(args):
     from .classify import classify_binary
     from .extract import run_extract
     from .light import run_light_extract
+    from .native import run_native_extract
 
     output = args.output
     if output is None:
@@ -145,9 +149,18 @@ def cmd_extract(args):
     selected_backend = args.backend
     if selected_backend == "auto":
         info = classify_binary(args.binary)
-        selected_backend = "light" if (info["language"] in {"go", "rust"} or info["challenging"]) else "ghidra"
+        if info["language"] in {"go", "rust"}:
+            selected_backend = "light"
+        elif info["symbolized"] and not info["challenging"]:
+            selected_backend = "native"
+        elif info["challenging"]:
+            selected_backend = "light"
+        else:
+            selected_backend = "ghidra"
     if selected_backend == "light":
         data = run_light_extract(args.binary, output, reuse_cached=not args.force)
+    elif selected_backend == "native":
+        data = run_native_extract(args.binary, output, reuse_cached=not args.force)
     else:
         data = run_extract(
             args.binary,
@@ -308,8 +321,8 @@ def main():
                         help="Force re-extraction even if cached feature JSONs already match the input binaries")
     p_run.add_argument("--profile", choices=["auto", "fast", "full"], default="auto",
                         help="Extraction profile: auto selects based on binary pre-scan")
-    p_run.add_argument("--backend", choices=["auto", "ghidra", "light"], default="auto",
-                        help="Extraction backend: auto picks light for likely Go/Rust binaries")
+    p_run.add_argument("--backend", choices=["auto", "ghidra", "native", "light"], default="auto",
+                        help="Extraction backend: auto picks native for symbolized binaries and light for likely Go/Rust binaries")
     p_run.set_defaults(func=cmd_run)
 
     # --- extract ---
@@ -321,8 +334,8 @@ def main():
                            help="Force extraction even if a matching cached feature file already exists")
     p_extract.add_argument("--profile", choices=["auto", "fast", "full"], default="auto",
                            help="Extraction profile: auto selects based on binary pre-scan")
-    p_extract.add_argument("--backend", choices=["auto", "ghidra", "light"], default="auto",
-                           help="Extraction backend: auto picks light for likely Go/Rust binaries")
+    p_extract.add_argument("--backend", choices=["auto", "ghidra", "native", "light"], default="auto",
+                           help="Extraction backend: auto picks native for symbolized binaries and light for likely Go/Rust binaries")
     p_extract.set_defaults(func=cmd_extract)
 
     # --- diff ---

@@ -1,0 +1,29 @@
+2026-03-19 15:09:41 INFO  (LoggingInitialization) Using log config file: jar:file:/Users/marty/ghidra_12.0_PUBLIC/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml  
+2026-03-19 15:09:41 INFO  (LoggingInitialization) Using log file: /Users/marty/patchdiff-cli/corpus/sqlite/results/.ghidra-settings/ghidra/ghidra_12.0_PUBLIC/application.log  
+2026-03-19 15:09:41 INFO  (Preferences) Loading user preferences: /Users/marty/patchdiff-cli/corpus/sqlite/results/.ghidra-settings/ghidra/ghidra_12.0_PUBLIC/preferences  
+2026-03-19 15:09:41 INFO  (ClassSearcher) Searching for classes...  
+2026-03-19 15:09:43 INFO  (ClassSearcher) Class search complete (1979 ms)  
+2026-03-19 15:09:43 INFO  (SSLContextInitializer) Initializing SSL Context  
+2026-03-19 15:09:43 INFO  (SecureRandomFactory) Initializing Random Number Generator...  
+2026-03-19 15:09:43 INFO  (SecureRandomFactory) Random Number Generator initialization complete: NativePRNGNonBlocking  
+2026-03-19 15:09:43 INFO  (ApplicationTrustManagerFactory) Trust manager disabled, cacerts have not been set  
+2026-03-19 15:09:43 DEBUG (DefaultProjectManager) No tools found; Installing default tools  
+2026-03-19 15:09:43 DEBUG (DefaultProjectManager) 	no recent project directories found  
+2026-03-19 15:09:43 INFO  (DefaultProject) Creating project: /Users/marty/patchdiff-cli/corpus/sqlite/results/sqlite3_ghidra_sg42_x4e/sqlite3_ghidra/sqlite3_ghidra  
+2026-03-19 15:09:45 INFO  (ProgramLoader) Using Loader: Mac OS X Mach-O  
+2026-03-19 15:09:45 INFO  (ProgramLoader) Using Language/Compiler: AARCH64:LE:64:AppleSilicon:default  
+2026-03-19 15:09:45 INFO  (ProgramLoader) Using Library Search Path: [., /System/Library/dyld/dyld_shared_cache_arm64e, /System/Library/dyld/dyld_shared_cache_x86_64, /System/Library/dyld/dyld_shared_cache_x86_64h, /System/Cryptexes/OS/System/Library/dyld/dyld_shared_cache_arm64e, /System/Cryptexes/OS/System/Library/dyld/dyld_shared_cache_x86_64, /System/Cryptexes/OS/System/Library/dyld/dyld_shared_cache_x86_64h, /Users/marty/Library/Java/Extensions, /Library/Java/Extensions, /Network/Library/Java/Extensions, /System/Library/Java/Extensions, /usr/lib/java]  
+2026-03-19 15:09:48 INFO  (ProgramLoader) Additional info:
+Loading file:///Users/marty/patchdiff-cli/corpus/sqlite/v3510200/sqlite3?MD5=7117135131631863a5b82c7ad8340f36...
+Discovered 2910 DYLD_CHAINED_PTR_64_OFFSET chained pointers.
+Fixed up 2910 chained pointers.
+------------------------------------------------
+
+Linking the External Programs of 'sqlite3' to imported libraries...
+  [/usr/lib/libz.1.dylib] -> not found in project
+  [/usr/lib/libSystem.B.dylib] -> not found in project
+------------------------------------------------
+
+  
+2026-03-19 15:09:48 INFO  (LocalFileSystem) /sqlite3: file created (marty)  
+2026-03-19 15:10:02 INFO  (DecompilerSwitchAnalyzer) hit non-returning function, restarting decompiler switch analyzer later  

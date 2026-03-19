@@ -5,6 +5,7 @@ from patchtriage.normalize import (
     classify_api_family,
     classify_string,
     enrich_function_features,
+    infer_function_roles,
     normalize_string,
     normalize_symbol,
 )
@@ -45,3 +46,17 @@ def test_enrich_function_features_adds_derived_fields():
     assert "api_families" in enriched
     assert "validation" in enriched["api_families"]
     assert enriched["callgraph_context"]["caller_count"] == 1
+
+
+def test_infer_function_roles_finds_parser_and_validator():
+    func = {
+        "name": "parse_request",
+        "normalized_strings": ["invalid header length", "content-length"],
+        "string_categories": ["error", "http"],
+        "api_families": ["validation", "file"],
+        "normalized_call_names": ["strncpy", "fprintf"],
+        "instruction_groups": {"compare": 3, "branch": 4, "memory": 2},
+    }
+    roles = infer_function_roles(func)
+    assert "parser" in roles
+    assert "validator" in roles

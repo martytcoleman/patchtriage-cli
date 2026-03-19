@@ -1,0 +1,3513 @@
+{
+  "binary": "/Users/marty/patchdiff-cli/corpus/yq/yq-v4.49.1-darwin-arm64",
+  "arch": "aarch64",
+  "num_functions": 23,
+  "functions": [
+    {
+      "name": "section:__TEXT:__text",
+      "entry": "section:__TEXT:__text",
+      "size": 4509972,
+      "instr_count": 12000,
+      "block_count": 1,
+      "mnemonic_hist": {
+        "umlal2.4s": 1,
+        "ldpsw": 1,
+        "eon": 26,
+        "tbz": 152,
+        "ldrb": 370,
+        "cbz": 217,
+        "ldrh": 88,
+        "cbnz": 143,
+        "subs": 5,
+        "ldr": 2461,
+        "udf": 578,
+        "cmp": 648,
+        "b.ls": 138,
+        "str": 866,
+        "stur": 124,
+        "sub": 320,
+        "bl": 648,
+        "ldur": 246,
+        "ret": 501,
+        "stp": 220,
+        "mov": 1113,
+        "ldp": 209,
+        "nop": 413,
+        "b.hi": 63,
+        "b.lo": 36,
+        "neg": 24,
+        "and": 321,
+        "b.lt": 8,
+        "movk": 17,
+        "b.ne": 207,
+        "tbnz": 69,
+        "asr": 14,
+        "cset": 73,
+        "adrp": 323,
+        "strb": 89,
+        "orr": 117,
+        "b.le": 13,
+        "b.ge": 23,
+        "b.hs": 30,
+        "lsl": 40,
+        "adr": 4,
+        "eor": 85,
+        "b.eq": 57,
+        "csel": 64,
+        "rev": 4,
+        "cneg": 3,
+        "cinc": 2,
+        "ands": 2,
+        "dup.16b": 3,
+        "eor.8b": 2,
+        "ld1.16b": 3,
+        "cmeq.16b": 6,
+        "and.16b": 9,
+        "addp.16b": 5,
+        "uaddlv.16b": 1,
+        "mov.d": 6,
+        "ld1.2d": 2,
+        "cmeq.2d": 4,
+        "ldurh": 1,
+        "dup.4s": 1,
+        "adds": 1,
+        "lsr": 76,
+        "orr.16b": 1,
+        "addp.2d": 1,
+        "rbit": 44,
+        "clz": 46,
+        "ldrsb": 49,
+        "tst": 51,
+        "ubfx": 25,
+        "ubfiz": 4,
+        "br": 8,
+        "sturh": 2,
+        "csinc": 2,
+        "ldrsw": 2,
+        "mrs": 1,
+        "msr": 1,
+        "ldar": 10,
+        "stlr": 12,
+        "sxtw": 3,
+        "ldaxr": 20,
+        "stlxr": 20,
+        "ldarb": 2,
+        "stlrb": 2,
+        "mvn": 23,
+        "ldaxrb": 2,
+        "stlxrb": 2,
+        "madd": 58,
+        "mul": 75,
+        "umulh": 4,
+        "udiv": 1,
+        "blr": 44,
+        "strh": 32,
+        "fmov": 2,
+        "cnt.8b": 1,
+        "uaddlv.8b": 1,
+        "b.gt": 6,
+        "cmn": 2,
+        "bic": 1,
+        "msub": 1,
+        "ld4r.4s": 3,
+        "ld1.4s": 1,
+        "ld1r.4s": 1,
+        "add.4s": 41,
+        "eor.16b": 35,
+        "mov.16b": 8,
+        "rev32.8h": 8,
+        "shl.4s": 16,
+        "sri.4s": 16,
+        "tbl.16b": 8,
+        "st1.16b": 4,
+        "fcmp": 2
+      },
+      "mnemonic_bigrams": {},
+      "strings": [
+        "__TEXT:__text",
+        "executable section"
+      ],
+      "constants": [],
+      "called_functions": [],
+      "callers": [],
+      "normalized_strings": [
+        "__text:__text",
+        "executable section"
+      ],
+      "string_categories": [],
+      "constant_buckets": [],
+      "api_families": [],
+      "normalized_call_names": [],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 701,
+        "branch": 2363,
+        "memory": 5988,
+        "arithmetic": 448,
+        "logic": 466
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 0,
+        "external_callee_count": 0,
+        "internal_callee_count": 0
+      },
+      "function_roles": [],
+      "primary_role": "unknown"
+    },
+    {
+      "name": "section:__TEXT:__symbol_stub1",
+      "entry": "section:__TEXT:__symbol_stub1",
+      "size": 1224,
+      "instr_count": 12000,
+      "block_count": 1,
+      "mnemonic_hist": {
+        "umlal2.4s": 1,
+        "ldpsw": 1,
+        "eon": 26,
+        "tbz": 152,
+        "ldrb": 370,
+        "cbz": 217,
+        "ldrh": 88,
+        "cbnz": 143,
+        "subs": 5,
+        "ldr": 2461,
+        "udf": 578,
+        "cmp": 648,
+        "b.ls": 138,
+        "str": 866,
+        "stur": 124,
+        "sub": 320,
+        "bl": 648,
+        "ldur": 246,
+        "ret": 501,
+        "stp": 220,
+        "mov": 1113,
+        "ldp": 209,
+        "nop": 413,
+        "b.hi": 63,
+        "b.lo": 36,
+        "neg": 24,
+        "and": 321,
+        "b.lt": 8,
+        "movk": 17,
+        "b.ne": 207,
+        "tbnz": 69,
+        "asr": 14,
+        "cset": 73,
+        "adrp": 323,
+        "strb": 89,
+        "orr": 117,
+        "b.le": 13,
+        "b.ge": 23,
+        "b.hs": 30,
+        "lsl": 40,
+        "adr": 4,
+        "eor": 85,
+        "b.eq": 57,
+        "csel": 64,
+        "rev": 4,
+        "cneg": 3,
+        "cinc": 2,
+        "ands": 2,
+        "dup.16b": 3,
+        "eor.8b": 2,
+        "ld1.16b": 3,
+        "cmeq.16b": 6,
+        "and.16b": 9,
+        "addp.16b": 5,
+        "uaddlv.16b": 1,
+        "mov.d": 6,
+        "ld1.2d": 2,
+        "cmeq.2d": 4,
+        "ldurh": 1,
+        "dup.4s": 1,
+        "adds": 1,
+        "lsr": 76,
+        "orr.16b": 1,
+        "addp.2d": 1,
+        "rbit": 44,
+        "clz": 46,
+        "ldrsb": 49,
+        "tst": 51,
+        "ubfx": 25,
+        "ubfiz": 4,
+        "br": 8,
+        "sturh": 2,
+        "csinc": 2,
+        "ldrsw": 2,
+        "mrs": 1,
+        "msr": 1,
+        "ldar": 10,
+        "stlr": 12,
+        "sxtw": 3,
+        "ldaxr": 20,
+        "stlxr": 20,
+        "ldarb": 2,
+        "stlrb": 2,
+        "mvn": 23,
+        "ldaxrb": 2,
+        "stlxrb": 2,
+        "madd": 58,
+        "mul": 75,
+        "umulh": 4,
+        "udiv": 1,
+        "blr": 44,
+        "strh": 32,
+        "fmov": 2,
+        "cnt.8b": 1,
+        "uaddlv.8b": 1,
+        "b.gt": 6,
+        "cmn": 2,
+        "bic": 1,
+        "msub": 1,
+        "ld4r.4s": 3,
+        "ld1.4s": 1,
+        "ld1r.4s": 1,
+        "add.4s": 41,
+        "eor.16b": 35,
+        "mov.16b": 8,
+        "rev32.8h": 8,
+        "shl.4s": 16,
+        "sri.4s": 16,
+        "tbl.16b": 8,
+        "st1.16b": 4,
+        "fcmp": 2
+      },
+      "mnemonic_bigrams": {},
+      "strings": [
+        "__TEXT:__symbol_stub1",
+        "executable section"
+      ],
+      "constants": [],
+      "called_functions": [],
+      "callers": [],
+      "normalized_strings": [
+        "__text:__symbol_stub<num>",
+        "executable section"
+      ],
+      "string_categories": [],
+      "constant_buckets": [],
+      "api_families": [],
+      "normalized_call_names": [],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 701,
+        "branch": 2363,
+        "memory": 5988,
+        "arithmetic": 448,
+        "logic": 466
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 0,
+        "external_callee_count": 0,
+        "internal_callee_count": 0
+      },
+      "function_roles": [],
+      "primary_role": "unknown"
+    },
+    {
+      "name": "section:__TEXT:__rodata",
+      "entry": "section:__TEXT:__rodata",
+      "size": 929369,
+      "instr_count": 12000,
+      "block_count": 1,
+      "mnemonic_hist": {
+        "umlal2.4s": 1,
+        "ldpsw": 1,
+        "eon": 26,
+        "tbz": 152,
+        "ldrb": 370,
+        "cbz": 217,
+        "ldrh": 88,
+        "cbnz": 143,
+        "subs": 5,
+        "ldr": 2461,
+        "udf": 578,
+        "cmp": 648,
+        "b.ls": 138,
+        "str": 866,
+        "stur": 124,
+        "sub": 320,
+        "bl": 648,
+        "ldur": 246,
+        "ret": 501,
+        "stp": 220,
+        "mov": 1113,
+        "ldp": 209,
+        "nop": 413,
+        "b.hi": 63,
+        "b.lo": 36,
+        "neg": 24,
+        "and": 321,
+        "b.lt": 8,
+        "movk": 17,
+        "b.ne": 207,
+        "tbnz": 69,
+        "asr": 14,
+        "cset": 73,
+        "adrp": 323,
+        "strb": 89,
+        "orr": 117,
+        "b.le": 13,
+        "b.ge": 23,
+        "b.hs": 30,
+        "lsl": 40,
+        "adr": 4,
+        "eor": 85,
+        "b.eq": 57,
+        "csel": 64,
+        "rev": 4,
+        "cneg": 3,
+        "cinc": 2,
+        "ands": 2,
+        "dup.16b": 3,
+        "eor.8b": 2,
+        "ld1.16b": 3,
+        "cmeq.16b": 6,
+        "and.16b": 9,
+        "addp.16b": 5,
+        "uaddlv.16b": 1,
+        "mov.d": 6,
+        "ld1.2d": 2,
+        "cmeq.2d": 4,
+        "ldurh": 1,
+        "dup.4s": 1,
+        "adds": 1,
+        "lsr": 76,
+        "orr.16b": 1,
+        "addp.2d": 1,
+        "rbit": 44,
+        "clz": 46,
+        "ldrsb": 49,
+        "tst": 51,
+        "ubfx": 25,
+        "ubfiz": 4,
+        "br": 8,
+        "sturh": 2,
+        "csinc": 2,
+        "ldrsw": 2,
+        "mrs": 1,
+        "msr": 1,
+        "ldar": 10,
+        "stlr": 12,
+        "sxtw": 3,
+        "ldaxr": 20,
+        "stlxr": 20,
+        "ldarb": 2,
+        "stlrb": 2,
+        "mvn": 23,
+        "ldaxrb": 2,
+        "stlxrb": 2,
+        "madd": 58,
+        "mul": 75,
+        "umulh": 4,
+        "udiv": 1,
+        "blr": 44,
+        "strh": 32,
+        "fmov": 2,
+        "cnt.8b": 1,
+        "uaddlv.8b": 1,
+        "b.gt": 6,
+        "cmn": 2,
+        "bic": 1,
+        "msub": 1,
+        "ld4r.4s": 3,
+        "ld1.4s": 1,
+        "ld1r.4s": 1,
+        "add.4s": 41,
+        "eor.16b": 35,
+        "mov.16b": 8,
+        "rev32.8h": 8,
+        "shl.4s": 16,
+        "sri.4s": 16,
+        "tbl.16b": 8,
+        "st1.16b": 4,
+        "fcmp": 2
+      },
+      "mnemonic_bigrams": {},
+      "strings": [
+        "__TEXT:__rodata",
+        "executable section"
+      ],
+      "constants": [],
+      "called_functions": [],
+      "callers": [],
+      "normalized_strings": [
+        "__text:__rodata",
+        "executable section"
+      ],
+      "string_categories": [],
+      "constant_buckets": [],
+      "api_families": [],
+      "normalized_call_names": [],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 701,
+        "branch": 2363,
+        "memory": 5988,
+        "arithmetic": 448,
+        "logic": 466
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 0,
+        "external_callee_count": 0,
+        "internal_callee_count": 0
+      },
+      "function_roles": [],
+      "primary_role": "unknown"
+    },
+    {
+      "name": "section:__DATA_CONST:__rodata",
+      "entry": "section:__DATA_CONST:__rodata",
+      "size": 994744,
+      "instr_count": 0,
+      "block_count": 1,
+      "mnemonic_hist": {},
+      "mnemonic_bigrams": {},
+      "strings": [
+        "__DATA_CONST:__rodata",
+        "data section"
+      ],
+      "constants": [],
+      "called_functions": [],
+      "callers": [],
+      "normalized_strings": [
+        "__data_const:__rodata",
+        "data section"
+      ],
+      "string_categories": [],
+      "constant_buckets": [],
+      "api_families": [],
+      "normalized_call_names": [],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 0,
+        "branch": 0,
+        "memory": 0,
+        "arithmetic": 0,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 0,
+        "external_callee_count": 0,
+        "internal_callee_count": 0
+      },
+      "function_roles": [],
+      "primary_role": "unknown"
+    },
+    {
+      "name": "section:__DATA_CONST:__got",
+      "entry": "section:__DATA_CONST:__got",
+      "size": 816,
+      "instr_count": 0,
+      "block_count": 1,
+      "mnemonic_hist": {},
+      "mnemonic_bigrams": {},
+      "strings": [
+        "__DATA_CONST:__got",
+        "data section"
+      ],
+      "constants": [],
+      "called_functions": [],
+      "callers": [],
+      "normalized_strings": [
+        "__data_const:__got",
+        "data section"
+      ],
+      "string_categories": [],
+      "constant_buckets": [],
+      "api_families": [],
+      "normalized_call_names": [],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 0,
+        "branch": 0,
+        "memory": 0,
+        "arithmetic": 0,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 0,
+        "external_callee_count": 0,
+        "internal_callee_count": 0
+      },
+      "function_roles": [],
+      "primary_role": "unknown"
+    },
+    {
+      "name": "section:__DATA_CONST:__typelink",
+      "entry": "section:__DATA_CONST:__typelink",
+      "size": 13100,
+      "instr_count": 0,
+      "block_count": 1,
+      "mnemonic_hist": {},
+      "mnemonic_bigrams": {},
+      "strings": [
+        "__DATA_CONST:__typelink",
+        "data section"
+      ],
+      "constants": [],
+      "called_functions": [],
+      "callers": [],
+      "normalized_strings": [
+        "__data_const:__typelink",
+        "data section"
+      ],
+      "string_categories": [],
+      "constant_buckets": [],
+      "api_families": [],
+      "normalized_call_names": [],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 0,
+        "branch": 0,
+        "memory": 0,
+        "arithmetic": 0,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 0,
+        "external_callee_count": 0,
+        "internal_callee_count": 0
+      },
+      "function_roles": [],
+      "primary_role": "unknown"
+    },
+    {
+      "name": "section:__DATA_CONST:__itablink",
+      "entry": "section:__DATA_CONST:__itablink",
+      "size": 3784,
+      "instr_count": 0,
+      "block_count": 1,
+      "mnemonic_hist": {},
+      "mnemonic_bigrams": {},
+      "strings": [
+        "__DATA_CONST:__itablink",
+        "data section"
+      ],
+      "constants": [],
+      "called_functions": [],
+      "callers": [],
+      "normalized_strings": [
+        "__data_const:__itablink",
+        "data section"
+      ],
+      "string_categories": [],
+      "constant_buckets": [],
+      "api_families": [],
+      "normalized_call_names": [],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 0,
+        "branch": 0,
+        "memory": 0,
+        "arithmetic": 0,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 0,
+        "external_callee_count": 0,
+        "internal_callee_count": 0
+      },
+      "function_roles": [],
+      "primary_role": "unknown"
+    },
+    {
+      "name": "section:__DATA_CONST:__gosymtab",
+      "entry": "section:__DATA_CONST:__gosymtab",
+      "size": 0,
+      "instr_count": 0,
+      "block_count": 1,
+      "mnemonic_hist": {},
+      "mnemonic_bigrams": {},
+      "strings": [
+        "__DATA_CONST:__gosymtab",
+        "data section"
+      ],
+      "constants": [],
+      "called_functions": [],
+      "callers": [],
+      "normalized_strings": [
+        "__data_const:__gosymtab",
+        "data section"
+      ],
+      "string_categories": [],
+      "constant_buckets": [],
+      "api_families": [],
+      "normalized_call_names": [],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 0,
+        "branch": 0,
+        "memory": 0,
+        "arithmetic": 0,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 0,
+        "external_callee_count": 0,
+        "internal_callee_count": 0
+      },
+      "function_roles": [],
+      "primary_role": "unknown"
+    },
+    {
+      "name": "section:__DATA_CONST:__gopclntab",
+      "entry": "section:__DATA_CONST:__gopclntab",
+      "size": 3114944,
+      "instr_count": 0,
+      "block_count": 1,
+      "mnemonic_hist": {},
+      "mnemonic_bigrams": {},
+      "strings": [
+        "__DATA_CONST:__gopclntab",
+        "data section"
+      ],
+      "constants": [],
+      "called_functions": [],
+      "callers": [],
+      "normalized_strings": [
+        "__data_const:__gopclntab",
+        "data section"
+      ],
+      "string_categories": [],
+      "constant_buckets": [],
+      "api_families": [],
+      "normalized_call_names": [],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 0,
+        "branch": 0,
+        "memory": 0,
+        "arithmetic": 0,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 0,
+        "external_callee_count": 0,
+        "internal_callee_count": 0
+      },
+      "function_roles": [],
+      "primary_role": "unknown"
+    },
+    {
+      "name": "section:__DATA:__go_buildinfo",
+      "entry": "section:__DATA:__go_buildinfo",
+      "size": 2352,
+      "instr_count": 0,
+      "block_count": 1,
+      "mnemonic_hist": {},
+      "mnemonic_bigrams": {},
+      "strings": [
+        "__DATA:__go_buildinfo",
+        "data section"
+      ],
+      "constants": [],
+      "called_functions": [],
+      "callers": [],
+      "normalized_strings": [
+        "__data:__go_buildinfo",
+        "data section"
+      ],
+      "string_categories": [],
+      "constant_buckets": [],
+      "api_families": [],
+      "normalized_call_names": [],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 0,
+        "branch": 0,
+        "memory": 0,
+        "arithmetic": 0,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 0,
+        "external_callee_count": 0,
+        "internal_callee_count": 0
+      },
+      "function_roles": [],
+      "primary_role": "unknown"
+    },
+    {
+      "name": "section:__DATA:__go_fipsinfo",
+      "entry": "section:__DATA:__go_fipsinfo",
+      "size": 120,
+      "instr_count": 0,
+      "block_count": 1,
+      "mnemonic_hist": {},
+      "mnemonic_bigrams": {},
+      "strings": [
+        "__DATA:__go_fipsinfo",
+        "data section"
+      ],
+      "constants": [],
+      "called_functions": [],
+      "callers": [],
+      "normalized_strings": [
+        "__data:__go_fipsinfo",
+        "data section"
+      ],
+      "string_categories": [],
+      "constant_buckets": [],
+      "api_families": [],
+      "normalized_call_names": [],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 0,
+        "branch": 0,
+        "memory": 0,
+        "arithmetic": 0,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 0,
+        "external_callee_count": 0,
+        "internal_callee_count": 0
+      },
+      "function_roles": [],
+      "primary_role": "unknown"
+    },
+    {
+      "name": "section:__DATA:__noptrdata",
+      "entry": "section:__DATA:__noptrdata",
+      "size": 917985,
+      "instr_count": 0,
+      "block_count": 1,
+      "mnemonic_hist": {},
+      "mnemonic_bigrams": {},
+      "strings": [
+        "__DATA:__noptrdata",
+        "data section"
+      ],
+      "constants": [],
+      "called_functions": [],
+      "callers": [],
+      "normalized_strings": [
+        "__data:__noptrdata",
+        "data section"
+      ],
+      "string_categories": [],
+      "constant_buckets": [],
+      "api_families": [],
+      "normalized_call_names": [],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 0,
+        "branch": 0,
+        "memory": 0,
+        "arithmetic": 0,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 0,
+        "external_callee_count": 0,
+        "internal_callee_count": 0
+      },
+      "function_roles": [],
+      "primary_role": "unknown"
+    },
+    {
+      "name": "section:__DATA:__data",
+      "entry": "section:__DATA:__data",
+      "size": 183970,
+      "instr_count": 0,
+      "block_count": 1,
+      "mnemonic_hist": {},
+      "mnemonic_bigrams": {},
+      "strings": [
+        "__DATA:__data",
+        "data section"
+      ],
+      "constants": [],
+      "called_functions": [],
+      "callers": [],
+      "normalized_strings": [
+        "__data:__data",
+        "data section"
+      ],
+      "string_categories": [],
+      "constant_buckets": [],
+      "api_families": [],
+      "normalized_call_names": [],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 0,
+        "branch": 0,
+        "memory": 0,
+        "arithmetic": 0,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 0,
+        "external_callee_count": 0,
+        "internal_callee_count": 0
+      },
+      "function_roles": [],
+      "primary_role": "unknown"
+    },
+    {
+      "name": "section:__DATA:__bss",
+      "entry": "section:__DATA:__bss",
+      "size": 173064,
+      "instr_count": 0,
+      "block_count": 1,
+      "mnemonic_hist": {},
+      "mnemonic_bigrams": {},
+      "strings": [
+        "__DATA:__bss",
+        "data section"
+      ],
+      "constants": [],
+      "called_functions": [],
+      "callers": [],
+      "normalized_strings": [
+        "__data:__bss",
+        "data section"
+      ],
+      "string_categories": [],
+      "constant_buckets": [],
+      "api_families": [],
+      "normalized_call_names": [],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 0,
+        "branch": 0,
+        "memory": 0,
+        "arithmetic": 0,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 0,
+        "external_callee_count": 0,
+        "internal_callee_count": 0
+      },
+      "function_roles": [],
+      "primary_role": "unknown"
+    },
+    {
+      "name": "section:__DATA:__noptrbss",
+      "entry": "section:__DATA:__noptrbss",
+      "size": 55120,
+      "instr_count": 0,
+      "block_count": 1,
+      "mnemonic_hist": {},
+      "mnemonic_bigrams": {},
+      "strings": [
+        "__DATA:__noptrbss",
+        "data section"
+      ],
+      "constants": [],
+      "called_functions": [],
+      "callers": [],
+      "normalized_strings": [
+        "__data:__noptrbss",
+        "data section"
+      ],
+      "string_categories": [],
+      "constant_buckets": [],
+      "api_families": [],
+      "normalized_call_names": [],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 0,
+        "branch": 0,
+        "memory": 0,
+        "arithmetic": 0,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 0,
+        "external_callee_count": 0,
+        "internal_callee_count": 0
+      },
+      "function_roles": [],
+      "primary_role": "unknown"
+    },
+    {
+      "name": "imports:auth",
+      "entry": "imports:auth",
+      "size": 1,
+      "instr_count": 0,
+      "block_count": 1,
+      "mnemonic_hist": {},
+      "mnemonic_bigrams": {},
+      "strings": [
+        "_notify_is_valid_token"
+      ],
+      "constants": [],
+      "called_functions": [
+        {
+          "name": "_notify_is_valid_token",
+          "is_external": true,
+          "entry": null
+        }
+      ],
+      "callers": [],
+      "normalized_strings": [
+        "_notify_is_valid_token"
+      ],
+      "string_categories": [],
+      "constant_buckets": [],
+      "api_families": [
+        "auth"
+      ],
+      "normalized_call_names": [
+        "notify_is_valid_token"
+      ],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 0,
+        "branch": 0,
+        "memory": 0,
+        "arithmetic": 0,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 1,
+        "external_callee_count": 1,
+        "internal_callee_count": 0
+      },
+      "function_roles": [],
+      "primary_role": "unknown"
+    },
+    {
+      "name": "imports:file",
+      "entry": "imports:file",
+      "size": 25,
+      "instr_count": 0,
+      "block_count": 1,
+      "mnemonic_hist": {},
+      "mnemonic_bigrams": {},
+      "strings": [
+        "_fdopendir",
+        "_open",
+        "_openat",
+        "_pread",
+        "_pthread_attr_getstacksize",
+        "_pthread_attr_init",
+        "_pthread_attr_setdetachstate",
+        "_pthread_cond_init",
+        "_pthread_cond_signal",
+        "_pthread_cond_timedwait_relative_np",
+        "_pthread_cond_wait",
+        "_pthread_create",
+        "_pthread_key_create",
+        "_pthread_kill",
+        "_pthread_mutex_init",
+        "_pthread_mutex_lock",
+        "_pthread_mutex_unlock",
+        "_pthread_self",
+        "_pthread_setspecific",
+        "_pthread_sigmask",
+        "_pwrite",
+        "_read",
+        "_readdir_r",
+        "_write",
+        "_writev"
+      ],
+      "constants": [],
+      "called_functions": [
+        {
+          "name": "_fdopendir",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_open",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_openat",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pread",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_attr_getstacksize",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_attr_init",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_attr_setdetachstate",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_cond_init",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_cond_signal",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_cond_timedwait_relative_np",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_cond_wait",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_create",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_key_create",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_kill",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_mutex_init",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_mutex_lock",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_mutex_unlock",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_self",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_setspecific",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_sigmask",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pwrite",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_read",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_readdir_r",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_write",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_writev",
+          "is_external": true,
+          "entry": null
+        }
+      ],
+      "callers": [],
+      "normalized_strings": [
+        "_fdopendir",
+        "_open",
+        "_openat",
+        "_pread",
+        "_pthread_attr_getstacksize",
+        "_pthread_attr_init",
+        "_pthread_attr_setdetachstate",
+        "_pthread_cond_init",
+        "_pthread_cond_signal",
+        "_pthread_cond_timedwait_relative_np",
+        "_pthread_cond_wait",
+        "_pthread_create",
+        "_pthread_key_create",
+        "_pthread_kill",
+        "_pthread_mutex_init",
+        "_pthread_mutex_lock",
+        "_pthread_mutex_unlock",
+        "_pthread_self",
+        "_pthread_setspecific",
+        "_pthread_sigmask",
+        "_pwrite",
+        "_read",
+        "_readdir_r",
+        "_write",
+        "_writev"
+      ],
+      "string_categories": [],
+      "constant_buckets": [],
+      "api_families": [
+        "file"
+      ],
+      "normalized_call_names": [
+        "fdopendir",
+        "open",
+        "openat",
+        "pread",
+        "pthread_attr_getstacksize",
+        "pthread_attr_init",
+        "pthread_attr_setdetachstate",
+        "pthread_cond_init",
+        "pthread_cond_signal",
+        "pthread_cond_timedwait_relative_np",
+        "pthread_cond_wait",
+        "pthread_create",
+        "pthread_key_create",
+        "pthread_kill",
+        "pthread_mutex_init",
+        "pthread_mutex_lock",
+        "pthread_mutex_unlock",
+        "pthread_self",
+        "pthread_setspecific",
+        "pthread_sigmask",
+        "pwrite",
+        "read",
+        "readdir_r",
+        "write",
+        "writev"
+      ],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 0,
+        "branch": 0,
+        "memory": 0,
+        "arithmetic": 0,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 25,
+        "external_callee_count": 25,
+        "internal_callee_count": 0
+      },
+      "function_roles": [
+        "io"
+      ],
+      "primary_role": "io"
+    },
+    {
+      "name": "imports:memory",
+      "entry": "imports:memory",
+      "size": 1,
+      "instr_count": 0,
+      "block_count": 1,
+      "mnemonic_hist": {},
+      "mnemonic_bigrams": {},
+      "strings": [
+        "_freeaddrinfo"
+      ],
+      "constants": [],
+      "called_functions": [
+        {
+          "name": "_freeaddrinfo",
+          "is_external": true,
+          "entry": null
+        }
+      ],
+      "callers": [],
+      "normalized_strings": [
+        "_freeaddrinfo"
+      ],
+      "string_categories": [],
+      "constant_buckets": [],
+      "api_families": [
+        "memory"
+      ],
+      "normalized_call_names": [
+        "freeaddrinfo"
+      ],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 0,
+        "branch": 0,
+        "memory": 0,
+        "arithmetic": 0,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 1,
+        "external_callee_count": 1,
+        "internal_callee_count": 0
+      },
+      "function_roles": [
+        "allocator"
+      ],
+      "primary_role": "allocator"
+    },
+    {
+      "name": "imports:network",
+      "entry": "imports:network",
+      "size": 10,
+      "instr_count": 0,
+      "block_count": 1,
+      "mnemonic_hist": {},
+      "mnemonic_bigrams": {},
+      "strings": [
+        "_accept",
+        "_bind",
+        "_connect",
+        "_listen",
+        "_recvfrom",
+        "_recvmsg",
+        "_sendfile",
+        "_sendmsg",
+        "_sendto",
+        "_socket"
+      ],
+      "constants": [],
+      "called_functions": [
+        {
+          "name": "_accept",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_bind",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_connect",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_listen",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_recvfrom",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_recvmsg",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_sendfile",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_sendmsg",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_sendto",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_socket",
+          "is_external": true,
+          "entry": null
+        }
+      ],
+      "callers": [],
+      "normalized_strings": [
+        "_accept",
+        "_bind",
+        "_connect",
+        "_listen",
+        "_recvfrom",
+        "_recvmsg",
+        "_sendfile",
+        "_sendmsg",
+        "_sendto",
+        "_socket"
+      ],
+      "string_categories": [
+        "path"
+      ],
+      "constant_buckets": [],
+      "api_families": [
+        "network"
+      ],
+      "normalized_call_names": [
+        "accept",
+        "bind",
+        "connect",
+        "listen",
+        "recvfrom",
+        "recvmsg",
+        "sendfile",
+        "sendmsg",
+        "sendto",
+        "socket"
+      ],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 0,
+        "branch": 0,
+        "memory": 0,
+        "arithmetic": 0,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 10,
+        "external_callee_count": 10,
+        "internal_callee_count": 0
+      },
+      "function_roles": [
+        "io"
+      ],
+      "primary_role": "io"
+    },
+    {
+      "name": "imports:other",
+      "entry": "imports:other",
+      "size": 61,
+      "instr_count": 0,
+      "block_count": 1,
+      "mnemonic_hist": {},
+      "mnemonic_bigrams": {},
+      "strings": [
+        "___error",
+        "__exit",
+        "_arc4random_buf",
+        "_chdir",
+        "_chmod",
+        "_chroot",
+        "_clock_gettime",
+        "_close",
+        "_closedir",
+        "_dup",
+        "_dup2",
+        "_faccessat",
+        "_fchdir",
+        "_fchmod",
+        "_fchown",
+        "_fcntl",
+        "_fstat",
+        "_fsync",
+        "_ftruncate",
+        "_getaddrinfo",
+        "_getcwd",
+        "_getpeername",
+        "_getpid",
+        "_getrlimit",
+        "_getsockname",
+        "_getsockopt",
+        "_ioctl",
+        "_issetugid",
+        "_kevent",
+        "_kill",
+        "_kqueue",
+        "_lseek",
+        "_lstat",
+        "_mach_absolute_time",
+        "_mach_timebase_info",
+        "_madvise",
+        "_mkdir",
+        "_mlock",
+        "_mmap",
+        "_munmap"
+      ],
+      "constants": [],
+      "called_functions": [
+        {
+          "name": "___error",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "__exit",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_arc4random_buf",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_chdir",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_chmod",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_chroot",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_clock_gettime",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_close",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_closedir",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_dup",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_dup2",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_faccessat",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fchdir",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fchmod",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fchown",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fcntl",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fstat",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fsync",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_ftruncate",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_getaddrinfo",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_getcwd",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_getpeername",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_getpid",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_getrlimit",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_getsockname",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_getsockopt",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_ioctl",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_issetugid",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_kevent",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_kill",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_kqueue",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_lseek",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_lstat",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_mach_absolute_time",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_mach_timebase_info",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_madvise",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_mkdir",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_mlock",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_mmap",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_munmap",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pipe",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_ptrace",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_raise",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_rename",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_rmdir",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_setgid",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_setgroups",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_setpgid",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_setrlimit",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_setsid",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_setsockopt",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_setuid",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_shutdown",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_sigaction",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_sigaltstack",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_stat",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_sysctl",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_sysctlbyname",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_unlink",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_usleep",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_xpc_date_create_from_current",
+          "is_external": true,
+          "entry": null
+        }
+      ],
+      "callers": [],
+      "normalized_strings": [
+        "___error",
+        "__exit",
+        "_arc<num>random_buf",
+        "_chdir",
+        "_chmod",
+        "_chroot",
+        "_clock_gettime",
+        "_close",
+        "_closedir",
+        "_dup",
+        "_dup<num>",
+        "_faccessat",
+        "_fchdir",
+        "_fchmod",
+        "_fchown",
+        "_fcntl",
+        "_fstat",
+        "_fsync",
+        "_ftruncate",
+        "_getaddrinfo",
+        "_getcwd",
+        "_getpeername",
+        "_getpid",
+        "_getrlimit",
+        "_getsockname",
+        "_getsockopt",
+        "_ioctl",
+        "_issetugid",
+        "_kevent",
+        "_kill",
+        "_kqueue",
+        "_lseek",
+        "_lstat",
+        "_mach_absolute_time",
+        "_mach_timebase_info",
+        "_madvise",
+        "_mkdir",
+        "_mlock",
+        "_mmap",
+        "_munmap"
+      ],
+      "string_categories": [
+        "bounds",
+        "error"
+      ],
+      "constant_buckets": [],
+      "api_families": [],
+      "normalized_call_names": [
+        "arc4random_buf",
+        "chdir",
+        "chmod",
+        "chroot",
+        "clock_gettime",
+        "close",
+        "closedir",
+        "dup",
+        "dup2",
+        "error",
+        "exit",
+        "faccessat",
+        "fchdir",
+        "fchmod",
+        "fchown",
+        "fcntl",
+        "fstat",
+        "fsync",
+        "ftruncate",
+        "getaddrinfo",
+        "getcwd",
+        "getpeername",
+        "getpid",
+        "getrlimit",
+        "getsockname",
+        "getsockopt",
+        "ioctl",
+        "issetugid",
+        "kevent",
+        "kill",
+        "kqueue",
+        "lseek",
+        "lstat",
+        "mach_absolute_time",
+        "mach_timebase_info",
+        "madvise",
+        "mkdir",
+        "mlock",
+        "mmap",
+        "munmap",
+        "pipe",
+        "ptrace",
+        "raise",
+        "rename",
+        "rmdir",
+        "setgid",
+        "setgroups",
+        "setpgid",
+        "setrlimit",
+        "setsid",
+        "setsockopt",
+        "setuid",
+        "shutdown",
+        "sigaction",
+        "sigaltstack",
+        "stat",
+        "sysctl",
+        "sysctlbyname",
+        "unlink",
+        "usleep",
+        "xpc_date_create_from_current"
+      ],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 0,
+        "branch": 0,
+        "memory": 0,
+        "arithmetic": 0,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 61,
+        "external_callee_count": 61,
+        "internal_callee_count": 0
+      },
+      "function_roles": [
+        "validator"
+      ],
+      "primary_role": "validator"
+    },
+    {
+      "name": "imports:process",
+      "entry": "imports:process",
+      "size": 3,
+      "instr_count": 0,
+      "block_count": 1,
+      "mnemonic_hist": {},
+      "mnemonic_bigrams": {},
+      "strings": [
+        "_execve",
+        "_fork",
+        "_wait4"
+      ],
+      "constants": [],
+      "called_functions": [
+        {
+          "name": "_execve",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fork",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_wait4",
+          "is_external": true,
+          "entry": null
+        }
+      ],
+      "callers": [],
+      "normalized_strings": [
+        "_execve",
+        "_fork",
+        "_wait<num>"
+      ],
+      "string_categories": [],
+      "constant_buckets": [],
+      "api_families": [
+        "process"
+      ],
+      "normalized_call_names": [
+        "execve",
+        "fork",
+        "wait4"
+      ],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 0,
+        "branch": 0,
+        "memory": 0,
+        "arithmetic": 0,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 3,
+        "external_callee_count": 3,
+        "internal_callee_count": 0
+      },
+      "function_roles": [
+        "dispatcher"
+      ],
+      "primary_role": "dispatcher"
+    },
+    {
+      "name": "imports:string",
+      "entry": "imports:string",
+      "size": 1,
+      "instr_count": 0,
+      "block_count": 1,
+      "mnemonic_hist": {},
+      "mnemonic_bigrams": {},
+      "strings": [
+        "_gai_strerror"
+      ],
+      "constants": [],
+      "called_functions": [
+        {
+          "name": "_gai_strerror",
+          "is_external": true,
+          "entry": null
+        }
+      ],
+      "callers": [],
+      "normalized_strings": [
+        "_gai_strerror"
+      ],
+      "string_categories": [
+        "error"
+      ],
+      "constant_buckets": [],
+      "api_families": [
+        "string"
+      ],
+      "normalized_call_names": [
+        "gai_strerror"
+      ],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 0,
+        "branch": 0,
+        "memory": 0,
+        "arithmetic": 0,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 1,
+        "external_callee_count": 1,
+        "internal_callee_count": 0
+      },
+      "function_roles": [
+        "validator"
+      ],
+      "primary_role": "validator"
+    },
+    {
+      "name": "__binary__",
+      "entry": "binary",
+      "size": 10997522,
+      "instr_count": 12000,
+      "block_count": 1,
+      "mnemonic_hist": {
+        "umlal2.4s": 1,
+        "ldpsw": 1,
+        "eon": 26,
+        "tbz": 152,
+        "ldrb": 370,
+        "cbz": 217,
+        "ldrh": 88,
+        "cbnz": 143,
+        "subs": 5,
+        "ldr": 2461,
+        "udf": 578,
+        "cmp": 648,
+        "b.ls": 138,
+        "str": 866,
+        "stur": 124,
+        "sub": 320,
+        "bl": 648,
+        "ldur": 246,
+        "ret": 501,
+        "stp": 220,
+        "mov": 1113,
+        "ldp": 209,
+        "nop": 413,
+        "b.hi": 63,
+        "b.lo": 36,
+        "neg": 24,
+        "and": 321,
+        "b.lt": 8,
+        "movk": 17,
+        "b.ne": 207,
+        "tbnz": 69,
+        "asr": 14,
+        "cset": 73,
+        "adrp": 323,
+        "strb": 89,
+        "orr": 117,
+        "b.le": 13,
+        "b.ge": 23,
+        "b.hs": 30,
+        "lsl": 40,
+        "adr": 4,
+        "eor": 85,
+        "b.eq": 57,
+        "csel": 64,
+        "rev": 4,
+        "cneg": 3,
+        "cinc": 2,
+        "ands": 2,
+        "dup.16b": 3,
+        "eor.8b": 2,
+        "ld1.16b": 3,
+        "cmeq.16b": 6,
+        "and.16b": 9,
+        "addp.16b": 5,
+        "uaddlv.16b": 1,
+        "mov.d": 6,
+        "ld1.2d": 2,
+        "cmeq.2d": 4,
+        "ldurh": 1,
+        "dup.4s": 1,
+        "adds": 1,
+        "lsr": 76,
+        "orr.16b": 1,
+        "addp.2d": 1,
+        "rbit": 44,
+        "clz": 46,
+        "ldrsb": 49,
+        "tst": 51,
+        "ubfx": 25,
+        "ubfiz": 4,
+        "br": 8,
+        "sturh": 2,
+        "csinc": 2,
+        "ldrsw": 2,
+        "mrs": 1,
+        "msr": 1,
+        "ldar": 10,
+        "stlr": 12,
+        "sxtw": 3,
+        "ldaxr": 20,
+        "stlxr": 20,
+        "ldarb": 2,
+        "stlrb": 2,
+        "mvn": 23,
+        "ldaxrb": 2,
+        "stlxrb": 2,
+        "madd": 58,
+        "mul": 75,
+        "umulh": 4,
+        "udiv": 1,
+        "blr": 44,
+        "strh": 32,
+        "fmov": 2,
+        "cnt.8b": 1,
+        "uaddlv.8b": 1,
+        "b.gt": 6,
+        "cmn": 2,
+        "bic": 1,
+        "msub": 1,
+        "ld4r.4s": 3,
+        "ld1.4s": 1,
+        "ld1r.4s": 1,
+        "add.4s": 41,
+        "eor.16b": 35,
+        "mov.16b": 8,
+        "rev32.8h": 8,
+        "shl.4s": 16,
+        "sri.4s": 16,
+        "tbl.16b": 8,
+        "st1.16b": 4,
+        "fcmp": 2
+      },
+      "mnemonic_bigrams": {},
+      "strings": [
+        "Go build ID: \"q2hY0YtN-3sB8ybJE-Jt/lTAkhEBRMc6ciKECGT99/v4LxqxBLF5Kp8ufaXZSy/i1U1wlGtqaV9Xjh3JxSr\"",
+        "hfx)",
+        "`@9D",
+        "d@9&d@9",
+        "Te`@9",
+        "6cd@9",
+        "`@9f`@9",
+        "d@9cd@9c",
+        "`@9f`@9",
+        "d@9cd@9c",
+        "`@9f`@9",
+        "d@9cd@9c",
+        "`D9$`D9",
+        "dD9$dD9",
+        "$@x%$@x",
+        "P@9?",
+        "P@9#",
+        "\\@9c",
+        "P@9b",
+        "T@xa",
+        "d@y 8@",
+        "P@9c",
+        "T`xa",
+        "P@9c",
+        "d@y?",
+        "Ii'8",
+        "(i'8",
+        "ci(8C",
+        "Dhd8",
+        "P@9#",
+        "P@9?",
+        "P@9#",
+        "P@9?",
+        "P@9#",
+        "P@9?",
+        "P@9#",
+        "P@9?",
+        "P@9#",
+        "P@9?",
+        "P@9#",
+        "P@9?",
+        "`K;9",
+        "Ta,@",
+        "6Dha",
+        "eha8e",
+        "6ghf",
+        "6fhe",
+        "\\@9C",
+        "D\\@9",
+        "T!0@",
+        "T!0@",
+        "T!0@",
+        "yB<C",
+        "T@<C",
+        "6Lih",
+        "6Lih",
+        "Ch&8",
+        "6nii",
+        "TB<C",
+        "@yD<@",
+        "T$(@",
+        "6fhe",
+        "ehb8E",
+        "6hhg",
+        "6bha",
+        "6+ij",
+        "6\"ia",
+        "6Dha",
+        "hb8h",
+        "hc8f",
+        "?7F,@",
+        "G@yw",
+        "T#0@",
+        "T#0@",
+        "T#0@",
+        "6'ig",
+        "6dhb",
+        "6'ig",
+        "Dh#8",
+        "fh`8g2",
+        "(hd8i2",
+        "T(h`8",
+        "T(hi8",
+        "a @9;Q",
+        "d\\@9D",
+        "yB<@",
+        "y!<@",
+        "9Axa",
+        "TeT@9",
+        "#B9B",
+        "#B9!",
+        "@9{R",
+        "@9{R",
+        "B0@yA",
+        "cB9b",
+        "cB9A",
+        "a#$9",
+        "4dD@",
+        ",i(8",
+        "/i.8",
+        "/i.8",
+        "qj#8c",
+        "j#8nP",
+        "qj#8c",
+        "j#8nP",
+        "+B9i",
+        "g@9{",
+        "B\\@9B",
+        "fhax'",
+        "eh`x&",
+        "he8d@",
+        "w@9g",
+        "T!<A",
+        "\\y_@",
+        "Ch`8",
+        "dx`x",
+        "Cd@y",
+        "Ed@y",
+        "yCd@y",
+        "?@yj",
+        ";@yO",
+        "d@y?",
+        "T+=@",
+        "d@y_",
+        "TL=@",
+        "c@9<",
+        "a@yK",
+        "ax`x",
+        "TL=@",
+        "c@9g",
+        "dGu9",
+        "dCu9",
+        "4bx`",
+        "P@9e",
+        "7$P@9d",
+        "TeP@9e",
+        "fP@9f",
+        "gP@9g",
+        "dP@9d",
+        "yA<C",
+        "P@9c",
+        "\"hb8_",
+        "@9D!",
+        "C@9Y",
+        "T\"d@y%",
+        "bhb8@",
+        "bCu9",
+        "bCu9",
+        "`@yB$",
+        "#d@y_",
+        "bCu9",
+        "T#d@y$",
+        "ah`8 Q",
+        "TBxc",
+        "G@@9",
+        "TBx`",
+        "Texa",
+        "TBxd",
+        "9ddP",
+        "TadM",
+        "*BxC",
+        "*cxE",
+        "l]@9",
+        "T\"d@",
+        "T\"h@",
+        "T\"l@",
+        "T\"p@",
+        "T\"t@",
+        "T\"x@",
+        "T\"|@",
+        "\\@9c",
+        "d\\@9",
+        "dd@y",
+        "x7d`@y",
+        "TdP@9d",
+        "P@9b",
+        "P@9b",
+        "\\@9B",
+        "bd@y",
+        "eP@9e",
+        "e`@y",
+        "Ah 8",
+        "Te|@",
+        "fCu9",
+        "4#x@",
+        "`G<9",
+        "4\"x@",
+        "9\"$I",
+        "B#@9",
+        "cCu9",
+        "4Cx@",
+        "h!8%",
+        "h%8e",
+        "B#@9",
+        "AC@9D",
+        "4\"x@",
+        "4Cx@",
+        "TDx`",
+        "TCx`",
+        "TDx`",
+        "h$8C",
+        "A9jt",
+        "T#T@",
+        "Tcxf",
+        "Tixi",
+        "7*Y@",
+        "E@@9",
+        "TB|@",
+        "eCu9",
+        "cCu9",
+        "bCu9",
+        "cCu9",
+        "hCu9",
+        "if8f",
+        "7g @",
+        "N9C\"",
+        "h'@)",
+        "TBxc",
+        "Ti`@y",
+        "Ti @",
+        "hf8B<M",
+        "Taxd",
+        "$hc8B<M",
+        "9\"0I",
+        "Tex`",
+        "cCu9",
+        "cCu9",
+        "cCu9",
+        "TB@@",
+        "*c|@",
+        "*c|@",
+        "bCu9",
+        "4 D@",
+        "p@9!",
+        "TEx`",
+        "T;@@",
+        "C@9h",
+        "@9!h",
+        ";@yBdP",
+        "y!<@",
+        "T\"8a",
+        "T  a",
+        "@9 P",
+        "s@9 P",
+        "s@9 P",
+        "TgX@",
+        "fCu9",
+        "9b4@",
+        "fGu9",
+        "4f$@",
+        "f`@y",
+        "jd@y",
+        "fd@y",
+        "@yL=@",
+        "fCu9&",
+        "`d@y&",
+        "4$d@y",
+        "gd@y",
+        "Tg(D",
+        "9Jif8",
+        "hf8G",
+        "fd@y",
+        "g`@y",
+        "4f4@",
+        "gGu9",
+        "gCu9",
+        "@@9l",
+        "C@9>",
+        "d@y_",
+        "bCu9",
+        "bCu9",
+        "C#@9",
+        "9B\\@",
+        "9Axa",
+        "T\"8@",
+        "iCu9",
+        "bCu9",
+        "T'xg",
+        "@9 P",
+        "cCu9",
+        "hc8O",
+        "TA 7",
+        "aGu9a",
+        "cCu9",
+        "g@9K",
+        "!x`xa4",
+        "`d@y",
+        "d@y\"`",
+        "bd@yd",
+        "T`x`",
+        "cGu9",
+        "cCu9",
+        "5%X@",
+        "T\" 7",
+        "TBxe",
+        "9edP",
+        "TadM",
+        "c@9o",
+        "TBx`",
+        "9`dP",
+        "TadM",
+        "C@9}",
+        "Te@@9",
+        "Tb@@9_",
+        "TBxd",
+        "9ddP",
+        "TadM",
+        "T$@@9",
+        "T#@@9",
+        "A9{@@",
+        "T{@@",
+        "9c0@",
+        "TBxc",
+        "9c0@",
+        "TAx`",
+        "T1yj",
+        "T{@@",
+        "9f0@",
+        "T_T@",
+        "T_T@",
+        "TH4G",
+        "TD4G",
+        "T;@@",
+        "7A|A",
+        "TFx$",
+        "9G#@",
+        "TAx`",
+        "cA9B",
+        "g@9N",
+        "4D8@",
+        "4Dp@",
+        "a;|9",
+        "4hxd",
+        "4$D@",
+        "4b,@",
+        "c#{9",
+        "c@D9",
+        "C\\@9c",
+        "!d@y <",
+        "C@98",
+        "Te@@9",
+        "Td@@9",
+        "T$x`",
+        "9`dP",
+        "T`dM",
+        "Te@@9",
+        "Tb@@9_",
+        "TBx`",
+        "Tdd@",
+        "5c|@",
+        "T@(`",
+        "h 8#",
+        "b;|9B",
+        "4Dxc",
+        "4hxd",
+        "`C;9",
+        ":9y?",
+        "b#$9",
+        "a;|9a",
+        "cCu9",
+        "c@9Y",
+        "B9?X",
+        "cA9d",
+        "4 x@",
+        "A#@9D",
+        "#A9D",
+        "cCu9",
+        "aCu9",
+        "Tgx`",
+        "bCu9",
+        "T h@",
+        "a;|9",
+        "4$|A",
+        "fCu9",
+        "TDx`",
+        "4#|A",
+        "bCu9",
+        "b;|9",
+        "cA96#",
+        "cCu9",
+        "4A\\@",
+        "yAtB",
+        "dLD9",
+        "dCu9",
+        "bLD9",
+        "aCu9",
+        "9ax@",
+        "5!@D9A",
+        "b;|9B",
+        "5Cd@",
+        "B0D9B",
+        "G@9M",
+        "cCu9c",
+        "TCh@",
+        "C0D9c",
+        "bCu9",
+        "cCu9c",
+        "0D9h",
+        "h'@)?",
+        "C0D9c"
+      ],
+      "constants": [],
+      "called_functions": [
+        {
+          "name": "___error",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "__exit",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_accept",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_arc4random_buf",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_bind",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_chdir",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_chmod",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_chroot",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_clock_gettime",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_close",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_closedir",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_connect",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_dup",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_dup2",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_execve",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_faccessat",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fchdir",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fchmod",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fchown",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fcntl",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fdopendir",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fork",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_freeaddrinfo",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fstat",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fsync",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_ftruncate",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_gai_strerror",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_getaddrinfo",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_getcwd",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_getpeername",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_getpid",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_getrlimit",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_getsockname",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_getsockopt",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_ioctl",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_issetugid",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_kevent",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_kill",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_kqueue",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_listen",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_lseek",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_lstat",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_mach_absolute_time",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_mach_timebase_info",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_madvise",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_mkdir",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_mlock",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_mmap",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_munmap",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_notify_is_valid_token",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_open",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_openat",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pipe",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pread",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_attr_getstacksize",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_attr_init",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_attr_setdetachstate",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_cond_init",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_cond_signal",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_cond_timedwait_relative_np",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_cond_wait",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_create",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_key_create",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_kill",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_mutex_init",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_mutex_lock",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_mutex_unlock",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_self",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_setspecific",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pthread_sigmask",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_ptrace",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_pwrite",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_raise",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_read",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_readdir_r",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_recvfrom",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_recvmsg",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_rename",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_rmdir",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_sendfile",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_sendmsg",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_sendto",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_setgid",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_setgroups",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_setpgid",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_setrlimit",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_setsid",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_setsockopt",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_setuid",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_shutdown",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_sigaction",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_sigaltstack",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_socket",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_stat",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_sysctl",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_sysctlbyname",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_unlink",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_usleep",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_wait4",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_write",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_writev",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_xpc_date_create_from_current",
+          "is_external": true,
+          "entry": null
+        }
+      ],
+      "callers": [],
+      "normalized_strings": [
+        "!d@y <",
+        "!x`xa<num>",
+        "\"hb<num>_",
+        "#a<num>d",
+        "#b<num>!",
+        "#b<num>b",
+        "#d@y_",
+        "$@x%$@x",
+        "$hc<num>b<m",
+        "(hd<num>i<num>",
+        "(i'<num>",
+        "*bxc",
+        "*cxe",
+        "*c|@",
+        "+b<num>i",
+        ",i(<num>",
+        "/i.<num>",
+        ":<num>y?",
+        ";@ybdp",
+        ";@yo",
+        "<num> d@",
+        "<num> x@",
+        "<num>!@d<num>a",
+        "<num>\"$i",
+        "<num>\"<num>i",
+        "<num>\"ia",
+        "<num>\"x@",
+        "<num>#x@",
+        "<num>#|a",
+        "<num>$d@",
+        "<num>$d@y",
+        "<num>$p@<num>d",
+        "<num>$|a",
+        "<num>%x@",
+        "<num>'ig",
+        "<num>*y@",
+        "<num>+ij",
+        "<num>`dp",
+        "<num>a\\@",
+        "<num>ax@",
+        "<num>axa",
+        "<num>a|a",
+        "<num>b,@",
+        "<num>b<num>@",
+        "<num>b\\@",
+        "<num>bha",
+        "<num>bx`",
+        "<num>c<num>@",
+        "<num>cd@",
+        "<num>cd@<num>",
+        "<num>cx@",
+        "<num>c|@",
+        "<num>d<num>@",
+        "<num>d<num>h",
+        "<num>dd@",
+        "<num>ddp",
+        "<num>dha",
+        "<num>dhb",
+        "<num>dp@",
+        "<num>dxc",
+        "<num>edp",
+        "<num>f$@",
+        "<num>f<num>@",
+        "<num>fhe",
+        "<num>g @",
+        "<num>g#@",
+        "<num>ghf",
+        "<num>hhg",
+        "<num>hxd",
+        "<num>jif<num>",
+        "<num>lih",
+        "<num>nii",
+        "?<num>f,@",
+        "?@yj",
+        "@<num> p",
+        "@<num>!h",
+        "@<num>d!",
+        "@<num>{r",
+        "@@<num>l",
+        "@yd<@",
+        "@yl=@",
+        "\\@<num>b",
+        "\\@<num>c",
+        "\\y_@",
+        "`@<num>d",
+        "`@<num>f`@<num>",
+        "`@yb$",
+        "`c;<num>",
+        "`d<num>$`d<num>",
+        "`d@y",
+        "`d@y&",
+        "`g<<num>",
+        "`k;<num>",
+        "a @<num>;q",
+        "a#$<num>",
+        "a#@<num>d",
+        "a;|<num>",
+        "a;|<num>a",
+        "a<num>jt",
+        "a<num>{@@",
+        "a@yk",
+        "ac@<num>d",
+        "acu<num>",
+        "agu<num>a",
+        "ah <num>",
+        "ah`<num> q",
+        "ax`x",
+        "b#$<num>",
+        "b#@<num>",
+        "b;|<num>",
+        "b;|<num>b",
+        "b<num>?x",
+        "b<num>@ya",
+        "b<num>d<num>b",
+        "b\\@<num>b",
+        "bcu<num>",
+        "bd@y",
+        "bd@yd",
+        "bhb<num>@",
+        "bld<num>",
+        "c#@<num>",
+        "c#{<num>",
+        "c<num>d<num>c",
+        "c@<num>",
+        "c@<num><",
+        "c@<num>>",
+        "c@<num>g",
+        "c@<num>h",
+        "c@<num>o",
+        "c@<num>y",
+        "c@<num>}",
+        "c@d<num>",
+        "c\\@<num>c",
+        "ca<num>#",
+        "ca<num>b",
+        "ca<num>d",
+        "cb<num>a",
+        "cb<num>b",
+        "ccu<num>",
+        "ccu<num>c",
+        "cd@y",
+        "cgu<num>",
+        "ch&<num>",
+        "ch`<num>",
+        "ci(<num>c",
+        "d@<num>&d@<num>",
+        "d@<num>cd@<num>c",
+        "d@y <num>@",
+        "d@y\"`",
+        "d@y?",
+        "d@y_",
+        "d\\@<num>",
+        "d\\@<num>d",
+        "dcu<num>",
+        "dd<num>$dd<num>",
+        "dd@y",
+        "dgu<num>",
+        "dh#<num>",
+        "dhd<num>",
+        "dld<num>",
+        "dp@<num>d",
+        "dx`x",
+        "e@@<num>",
+        "e`@y",
+        "ecu<num>",
+        "ed@y",
+        "eh`x&",
+        "eha<num>e",
+        "ehb<num>e",
+        "ep@<num>e",
+        "f`@y",
+        "fcu<num>",
+        "fcu<num>&",
+        "fd@y",
+        "fgu<num>",
+        "fh`<num>g<num>",
+        "fhax'",
+        "fp@<num>f",
+        "g@<num>k",
+        "g@<num>m",
+        "g@<num>n",
+        "g@<num>{",
+        "g@@<num>",
+        "g@yw",
+        "g`@y",
+        "gcu<num>",
+        "gd@y",
+        "ggu<num>",
+        "go build id: \"q<num>hy<num>ytn-<num>sb<num>ybje-jt/ltakhebrmc<num>cikecgt<num>/v<num>lxqxblf<num>kp<num>ufaxzsy/i<num>u<num>wlgtqav<num>xjh<num>jxsr\"",
+        "gp@<num>g",
+        "h <num>#",
+        "h!<num>%",
+        "h$<num>c",
+        "h%<num>e",
+        "h'@)",
+        "h'@)?",
+        "hb<num>h",
+        "hc<num>f",
+        "hc<num>o",
+        "hcu<num>",
+        "he<num>d@",
+        "hf<num>b<m",
+        "hf<num>g",
+        "hfx)",
+        "icu<num>",
+        "if<num>f",
+        "ii'<num>",
+        "j#<num>np",
+        "jd@y",
+        "l]@<num>",
+        "n<num>c\"",
+        "p@<num>!",
+        "p@<num>#",
+        "p@<num>?",
+        "p@<num>b",
+        "p@<num>c",
+        "p@<num>e",
+        "qj#<num>c",
+        "s@<num> p",
+        "t a",
+        "t h@",
+        "t!<a",
+        "t!<num>@",
+        "t\" <num>",
+        "t\"<num>@",
+        "t\"<num>a",
+        "t\"d@",
+        "t\"d@y%",
+        "t\"h@",
+        "t\"l@",
+        "t\"p@",
+        "t\"t@",
+        "t\"x@",
+        "t\"|@",
+        "t#<num>@",
+        "t#@@<num>",
+        "t#d@y$",
+        "t#t@",
+        "t$(@",
+        "t$@@<num>",
+        "t$x`",
+        "t'xg",
+        "t(h`<num>",
+        "t(hi<num>",
+        "t+=@",
+        "t;@@",
+        "t<num>yj",
+        "t@(`",
+        "t@<c",
+        "t@xa",
+        "t_t@",
+        "t`dm",
+        "t`x`",
+        "t`xa",
+        "ta <num>",
+        "ta,@",
+        "tadm",
+        "tax`",
+        "taxd",
+        "tb<c",
+        "tb@@",
+        "tb@@<num>_",
+        "tbx`",
+        "tbxc",
+        "tbxd",
+        "tbxe",
+        "tb|@",
+        "tch@",
+        "tcx`",
+        "tcxf",
+        "td<num>g",
+        "td@@<num>",
+        "tdd@",
+        "tdp@<num>d",
+        "tdx`",
+        "te@@<num>",
+        "te`@<num>",
+        "tep@<num>e",
+        "tet@<num>",
+        "tex`",
+        "texa",
+        "te|@",
+        "tfx$",
+        "tg(d",
+        "tgx@",
+        "tgx`",
+        "th<num>g",
+        "ti @",
+        "ti`@y",
+        "tixi",
+        "tl=@",
+        "t{@@",
+        "w@<num>g",
+        "x<num>d`@y",
+        "y!<@",
+        "ya<c",
+        "yatb",
+        "yb<@",
+        "yb<c",
+        "ycd@y"
+      ],
+      "string_categories": [
+        "format",
+        "path"
+      ],
+      "constant_buckets": [],
+      "api_families": [
+        "auth",
+        "file",
+        "memory",
+        "network",
+        "process",
+        "string"
+      ],
+      "normalized_call_names": [
+        "accept",
+        "arc4random_buf",
+        "bind",
+        "chdir",
+        "chmod",
+        "chroot",
+        "clock_gettime",
+        "close",
+        "closedir",
+        "connect",
+        "dup",
+        "dup2",
+        "error",
+        "execve",
+        "exit",
+        "faccessat",
+        "fchdir",
+        "fchmod",
+        "fchown",
+        "fcntl",
+        "fdopendir",
+        "fork",
+        "freeaddrinfo",
+        "fstat",
+        "fsync",
+        "ftruncate",
+        "gai_strerror",
+        "getaddrinfo",
+        "getcwd",
+        "getpeername",
+        "getpid",
+        "getrlimit",
+        "getsockname",
+        "getsockopt",
+        "ioctl",
+        "issetugid",
+        "kevent",
+        "kill",
+        "kqueue",
+        "listen",
+        "lseek",
+        "lstat",
+        "mach_absolute_time",
+        "mach_timebase_info",
+        "madvise",
+        "mkdir",
+        "mlock",
+        "mmap",
+        "munmap",
+        "notify_is_valid_token",
+        "open",
+        "openat",
+        "pipe",
+        "pread",
+        "pthread_attr_getstacksize",
+        "pthread_attr_init",
+        "pthread_attr_setdetachstate",
+        "pthread_cond_init",
+        "pthread_cond_signal",
+        "pthread_cond_timedwait_relative_np",
+        "pthread_cond_wait",
+        "pthread_create",
+        "pthread_key_create",
+        "pthread_kill",
+        "pthread_mutex_init",
+        "pthread_mutex_lock",
+        "pthread_mutex_unlock",
+        "pthread_self",
+        "pthread_setspecific",
+        "pthread_sigmask",
+        "ptrace",
+        "pwrite",
+        "raise",
+        "read",
+        "readdir_r",
+        "recvfrom",
+        "recvmsg",
+        "rename",
+        "rmdir",
+        "sendfile",
+        "sendmsg",
+        "sendto",
+        "setgid",
+        "setgroups",
+        "setpgid",
+        "setrlimit",
+        "setsid",
+        "setsockopt",
+        "setuid",
+        "shutdown",
+        "sigaction",
+        "sigaltstack",
+        "socket",
+        "stat",
+        "sysctl",
+        "sysctlbyname",
+        "unlink",
+        "usleep",
+        "wait4",
+        "write",
+        "writev",
+        "xpc_date_create_from_current"
+      ],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 701,
+        "branch": 2363,
+        "memory": 5988,
+        "arithmetic": 448,
+        "logic": 466
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 102,
+        "external_callee_count": 102,
+        "internal_callee_count": 0
+      },
+      "function_roles": [
+        "allocator",
+        "formatter",
+        "io",
+        "memory_heavy"
+      ],
+      "primary_role": "allocator"
+    }
+  ],
+  "feature_schema": "patchtriage.v2",
+  "source_metadata": {
+    "path": "/Users/marty/patchdiff-cli/corpus/yq/yq-v4.49.1-darwin-arm64",
+    "size": 10997522,
+    "mtime": 1773939724
+  },
+  "analysis_profile": "light",
+  "classification": {
+    "path": "/Users/marty/patchdiff-cli/corpus/yq/yq-v4.49.1-darwin-arm64",
+    "format": "macho",
+    "arch": "unknown",
+    "language": "unknown",
+    "size_bytes": 10997522,
+    "symbolized": false,
+    "text_symbol_count": 0,
+    "challenging": true,
+    "recommended_profile": "fast",
+    "reasons": [
+      "large binary (10.5 MiB)"
+    ]
+  },
+  "backend": "light"
+}

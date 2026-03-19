@@ -1,0 +1,28 @@
+2026-03-19 15:09:40 INFO  (LoggingInitialization) Using log config file: jar:file:/Users/marty/ghidra_12.0_PUBLIC/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml  
+2026-03-19 15:09:40 INFO  (LoggingInitialization) Using log file: /Users/marty/patchdiff-cli/corpus/jq/results/.ghidra-settings/ghidra/ghidra_12.0_PUBLIC/application.log  
+2026-03-19 15:09:40 INFO  (Preferences) Loading user preferences: /Users/marty/patchdiff-cli/corpus/jq/results/.ghidra-settings/ghidra/ghidra_12.0_PUBLIC/preferences  
+2026-03-19 15:09:40 INFO  (ClassSearcher) Searching for classes...  
+2026-03-19 15:09:42 INFO  (ClassSearcher) Class search complete (2027 ms)  
+2026-03-19 15:09:42 INFO  (SSLContextInitializer) Initializing SSL Context  
+2026-03-19 15:09:42 INFO  (SecureRandomFactory) Initializing Random Number Generator...  
+2026-03-19 15:09:42 INFO  (SecureRandomFactory) Random Number Generator initialization complete: NativePRNGNonBlocking  
+2026-03-19 15:09:42 INFO  (ApplicationTrustManagerFactory) Trust manager disabled, cacerts have not been set  
+2026-03-19 15:09:42 DEBUG (DefaultProjectManager) No tools found; Installing default tools  
+2026-03-19 15:09:42 DEBUG (DefaultProjectManager) 	no recent project directories found  
+2026-03-19 15:09:42 INFO  (DefaultProject) Creating project: /Users/marty/patchdiff-cli/corpus/jq/results/jq-1_ghidra_byeom5p6/jq-1_ghidra/jq-1_ghidra  
+2026-03-19 15:09:44 INFO  (ProgramLoader) Using Loader: Mac OS X Mach-O  
+2026-03-19 15:09:44 INFO  (ProgramLoader) Using Language/Compiler: AARCH64:LE:64:AppleSilicon:default  
+2026-03-19 15:09:44 INFO  (ProgramLoader) Using Library Search Path: [., /System/Library/dyld/dyld_shared_cache_arm64e, /System/Library/dyld/dyld_shared_cache_x86_64, /System/Library/dyld/dyld_shared_cache_x86_64h, /System/Cryptexes/OS/System/Library/dyld/dyld_shared_cache_arm64e, /System/Cryptexes/OS/System/Library/dyld/dyld_shared_cache_x86_64, /System/Cryptexes/OS/System/Library/dyld/dyld_shared_cache_x86_64h, /Users/marty/Library/Java/Extensions, /Library/Java/Extensions, /Network/Library/Java/Extensions, /System/Library/Java/Extensions, /usr/lib/java]  
+2026-03-19 15:09:46 INFO  (ProgramLoader) Additional info:
+Loading file:///Users/marty/patchdiff-cli/corpus/jq/jq-1.7-macos-arm64?MD5=7a8548abfc6b0ff3d0cee73d9efe19ab...
+Discovered 1319 DYLD_CHAINED_PTR_64_OFFSET chained pointers.
+Fixed up 1319 chained pointers.
+------------------------------------------------
+
+Linking the External Programs of 'jq-1.7-macos-arm64' to imported libraries...
+  [/usr/lib/libSystem.B.dylib] -> not found in project
+------------------------------------------------
+
+  
+2026-03-19 15:09:47 INFO  (LocalFileSystem) /jq-1.7-macos-arm64: file created (marty)  
+2026-03-19 15:09:51 INFO  (DecompilerSwitchAnalyzer) hit non-returning function, restarting decompiler switch analyzer later  

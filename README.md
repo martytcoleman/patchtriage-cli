@@ -41,6 +41,36 @@ pip install -e .
 
 ## Usage
 
+### Common Use Cases
+
+Use `PatchTriage` in one of four ways:
+
+1. quick end-to-end triage of two binaries
+2. feature extraction once, then repeated diff/report iteration
+3. fast symbolized-native analysis without Ghidra
+4. coarse fallback analysis on difficult binaries where rich extraction is not practical
+
+Recommended command patterns:
+
+```bash
+# 1. End-to-end triage
+patchtriage run old.bin new.bin -o out
+
+# 2. Stripped binaries
+patchtriage run old.bin new.bin -o out --stripped
+
+# 3. Extract once, then iterate
+patchtriage extract old.bin -o old_features.json
+patchtriage extract new.bin -o new_features.json
+patchtriage diff old_features.json new_features.json -o diff.json --stripped
+patchtriage report diff.json
+
+# 4. Force a backend explicitly
+patchtriage run old.bin new.bin -o out --backend native
+patchtriage run old.bin new.bin -o out --backend ghidra
+patchtriage run old.bin new.bin -o out --backend light
+```
+
 ### Fastest End-to-End Path
 
 ```bash
@@ -77,8 +107,16 @@ Extraction profiles:
 Extraction backends:
 
 - `--backend ghidra`: full Ghidra-backed extraction
+- `--backend native`: function-level extraction from `nm` and `objdump` for symbolized native binaries
 - `--backend light`: coarse non-Ghidra extraction using system tools such as `file`, `nm`, `strings`, `otool`, and `objdump`
-- `--backend auto`: choose `light` for likely Go/Rust binaries, otherwise `ghidra`
+- `--backend auto`: choose `native` for symbolized native binaries, `light` for likely Go/Rust binaries, and `ghidra` otherwise
+
+Backend selection guidance:
+
+- use `auto` by default
+- use `native` when the binary has usable text symbols and you want a fast CLI workflow
+- use `ghidra` when the binary is stripped and you want richer structural extraction
+- use `light` when Ghidra is too slow, too noisy, or likely to fail on the target
 
 This runs Ghidra's `analyzeHeadless` with a custom Jython script (`ghidra_scripts/extract_features.py`) that extracts per-function:
 
@@ -90,6 +128,16 @@ This runs Ghidra's `analyzeHeadless` with a custom Jython script (`ghidra_script
 - **CFG metrics** — basic block count, instruction count, function body size
 - **Caller list** — which functions call this one
 
+The `native` backend avoids Ghidra entirely on symbolized binaries. It reconstructs function-level features from:
+
+- `nm` text symbols
+- `objdump` disassembly
+- symbol-stub calls
+- literal-pool strings
+- immediate constants
+
+It is less precise than Ghidra on difficult stripped binaries, but it is much faster and more reliable when symbols are available.
+
 ### Step 2: Diff and Match Functions
 
 ```bash
@@ -97,6 +145,12 @@ patchtriage diff features_v1.json features_v2.json -o diff.json
 ```
 
 `diff` prints matching progress plus a short terminal summary of the top changed functions, and writes the full machine-readable diff to disk.
+
+This is the best command for iterative work when extraction is the expensive part:
+
+- re-run `diff` after changing matcher or analyzer logic
+- keep the same feature JSONs
+- avoid rerunning Ghidra unnecessarily
 
 **Matching algorithm:**
 
@@ -113,7 +167,8 @@ patchtriage diff features_v1.json features_v2.json -o diff.json
    | Mnemonic histogram | 0.14 | Cosine similarity |
    | Instruction groups | 0.08 | Cosine similarity |
    | Mnemonic bigrams | 0.05 | Jaccard on bigram sets |
-   | API families | 0.06 | Jaccard similarity |
+   | API families | 0.05 | Jaccard similarity |
+   | Function roles | 0.06 | Jaccard similarity |
    | Constant buckets | 0.04 | Jaccard similarity |
    | Callgraph context | 0.05 | Ratio similarity |
    | Size / blocks | 0.05 | min/max penalty |
@@ -130,6 +185,18 @@ patchtriage diff features_v1.json features_v2.json -o diff.json
 - Compare/branch instruction density changes (proxy for new validation checks)
 - **Interestingness score** — weighted combination of all change signals
 
+PatchTriage also infers coarse function roles such as:
+
+- `parser`
+- `validator`
+- `formatter`
+- `logger`
+- `allocator`
+- `io`
+- `dispatcher`
+
+Those roles are used both for matching and for triage de-noising. In practice, this helps suppress large families of formatter/logging churn that would otherwise crowd the review queue on stripped binaries.
+
 ### Step 3: Generate Report
 
 ```bash
@@ -137,6 +204,8 @@ patchtriage report diff.json --html
 ```
 
 `report` prints the triaged review queue to the terminal and also writes Markdown/HTML output files.
+
+The report view intentionally collapses repeated low-information families so the review queue stays readable on large stripped binaries. The underlying JSON is not truncated.
 
 Applies **triage heuristics** and generates a ranked Markdown report (and optional HTML).
 
@@ -155,6 +224,8 @@ Each function receives:
 - **triage_label**: `security_fix_likely`, `security_fix_possible`, `behavior_change`, `refactor`, `unchanged`, or `unknown`
 - **rationale**: Bullet-point explanations for the label
 - **confidence**: 0.0–1.0 score based on accumulated heuristic evidence
+
+The CLI shows this heuristic rationale even when `--llm` is not enabled.
 
 ### Step 4: LLM-Powered Vulnerability Analysis
 
@@ -237,7 +308,21 @@ Suggested metrics:
 
 `jq` is a small C command-line JSON processor with official release binaries and a documented security-fix release. The official jq site states that `jq 1.7.1` was released on December 13, 2023 and includes fixes for `CVE-2023-50246` and `CVE-2023-50268`.
 
-If you want a real-world patch-triage run outside the default fast test suite:
+The repository now keeps reusable example binaries under `corpus/`:
+
+- `corpus/open_source/`
+- `corpus/jq/`
+- `corpus/yq/`
+
+For example:
+
+```bash
+patchtriage run corpus/open_source/server_v1 corpus/open_source/server_v2 -o out --backend auto
+patchtriage run corpus/jq/jq-1.7-macos-arm64 corpus/jq/jq-1.7.1-macos-arm64 -o out --stripped
+patchtriage run corpus/yq/yq-v4.48.2-darwin-arm64 corpus/yq/yq-v4.49.1-darwin-arm64 -o out --backend auto --stripped
+```
+
+If you want a scripted real-world `jq` patch-triage run outside the default fast test suite:
 
 ```bash
 scripts/run_jq_real_world.sh
@@ -279,6 +364,30 @@ What writes files:
 - `report`: Markdown/HTML plus triaged JSON
 - `run`: feature JSONs, diff JSON, Markdown/HTML, final report JSON
 
+### Viewing Full Output
+
+Terminal and Markdown reports may collapse repeated low-information families to keep large results readable. Nothing is discarded from the machine-readable diff.
+
+To inspect the full uncollapsed result set, use the JSON output directly:
+
+```bash
+patchtriage diff old_features.json new_features.json -o diff.json --stripped
+jq '.functions[] | {name_a, name_b, interestingness, triage_label}' diff.json
+```
+
+Useful inspection examples:
+
+```bash
+# Show every function entry
+jq '.functions[]' diff.json
+
+# Show only likely security-relevant entries
+jq '.functions[] | select(.triage_label | startswith("security_fix"))' diff_triaged.json
+
+# Show the highest-interest raw entries without report collapsing
+jq '.functions | sort_by(-.interestingness) | .[:20] | .[] | {name_a, name_b, interestingness}' diff.json
+```
+
 ## Reliability Notes
 
 PatchTriage is most useful as a triage tool, not as a complete semantic decompiler. The goal is to help answer:
@@ -288,6 +397,7 @@ PatchTriage is most useful as a triage tool, not as a complete semantic decompil
 Current strengths:
 
 - native CLI binaries with conventional function boundaries
+- symbolized native binaries using the `native` backend
 - stripped binaries where coarse structural matching is still possible
 - repeated workflows where cached feature reuse avoids rerunning Ghidra
 
@@ -300,10 +410,12 @@ Current weak spots:
 Adaptive behavior:
 
 - PatchTriage performs a cheap pre-scan before extraction
-- likely Go/Rust or large binaries default to `--profile fast`
-- small conventional native binaries default to `--profile full`
+- symbolized conventional native binaries can default to the `native` backend
+- likely Go/Rust or large difficult binaries can default to the `light` backend
+- stripped or harder binaries still fall back to Ghidra when richer structural extraction is needed
 - cached feature reuse avoids rerunning extraction on repeated CLI use
 - `--backend auto` can route likely Go/Rust binaries to the light backend instead of forcing full Ghidra extraction
+- `--backend auto` can route symbolized native binaries to the native backend instead of forcing Ghidra
 
 Light backend characteristics:
 
@@ -311,6 +423,13 @@ Light backend characteristics:
 - much coarser than Ghidra-backed extraction
 - focuses on imports, import-family groupings, strings, available text symbols, section layout, and cheap disassembly-derived mnemonic summaries
 - intended to provide a useful fallback, not identical fidelity
+
+Native backend characteristics:
+
+- function-level rather than section-level output
+- fast enough for ordinary CLI use on symbolized binaries
+- avoids the Ghidra startup and analyzer bottleneck
+- best suited for C/C++ style binaries where exported text symbols are present
 
 What the light backend still gives you:
 

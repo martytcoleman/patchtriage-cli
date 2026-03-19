@@ -81,3 +81,19 @@ def test_match_in_stripped_mode_uses_non_name_signals():
     feat_b = {"functions": [fb], "binary": "b"}
     result = match_functions(feat_a, feat_b, threshold=0.2, stripped=True)
     assert result["num_matches"] == 1
+
+
+def test_uncertain_match_flag_set_when_alternatives_are_close():
+    fa1 = _make_func("FUN_A1", size=100, strings=["same"], calls=["printf"])
+    fa2 = _make_func("FUN_A2", size=100, strings=["same"], calls=["printf"])
+    fb1 = _make_func("FUN_B1", size=100, strings=["same"], calls=["printf"])
+    fb2 = _make_func("FUN_B2", size=100, strings=["same"], calls=["printf"])
+    result = match_functions(
+        {"functions": [fa1, fa2], "binary": "a"},
+        {"functions": [fb1, fb2], "binary": "b"},
+        threshold=0.2,
+        stripped=True,
+        uncertain_gap=0.2,
+    )
+    assert result["num_matches"] == 2
+    assert any(match["uncertain"] for match in result["matches"])

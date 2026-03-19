@@ -32,6 +32,18 @@ INSTR_GROUPS: dict[str, tuple[str, ...]] = {
     "logic": ("and", "or", "xor", "not", "shl", "shr", "sar"),
 }
 
+ROLE_NAME_RULES: dict[str, tuple[str, ...]] = {
+    "parser": ("parse", "decode", "lex", "scan", "token", "read_", "load_"),
+    "validator": ("valid", "check", "verify", "guard", "sanitize"),
+    "formatter": ("format", "print", "render", "dump", "show"),
+    "logger": ("log", "trace", "debug", "warn", "error"),
+    "allocator": ("alloc", "free", "malloc", "realloc", "new", "delete"),
+    "io": ("read", "write", "open", "close", "send", "recv", "file", "http"),
+    "dispatcher": ("main", "dispatch", "handle", "route", "process"),
+    "codec": ("compress", "decompress", "encode", "decode", "hash", "seqstore"),
+    "benchmark": ("bench", "bmk", "lorem", "datagen", "trace"),
+}
+
 
 def normalize_symbol(name: str) -> str:
     """Normalize symbol names across common compiler / platform variants."""
@@ -99,6 +111,41 @@ def mnemonic_groups(hist: dict[str, int]) -> dict[str, int]:
     return grouped
 
 
+def infer_function_roles(func: dict) -> list[str]:
+    """Infer coarse functional roles from names, strings, APIs, and instruction mix."""
+    roles = set()
+    name = normalize_symbol(func.get("name", ""))
+    api_families = set(func.get("api_families", []))
+    categories = set(func.get("string_categories", []))
+    calls = set(func.get("normalized_call_names", []))
+    strings = set(func.get("normalized_strings", []))
+    instr = func.get("instruction_groups", {})
+
+    for role, markers in ROLE_NAME_RULES.items():
+        if any(marker in name for marker in markers):
+            roles.add(role)
+
+    if "validation" in api_families or {"error", "bounds"} & categories:
+        roles.add("validator")
+    if "format" in categories or "string" in api_families and any("%" in s for s in strings):
+        roles.add("formatter")
+    if "file" in api_families or "network" in api_families or "http" in categories or "path" in categories:
+        roles.add("io")
+    if "memory" in api_families:
+        roles.add("allocator")
+    if any(call in {"printf", "fprintf", "puts", "putchar", "snprintf", "sprintf"} for call in calls):
+        roles.add("formatter")
+    if any(call in {"syslog", "fprintf", "perror"} for call in calls) and {"error", "format"} & categories:
+        roles.add("logger")
+    if any(tag in name for tag in ("compress", "decompress", "deflate", "inflate", "huf", "fse", "zstd")):
+        roles.add("codec")
+    if instr.get("compare", 0) >= 2 and instr.get("branch", 0) >= 2 and ("validator" in roles or "parser" in roles):
+        roles.add("control_heavy")
+    if instr.get("memory", 0) >= 8 and "allocator" in roles:
+        roles.add("memory_heavy")
+    return sorted(roles)
+
+
 def enrich_function_features(func: dict) -> dict:
     """Return a shallow copy of func with derived normalized features added."""
     enriched = dict(func)
@@ -136,5 +183,7 @@ def enrich_function_features(func: dict) -> dict:
         "external_callee_count": sum(1 for c in calls if c.get("is_external")),
         "internal_callee_count": sum(1 for c in calls if not c.get("is_external")),
     }
+    roles = infer_function_roles(enriched)
+    enriched["function_roles"] = roles
+    enriched["primary_role"] = roles[0] if roles else "unknown"
     return enriched
-

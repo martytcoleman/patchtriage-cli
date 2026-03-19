@@ -4,6 +4,65 @@ from __future__ import annotations
 from datetime import datetime
 
 
+def collapse_low_information_families(funcs: list[dict]) -> tuple[list[dict], list[dict]]:
+    """Keep one representative for repeated low-information families."""
+    families: dict[tuple, list[dict]] = {}
+    passthrough: list[dict] = []
+    for func in funcs:
+        sig = _collapse_signature(func)
+        if sig is None:
+            passthrough.append(func)
+            continue
+        families.setdefault(sig, []).append(func)
+
+    collapsed = list(passthrough)
+    summary = []
+    for group in families.values():
+        group.sort(key=lambda item: item.get("interestingness", 0), reverse=True)
+        rep = dict(group[0])
+        if len(group) > 1:
+            rep["collapsed_similar_count"] = len(group) - 1
+            rep["collapsed_similar_names"] = [item["name_a"] for item in group[1:6]]
+            summary.append({
+                "representative": rep["name_a"],
+                "count": len(group),
+                "label": rep.get("triage_label", "unknown"),
+            })
+        collapsed.append(rep)
+
+    collapsed.sort(
+        key=lambda func: (
+            0 if func.get("triage_label", "").startswith("security_fix") else 1,
+            -func.get("interestingness", 0),
+        )
+    )
+    return collapsed, summary
+
+
+def _collapse_signature(func: dict) -> tuple | None:
+    label = func.get("triage_label", "unknown")
+    if label.startswith("security_fix"):
+        return None
+    signals = func.get("signals", {})
+    if signals.get("ext_calls_added") or signals.get("ext_calls_removed"):
+        return None
+    cats = tuple(sorted(signals.get("string_categories_added", [])))
+    strings = tuple(sorted(_shorten(s, 48) for s in signals.get("strings_added", [])[:1]))
+    if cats and set(cats) - {"format"}:
+        return None
+    if signals.get("api_families_added") or signals.get("api_families_removed"):
+        return None
+    if signals.get("constants_added") or signals.get("constants_removed"):
+        return None
+    return (
+        label,
+        cats,
+        strings,
+        len(signals.get("calls_added", [])),
+        len(signals.get("calls_removed", [])),
+    )
+
+
 def _shorten(text: str, limit: int = 100) -> str:
     text = text.replace("\n", "\\n")
     return text if len(text) <= limit else text[: limit - 3] + "..."
@@ -106,8 +165,9 @@ def generate_markdown(diff_data: dict, top_n: int = 30) -> str:
     # Top changed functions
     funcs = diff_data.get("functions", [])
     interesting = [f for f in funcs if f.get("interestingness", 0) > 0]
+    display_funcs, collapsed_summary = collapse_low_information_families(interesting)
     security_queue = [
-        f for f in interesting
+        f for f in display_funcs
         if f.get("triage_label") in ("security_fix_likely", "security_fix_possible", "behavior_change")
     ]
 
@@ -118,12 +178,25 @@ def generate_markdown(diff_data: dict, top_n: int = 30) -> str:
             f"{i}. `{func['name_a']}` {_label_badge(func.get('triage_label', 'unknown'))} "
             f"(score {func.get('interestingness', 0)})"
         )
+        if func.get("collapsed_similar_count"):
+            lines.append(
+                f"   Similar low-information changes collapsed: {func['collapsed_similar_count']}"
+            )
     lines.append("")
 
-    lines.append(f"## Top {min(top_n, len(interesting))} Changed Functions")
+    if collapsed_summary:
+        lines.append("## Collapsed Families")
+        lines.append("")
+        for item in collapsed_summary[:10]:
+            lines.append(
+                f"- `{item['representative']}` represents {item['count']} similar `{item['label']}` changes"
+            )
+        lines.append("")
+
+    lines.append(f"## Top {min(top_n, len(display_funcs))} Changed Functions")
     lines.append("")
 
-    for i, func in enumerate(interesting[:top_n]):
+    for i, func in enumerate(display_funcs[:top_n]):
         label = func.get("triage_label", "unknown")
         badge = _label_badge(label)
         confidence = func.get("triage_confidence", 0)
@@ -133,6 +206,15 @@ def generate_markdown(diff_data: dict, top_n: int = 30) -> str:
         if func["name_a"] != func["name_b"]:
             lines.append(f"  Matched to: `{func['name_b']}`")
         lines.append("")
+        if func.get("collapsed_similar_count"):
+            lines.append(
+                f"**Collapsed similar changes:** {func['collapsed_similar_count']}"
+            )
+            if func.get("collapsed_similar_names"):
+                lines.append(
+                    f"**Examples:** {', '.join(f'`{name}`' for name in func['collapsed_similar_names'])}"
+                )
+            lines.append("")
 
         # LLM vulnerability classification (if present)
         if func.get("llm_vuln_class"):
@@ -155,6 +237,9 @@ def generate_markdown(diff_data: dict, top_n: int = 30) -> str:
         if func.get("uncertain"):
             lines.append("- **Match uncertain** (close alternatives exist)")
         lines.append(f"- **Triage confidence:** {confidence}")
+        roles = sorted(set(func.get("roles_a", [])) | set(func.get("roles_b", [])))
+        if roles:
+            lines.append(f"- **Inferred roles:** {', '.join(roles)}")
         lines.append(f"- **Size:** {signals.get('size_a', '?')} -> {signals.get('size_b', '?')} ({signals.get('size_delta_pct', 0):+.1f}%)")
         lines.append(f"- **Blocks:** {signals.get('blocks_a', '?')} -> {signals.get('blocks_b', '?')} ({signals.get('blocks_delta', 0):+d})")
         lines.append(f"- **Instructions:** {signals.get('instr_a', '?')} -> {signals.get('instr_b', '?')} ({signals.get('instr_delta', 0):+d})")

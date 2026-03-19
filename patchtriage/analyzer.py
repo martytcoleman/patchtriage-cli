@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from .features import enrich_feature_set
 from .normalize import normalize_symbol
 
 
@@ -224,11 +225,87 @@ def _adjust_interestingness(raw_score: float, func_a: dict, func_b: dict, signal
     ])
     if auto_named and only_internal_churn:
         return round(min(raw_score, 1.5), 2)
+    roles_a = set(func_a.get("function_roles", []))
+    roles_b = set(func_b.get("function_roles", []))
+    roles = roles_a | roles_b
+    format_only = roles and roles <= {"formatter", "logger"}
+    semantic_evidence = any([
+        signals.get("ext_calls_added"),
+        signals.get("ext_calls_removed"),
+        signals.get("api_families_added"),
+        signals.get("string_categories_added"),
+        signals.get("compare_delta", 0) > 0,
+    ])
+    if format_only and not semantic_evidence:
+        return round(min(raw_score, 1.2), 2)
     return raw_score
+
+
+def _repeat_structure_signature(signals: dict) -> tuple | None:
+    """Return a coarse signature for repetitive low-information structural churn."""
+    string_categories_added = set(signals.get("string_categories_added", []))
+    strings_added = signals.get("strings_added", [])
+    format_only_string = (
+        len(strings_added) <= 1
+        and string_categories_added <= {"format"}
+    )
+    has_semantic_evidence = any([
+        signals.get("strings_added"),
+        signals.get("strings_removed"),
+        signals.get("ext_calls_added"),
+        signals.get("ext_calls_removed"),
+        signals.get("api_families_added"),
+        signals.get("api_families_removed"),
+        signals.get("string_categories_added"),
+        signals.get("string_categories_removed"),
+        signals.get("constants_added"),
+        signals.get("constants_removed"),
+        signals.get("constant_buckets_added"),
+        signals.get("constant_buckets_removed"),
+    ])
+    if has_semantic_evidence and not format_only_string:
+        return None
+    if signals.get("compare_delta", 0) > 1:
+        return None
+    return (
+        tuple(sorted(string_categories_added)),
+        tuple(sorted(s[:32] for s in strings_added[:1])),
+        round(signals.get("size_delta_pct", 0), 1),
+        signals.get("blocks_delta", 0),
+        signals.get("instr_delta", 0),
+        signals.get("branch_delta", 0),
+        signals.get("compare_delta", 0),
+        len(signals.get("calls_added", [])),
+        len(signals.get("calls_removed", [])),
+    )
+
+
+def _repeat_family_signature(signals: dict) -> tuple | None:
+    """Return a broader family signature for repeated low-value change clusters."""
+    if signals.get("ext_calls_added") or signals.get("ext_calls_removed"):
+        return None
+    if signals.get("api_families_added") or signals.get("api_families_removed"):
+        return None
+    if signals.get("constants_added") or signals.get("constants_removed"):
+        return None
+    if signals.get("constant_buckets_added") or signals.get("constant_buckets_removed"):
+        return None
+    cats = tuple(sorted(signals.get("string_categories_added", [])))
+    if cats and set(cats) - {"format"}:
+        return None
+    strings = tuple(sorted(s[:48] for s in signals.get("strings_added", [])[:1]))
+    return (
+        cats,
+        strings,
+        len(signals.get("calls_added", [])),
+        len(signals.get("calls_removed", [])),
+    )
 
 
 def analyze_diff(features_a: dict, features_b: dict, match_data: dict) -> dict:
     """Analyze all matched functions and produce ranked change data."""
+    features_a = enrich_feature_set(features_a)
+    features_b = enrich_feature_set(features_b)
     # Build lookup by entry address
     idx_a = {f["entry"]: f for f in features_a["functions"]}
     idx_b = {f["entry"]: f for f in features_b["functions"]}
@@ -262,12 +339,44 @@ def analyze_diff(features_a: dict, features_b: dict, match_data: dict) -> dict:
             "name_b": m["name_b"],
             "entry_a": m["entry_a"],
             "entry_b": m["entry_b"],
+            "roles_a": fa.get("function_roles", []),
+            "roles_b": fb.get("function_roles", []),
             "match_score": m["score"],
             "match_method": m["method"],
             "uncertain": m.get("uncertain", False),
             "interestingness": interest,
             "signals": signals,
         })
+
+    signature_counts: dict[tuple, int] = {}
+    family_counts: dict[tuple, int] = {}
+    for item in analyzed:
+        sig = _repeat_structure_signature(item["signals"])
+        if sig is not None:
+            signature_counts[sig] = signature_counts.get(sig, 0) + 1
+        family_sig = _repeat_family_signature(item["signals"])
+        if family_sig is not None:
+            family_counts[family_sig] = family_counts.get(family_sig, 0) + 1
+
+    for item in analyzed:
+        sig = _repeat_structure_signature(item["signals"])
+        if sig is None:
+            count = 0
+        else:
+            count = signature_counts.get(sig, 0)
+            if count >= 8:
+                item["interestingness"] = min(item["interestingness"], 1.1)
+            elif count >= 4:
+                item["interestingness"] = min(item["interestingness"], 1.4)
+            elif count == 3:
+                item["interestingness"] = min(item["interestingness"], 2.2)
+        family_sig = _repeat_family_signature(item["signals"])
+        if family_sig is not None:
+            family_count = family_counts.get(family_sig, 0)
+            if family_count >= 6:
+                item["interestingness"] = min(item["interestingness"], 1.6)
+            elif family_count >= 4:
+                item["interestingness"] = min(item["interestingness"], 2.0)
 
     # Sort by interestingness descending
     analyzed.sort(key=lambda x: x["interestingness"], reverse=True)

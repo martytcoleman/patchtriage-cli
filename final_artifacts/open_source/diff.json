@@ -1,0 +1,406 @@
+{
+  "binary_a": "/Users/marty/patchdiff-cli/targets/open_source/server_v1",
+  "binary_b": "/Users/marty/patchdiff-cli/targets/open_source/server_v2",
+  "total_matches": 8,
+  "unmatched_a": [
+    "_log_request"
+  ],
+  "unmatched_b": [
+    "_parse_content_length",
+    "_validate_path"
+  ],
+  "functions": [
+    {
+      "name_a": "_parse_http_request",
+      "name_b": "_parse_http_request",
+      "entry_a": "1000006d0",
+      "entry_b": "10000094c",
+      "match_score": 0.7067,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 61.1,
+      "signals": {
+        "size_a": 456,
+        "size_b": 788,
+        "size_delta": 332,
+        "size_delta_pct": 72.8,
+        "blocks_a": 24,
+        "blocks_b": 37,
+        "blocks_delta": 13,
+        "instr_a": 114,
+        "instr_b": 197,
+        "instr_delta": 83,
+        "strings_added": [
+          "Body too large: %d bytes (max %d)\n",
+          "Incomplete body: expected %d, got %zu\n",
+          "Rejecting request: bad Content-Length\n",
+          "Request too large: %zu bytes\n",
+          "Too many headers (max %d)\n"
+        ],
+        "strings_removed": [],
+        "ext_calls_added": [
+          "_fprintf",
+          "_fwrite",
+          "_strlen",
+          "_strncpy"
+        ],
+        "ext_calls_removed": [
+          "_atoi",
+          "_strcpy"
+        ],
+        "calls_added": [
+          "_fprintf",
+          "_fwrite",
+          "_strlen",
+          "_strncpy",
+          "named:parse_content_length"
+        ],
+        "calls_removed": [
+          "_atoi",
+          "_strcpy"
+        ],
+        "constants_added": [],
+        "constants_removed": [],
+        "constant_buckets_added": [],
+        "constant_buckets_removed": [],
+        "api_families_added": [],
+        "api_families_removed": [],
+        "string_categories_added": [],
+        "string_categories_removed": [],
+        "branch_delta": 20,
+        "compare_delta": 6
+      }
+    },
+    {
+      "name_a": "_parse_request_line",
+      "name_b": "_parse_request_line",
+      "entry_a": "10000050c",
+      "entry_b": "100000680",
+      "match_score": 0.5568,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 38.7,
+      "signals": {
+        "size_a": 196,
+        "size_b": 340,
+        "size_delta": 144,
+        "size_delta_pct": 73.5,
+        "blocks_a": 5,
+        "blocks_b": 12,
+        "blocks_delta": 7,
+        "instr_a": 49,
+        "instr_b": 85,
+        "instr_delta": 36,
+        "strings_added": [
+          "..",
+          "Invalid path length: %zu\n",
+          "Path traversal detected\n",
+          "Request path too long: %d bytes\n"
+        ],
+        "strings_removed": [],
+        "ext_calls_added": [
+          "_fprintf",
+          "_fwrite",
+          "_strncpy",
+          "_strstr"
+        ],
+        "ext_calls_removed": [
+          "___strcpy_chk"
+        ],
+        "calls_added": [
+          "_fprintf",
+          "_fwrite",
+          "_strncpy",
+          "_strstr"
+        ],
+        "calls_removed": [
+          "___strcpy_chk"
+        ],
+        "constants_added": [],
+        "constants_removed": [],
+        "constant_buckets_added": [],
+        "constant_buckets_removed": [],
+        "api_families_added": [],
+        "api_families_removed": [],
+        "string_categories_added": [],
+        "string_categories_removed": [],
+        "branch_delta": 7,
+        "compare_delta": 2
+      }
+    },
+    {
+      "name_a": "_url_decode",
+      "name_b": "_url_decode",
+      "entry_a": "1000005e8",
+      "entry_b": "1000007d8",
+      "match_score": 0.6428,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 22.3,
+      "signals": {
+        "size_a": 232,
+        "size_b": 372,
+        "size_delta": 140,
+        "size_delta_pct": 60.3,
+        "blocks_a": 17,
+        "blocks_b": 23,
+        "blocks_delta": 6,
+        "instr_a": 58,
+        "instr_b": 93,
+        "instr_delta": 35,
+        "strings_added": [
+          "URL decode: output buffer too small\n"
+        ],
+        "strings_removed": [],
+        "ext_calls_added": [
+          "___stack_chk_fail",
+          "_fwrite"
+        ],
+        "ext_calls_removed": [],
+        "calls_added": [
+          "___stack_chk_fail",
+          "_fwrite"
+        ],
+        "calls_removed": [],
+        "constants_added": [],
+        "constants_removed": [],
+        "constant_buckets_added": [],
+        "constant_buckets_removed": [],
+        "api_families_added": [],
+        "api_families_removed": [],
+        "string_categories_added": [],
+        "string_categories_removed": [],
+        "branch_delta": 4,
+        "compare_delta": 3
+      }
+    },
+    {
+      "name_a": "entry",
+      "name_b": "entry",
+      "entry_a": "100000a0c",
+      "entry_b": "100000dd0",
+      "match_score": 0.8344,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 21.2,
+      "signals": {
+        "size_a": 412,
+        "size_b": 216,
+        "size_delta": -196,
+        "size_delta_pct": -47.6,
+        "blocks_a": 22,
+        "blocks_b": 8,
+        "blocks_delta": -14,
+        "instr_a": 103,
+        "instr_b": 54,
+        "instr_delta": -49,
+        "strings_added": [
+          "=== mini_server v2.0 ==="
+        ],
+        "strings_removed": [
+          "=== mini_server v1.0 ==="
+        ],
+        "ext_calls_added": [],
+        "ext_calls_removed": [
+          "_putchar",
+          "_strtol"
+        ],
+        "calls_added": [
+          "matched:_url_decode"
+        ],
+        "calls_removed": [
+          "_putchar",
+          "_strtol"
+        ],
+        "constants_added": [],
+        "constants_removed": [],
+        "constant_buckets_added": [],
+        "constant_buckets_removed": [],
+        "api_families_added": [],
+        "api_families_removed": [],
+        "string_categories_added": [],
+        "string_categories_removed": [],
+        "branch_delta": -15,
+        "compare_delta": -3
+      }
+    },
+    {
+      "name_a": "_parse_header_line",
+      "name_b": "_parse_header_line",
+      "entry_a": "10000048c",
+      "entry_b": "10000048c",
+      "match_score": 0.8484,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 15.3,
+      "signals": {
+        "size_a": 124,
+        "size_b": 168,
+        "size_delta": 44,
+        "size_delta_pct": 35.5,
+        "blocks_a": 6,
+        "blocks_b": 7,
+        "blocks_delta": 1,
+        "instr_a": 31,
+        "instr_b": 42,
+        "instr_delta": 11,
+        "strings_added": [],
+        "strings_removed": [],
+        "ext_calls_added": [
+          "_strlen",
+          "_strncpy"
+        ],
+        "ext_calls_removed": [
+          "_strcpy"
+        ],
+        "calls_added": [
+          "_strlen",
+          "_strncpy"
+        ],
+        "calls_removed": [
+          "_strcpy"
+        ],
+        "constants_added": [],
+        "constants_removed": [],
+        "constant_buckets_added": [],
+        "constant_buckets_removed": [],
+        "api_families_added": [],
+        "api_families_removed": [],
+        "string_categories_added": [],
+        "string_categories_removed": [],
+        "branch_delta": 1,
+        "compare_delta": 2
+      }
+    },
+    {
+      "name_a": "_format_log_entry",
+      "name_b": "_format_log_entry",
+      "entry_a": "100000460",
+      "entry_b": "100000460",
+      "match_score": 0.82,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 6.5,
+      "signals": {
+        "size_a": 44,
+        "size_b": 44,
+        "size_delta": 0,
+        "size_delta_pct": 0.0,
+        "blocks_a": 1,
+        "blocks_b": 1,
+        "blocks_delta": 0,
+        "instr_a": 11,
+        "instr_b": 11,
+        "instr_delta": 0,
+        "strings_added": [],
+        "strings_removed": [],
+        "ext_calls_added": [
+          "_snprintf"
+        ],
+        "ext_calls_removed": [
+          "_sprintf"
+        ],
+        "calls_added": [
+          "_snprintf"
+        ],
+        "calls_removed": [
+          "_sprintf"
+        ],
+        "constants_added": [],
+        "constants_removed": [],
+        "constant_buckets_added": [],
+        "constant_buckets_removed": [],
+        "api_families_added": [],
+        "api_families_removed": [],
+        "string_categories_added": [],
+        "string_categories_removed": [],
+        "branch_delta": 0,
+        "compare_delta": 0
+      }
+    },
+    {
+      "name_a": "_print_request",
+      "name_b": "_print_request",
+      "entry_a": "1000008cc",
+      "entry_b": "100000c94",
+      "match_score": 0.9064,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 6.5,
+      "signals": {
+        "size_a": 320,
+        "size_b": 316,
+        "size_delta": -4,
+        "size_delta_pct": -1.2,
+        "blocks_a": 8,
+        "blocks_b": 8,
+        "blocks_delta": 0,
+        "instr_a": 80,
+        "instr_b": 79,
+        "instr_delta": -1,
+        "strings_added": [],
+        "strings_removed": [],
+        "ext_calls_added": [
+          "_snprintf"
+        ],
+        "ext_calls_removed": [
+          "___sprintf_chk"
+        ],
+        "calls_added": [
+          "_snprintf"
+        ],
+        "calls_removed": [
+          "___sprintf_chk"
+        ],
+        "constants_added": [],
+        "constants_removed": [],
+        "constant_buckets_added": [],
+        "constant_buckets_removed": [],
+        "api_families_added": [],
+        "api_families_removed": [],
+        "string_categories_added": [],
+        "string_categories_removed": [],
+        "branch_delta": 0,
+        "compare_delta": 0
+      }
+    },
+    {
+      "name_a": "_free_request",
+      "name_b": "_free_request",
+      "entry_a": "100000898",
+      "entry_b": "100000c60",
+      "match_score": 1.0,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 0.0,
+      "signals": {
+        "size_a": 52,
+        "size_b": 52,
+        "size_delta": 0,
+        "size_delta_pct": 0.0,
+        "blocks_a": 3,
+        "blocks_b": 3,
+        "blocks_delta": 0,
+        "instr_a": 13,
+        "instr_b": 13,
+        "instr_delta": 0,
+        "strings_added": [],
+        "strings_removed": [],
+        "ext_calls_added": [],
+        "ext_calls_removed": [],
+        "calls_added": [],
+        "calls_removed": [],
+        "constants_added": [],
+        "constants_removed": [],
+        "constant_buckets_added": [],
+        "constant_buckets_removed": [],
+        "api_families_added": [],
+        "api_families_removed": [],
+        "string_categories_added": [],
+        "string_categories_removed": [],
+        "branch_delta": 0,
+        "compare_delta": 0
+      }
+    }
+  ]
+}

@@ -5,6 +5,8 @@ from __future__ import annotations
 import sys
 import textwrap
 
+from .report import collapse_low_information_families
+
 # ── ANSI color codes ──────────────────────────────────────────────────────────
 
 RESET = "\033[0m"
@@ -192,11 +194,20 @@ def print_report(diff_data: dict, top_n: int = 30):
     # Top changed functions
     funcs = diff_data.get("functions", [])
     interesting = [f for f in funcs if f.get("interestingness", 0) > 0]
-    max_interest = max((f.get("interestingness", 0) for f in interesting), default=1)
+    display_funcs, collapsed_summary = collapse_low_information_families(interesting)
+    max_interest = max((f.get("interestingness", 0) for f in display_funcs), default=1)
 
-    subheader(f"Top {min(top_n, len(interesting))} Changed Functions")
+    if collapsed_summary:
+        subheader("Collapsed Families")
+        for item in collapsed_summary[:8]:
+            print(
+                f"  {_c(DIM, item['representative'])} "
+                f"represents {_c(BOLD, str(item['count']))} similar {label_color(item['label'])} changes"
+            )
 
-    for i, func in enumerate(interesting[:top_n]):
+    subheader(f"Top {min(top_n, len(display_funcs))} Changed Functions")
+
+    for i, func in enumerate(display_funcs[:top_n]):
         label = func.get("triage_label", "unknown")
         signals = func.get("signals", {})
         interest = func.get("interestingness", 0)
@@ -211,6 +222,11 @@ def print_report(diff_data: dict, top_n: int = 30):
 
         if func["name_a"] != func["name_b"]:
             print(f"     {_c(DIM, 'matched to')} {_c(CYAN, func['name_b'])}")
+        if func.get("collapsed_similar_count"):
+            print(
+                f"     {_c(DIM, 'collapsed similar changes:')} "
+                f"{_c(BOLD, str(func['collapsed_similar_count']))}"
+            )
 
         # LLM vuln classification
         if func.get("llm_vuln_class"):
