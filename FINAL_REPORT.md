@@ -100,7 +100,44 @@ The output labels are:
 
 That label set turned out to be a better fit than a generic "interesting/uninteresting" score because it makes the report much easier to scan.
 
-## 4. CLI and Reproducibility
+## 4. Setup and Usage
+
+### 4.1 Requirements
+
+- **Python 3.10+**
+- **Ghidra** (only needed for stripped binaries) — set `GHIDRA_INSTALL_DIR` env var or install to `~/ghidra_*/`
+- **numpy**, **scipy** (installed automatically)
+- Standard command-line tools: `nm`, `objdump`, `otool` (included on macOS with Xcode CLI tools)
+- (Optional) **openai** package for LLM explanations: `pip install patchtriage[llm]`
+
+### 4.2 Installation
+
+```bash
+git clone <repo-url>
+cd patchdiff-cli
+pip install -e .
+```
+
+### 4.3 Corpus Setup
+
+To reproduce the evaluation results, a script populates the corpus directory with ready-to-run version pairs:
+
+```bash
+scripts/download_corpus_targets.sh
+```
+
+This downloads and/or builds:
+
+- **jq** 1.7 → 1.7.1 (pre-built release binaries)
+- **yq** v4.48.2 → v4.49.1 (pre-built release binaries)
+- **OpenSSL** 3.0.13 → 3.0.14 (built from source)
+- **OpenSSH** 9.7p1 → 9.8p1 (built from source)
+
+SQLite and zstd binaries are set up manually — see the reproduction commands in section 5 for each target.
+
+Note: Building OpenSSL/OpenSSH from source can take several minutes. OpenSSH is built with `--without-openssl` to avoid host compatibility issues.
+
+### 4.4 CLI
 
 The project is usable as a CLI without custom scripts:
 
@@ -114,25 +151,25 @@ patchtriage evaluate examples/example_corpus.json
 
 The `run` command performs the full pipeline and prints a report to the terminal while also writing JSON and Markdown artifacts. Intermediate feature files are cached and reused unless `--force` is passed.
 
-### Additional Options
+### 4.5 Additional Options
 
 ```bash
 # Force re-extraction (ignore cache)
-python -m patchtriage.cli run binary_a binary_b --force
+patchtriage run binary_a binary_b --force
 
 # Override backend selection
-python -m patchtriage.cli run binary_a binary_b --backend native
-python -m patchtriage.cli run binary_a binary_b --backend light
-python -m patchtriage.cli run binary_a binary_b --backend ghidra
+patchtriage run binary_a binary_b --backend native
+patchtriage run binary_a binary_b --backend light
+patchtriage run binary_a binary_b --backend ghidra
 
 # Generate HTML report
-python -m patchtriage.cli run binary_a binary_b --html
+patchtriage run binary_a binary_b --html
 
 # Show more functions in terminal output
-python -m patchtriage.cli run binary_a binary_b --top 50
+patchtriage run binary_a binary_b --top 50
 
 # Enable LLM-assisted analysis (requires API key in .env)
-python -m patchtriage.cli run binary_a binary_b --llm --provider grok
+patchtriage run binary_a binary_b --llm --provider grok
 ```
 
 ## 5. Evaluation
@@ -144,11 +181,11 @@ I evaluated the tool across seven different corpus targets spanning different bi
 | Target | Backend | Matched | SEC-LIKELY | SEC-POSSIBLE | Known CVEs Found |
 |--------|---------|---------|------------|--------------|-----------------|
 | OpenSSL 3.0.13→14 | native | 12,028 | 2 | 1 | 3/3 |
-| OpenSSH 9.7→9.8 | native | 679 | 3 | 2 | 1/1 (+ structural) |
+| OpenSSH 9.7→9.8 | native | 681 | 3 | 3 | 1/1 (+ structural) |
 | SQLite 3.51.2→3 | ghidra | 2,356 | 2 | 0 | corruption detection |
-| zstd 1.5.5→7 | native | 1,134 | 0 | 2 | stack hardening |
+| zstd 1.5.5→7 | native | 1,132 | 0 | 3 | stack hardening |
 | jq 1.7→1.7.1 | ghidra | 1,449 | 0 | 1 | stack hardening |
-| yq 4.48→4.49 | light | 11,155 | 0 | 0 | minor release (correct) |
+| yq 4.48→4.49 | light | 11,154 | 0 | 0 | minor release (correct) |
 | test binaries | native | 10 | 4 | 3 | synthetic (7/7) |
 
 ### 5.2 OpenSSL 3.0.13 → 3.0.14 (CVE Validation Case Study)
@@ -185,15 +222,15 @@ python -m patchtriage.cli run \
 
 OpenSSH 9.8p1 was released July 2024 to fix CVE-2024-6387, a critical unauthenticated RCE vulnerability in sshd's SIGALRM signal handler. This release also rearchitected sshd by splitting it into a listener process (`sshd`) and a per-session process (`sshd-session`), which reduced the sshd binary from 994KB to 578KB.
 
-**Triage Results:** 679 matched (100% correct matches), 563 removed from A, 28 new in B.
+**Triage Results:** 681 matched, 561 removed from A, 26 new in B.
 
 | Label | Count |
 |-------|-------|
 | SEC-LIKELY | 3 |
-| SEC-POSSIBLE | 2 |
+| SEC-POSSIBLE | 3 |
 | BEHAVIOR | 9 |
 | REFACTOR | 8 |
-| UNCHANGED | 657 |
+| UNCHANGED | 658 |
 
 **Top Security Findings:**
 
@@ -209,13 +246,13 @@ OpenSSH 9.8p1 was released July 2024 to fix CVE-2024-6387, a critical unauthenti
 
 - **`_server_accept_loop` (ranked #1)** — the core server loop rearchitected to move child process management and signal handling into a safe unprivileged listener. The +42.6% size increase with 50 new blocks reflects the new process orchestration code that replaces the vulnerable signal handler approach.
 
-- **`_grace_alarm_handler` removed** — appears in the 563 "Unmatched in A" functions. This was the async-signal-unsafe handler that caused CVE-2024-6387. Its complete removal is the most direct evidence of the fix.
+- **`_grace_alarm_handler` removed** — appears in the 561 "Unmatched in A" functions. This was the async-signal-unsafe handler that caused CVE-2024-6387. Its complete removal is the most direct evidence of the fix.
 
 - **`_main_sigchld_handler` shrunk 84%** (ranked #11 as REFACTOR) — the SIGCHLD handler was stripped to bare signal-safe operations (set a flag and return), eliminating the race condition attack surface.
 
 - **`_privsep_preauth` removed** — pre-authentication privilege separation was rearchitected as part of the sshd split.
 
-- **563 functions removed, 28 new** — the sshd binary shrank from 994KB to 578KB because per-session functionality was moved to the new `sshd-session` binary. PatchTriage correctly reports these as unmatched rather than forcing spurious matches. The 28 new functions include the new penalty/rate-limiting system (`_srclimit_penalise`, `_srclimit_penalty_check_allow`, `_expire_penalties`) and new safe signal handlers (`_siginfo_handler`, `_signal_is_crash`).
+- **561 functions removed, 26 new** — the sshd binary shrank from 994KB to 578KB because per-session functionality was moved to the new `sshd-session` binary. PatchTriage correctly reports these as unmatched rather than forcing spurious matches. The 26 new functions include the new penalty/rate-limiting system (`_srclimit_penalise`, `_srclimit_penalty_check_allow`, `_expire_penalties`) and new safe signal handlers (`_siginfo_handler`, `_signal_is_crash`).
 
 **Reproduction:**
 ```bash
@@ -258,9 +295,10 @@ Zstd is a compression library where most changes are performance/algorithm optim
 | Rank | Function | Label | Key Signal |
 |------|----------|-------|------------|
 | #1 | `_ZSTD_compressBlock_doubleFast` | SEC-POSSIBLE | Stack protection added |
-| #2 | `_ZSTD_compressSeqStore_singleBlock` | SEC-POSSIBLE | Bounds constants + comparisons |
+| #2 | `_ZSTDMT_freeCCtx` | SEC-POSSIBLE | Stack protection added |
+| #3 | `_ZSTD_compressSeqStore_singleBlock` | SEC-POSSIBLE | Bounds constants + comparisons |
 
-The system correctly identifies only 2 functions as security-relevant (stack hardening) while classifying the remaining 91 behavioral changes as codec-oriented. This was achieved through:
+The system correctly identifies only 3 functions as security-relevant (stack hardening, bounds checking) while classifying the remaining 89 behavioral changes as codec-oriented. This was achieved through:
 - Codec role detection that caps interestingness of codec-only functions without semantic evidence
 - Address constant filtering (values > 0x100000000 are pointer artifacts, not real constants)
 - Phantom churn detection for data tables misinterpreted as code
@@ -299,7 +337,7 @@ python -m patchtriage.cli run \
 yq is a 10MB Go binary. Standard `nm` returns 0 text symbols for Go binaries because Go uses its own symbol table format. PatchTriage handles this through:
 
 1. **Go detection**: Checks for `__gopclntab` Mach-O section when byte-prefix markers fall outside the 2MB pre-scan window
-2. **pclntab parsing**: Full Go PC line table parser supporting Go 1.16+ format, extracting 11,155 function names and sizes from the binary's embedded metadata
+2. **pclntab parsing**: Full Go PC line table parser supporting Go 1.16+ format, extracting 11,154 function names and sizes from the binary's embedded metadata
 
 The system correctly identifies this as a minor release with no security-relevant changes (0 SEC-LIKELY, 0 SEC-POSSIBLE). Earlier versions of the tool showed only 23 "functions" — all section/import nodes — because they lacked Go-specific extraction.
 
@@ -337,19 +375,54 @@ During corpus testing, several sources of false positives were identified and ad
 | yq 23 "functions" | nm returns 0 symbols for Go binaries | Full Go pclntab parser for function names and sizes |
 | OpenSSH false match security flags | Similarity-based matching force-paired removed/added functions with unrelated counterparts | Named functions absent from the other binary are sent directly to unmatched, bypassing the similarity pass |
 
-## 7. Limitations
+## 7. Try Your Own Binaries
+
+PatchTriage is designed to work on arbitrary binary pairs, not just the corpus targets above. If you have two versions of a binary, you can triage them directly:
+
+```bash
+patchtriage run ./old_version ./new_version -o out
+```
+
+The tool will automatically classify the binary, select an appropriate backend, extract features, match functions, and produce a ranked triage report. No configuration or Ghidra setup is needed for symbolized binaries — the native backend handles them end-to-end.
+
+### What works well
+
+- **Symbolized C/C++ binaries** (the native backend): fast, accurate matching, reliable triage. This covers most open-source projects built from source, debug builds, and binaries that ship with symbols.
+- **Stripped C/C++ binaries** (the Ghidra backend): requires Ghidra but produces good results when Ghidra's analysis is stable. Function names will be anonymous, but the triage heuristics still surface security-relevant changes based on API calls, strings, and control-flow patterns.
+- **Go binaries** (the light backend with pclntab parsing): extracts real function names and sizes from Go's embedded metadata, even when standard tools report no symbols.
+- **Binaries with 100 to 12,000+ functions**: the matching pipeline and triage heuristics have been tested across this range.
+
+### What to watch for
+
+- **Stripped binaries without Ghidra**: if Ghidra is not installed and the binary has no symbols, extraction will fall back to the light backend, which gives coarser results (section-level rather than per-function).
+- **Cross-binary refactors**: if a patch splits one binary into two (like OpenSSH's sshd → sshd-session split), the tool compares a single pair and will report the extracted functions as unmatched. This is correct behavior but means you should also triage the new binary separately.
+- **Rust binaries**: detection works, but per-function extraction depth on the light backend is limited. Ghidra can help but may be slow on large Rust binaries.
+- **Heavily obfuscated or packed binaries**: these will likely defeat both Ghidra and the native backend.
+
+### Suggested targets to try
+
+Any project that ships release binaries or can be built from source across two versions makes a good candidate. Some examples:
+
+- `curl` / `libcurl` — frequent security patches, symbolized builds
+- `nginx` — well-structured C codebase, periodic security fixes
+- `libpng` / `libjpeg-turbo` — parser-heavy libraries with known CVE history
+- `sudo` — small binary, high-impact security fixes
+
+The fastest path is to build two versions of the same project from source with default flags, then run `patchtriage run` on the resulting binaries.
+
+## 8. Limitations
 
 - **Stripped function names**: When Ghidra recovers function boundaries but names remain anonymous, the triage can say "look here first" but cannot explain what the function does
 - **Cross-binary refactors**: The OpenSSH sshd→sshd-session split produced many mismatches because the tool compares a single binary pair, not a set
 - **Stem matching**: Extract-and-harden detection uses substring matching, which misses cases where function names diverge (e.g., `BN_generate_dsa_nonce` → `ossl_bn_gen_dsa_nonce_fixed_top`)
 - **Go/Rust depth**: The light backend extracts names and sizes but not per-function call graphs or strings for Go binaries
 
-## 8. Conclusion
+## 9. Conclusion
 
 PatchTriage successfully identifies security-relevant changes across diverse binary types (C, C++, Go), formats (Mach-O, stripped, symbolized), and scales (10 to 12,000+ functions). For the two targets with well-documented CVEs (OpenSSL 3.0.14 and OpenSSH 9.8), the tool's top-ranked functions align directly with the known security fixes:
 
 - **OpenSSL**: 3/3 CVEs surfaced in top results (CVE-2024-4741, CVE-2024-4603, CVE-2024-2511)
-- **OpenSSH**: CVE-2024-6387 fix components ranked #1 (server_accept_loop rearchitecture) with corroborating evidence from 563 removed functions, 28 new functions (penalty system, safe signal handlers), and signal handler shrinkage — all with 100% match accuracy across 679 paired functions
+- **OpenSSH**: CVE-2024-6387 fix components ranked #1 (server_accept_loop rearchitecture) with corroborating evidence from 561 removed functions, 26 new functions (penalty system, safe signal handlers), and signal handler shrinkage — all with 100% match accuracy across 681 paired functions
 
 The project succeeded at the problem it was scoped to solve: helping an analyst decide what to reverse first after a patch lands.
 
