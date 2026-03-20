@@ -27,6 +27,76 @@ def _run_pipeline(binary_a: str, binary_b: str, *,
                   profile: str = "auto",
                   backend: str = "auto"):
     """Core pipeline: extract -> diff -> triage -> (llm) -> report."""
+    binary_a = os.path.abspath(binary_a)
+    binary_b = os.path.abspath(binary_b)
+
+    # Output directory: explicit path persists reports; omitted = temp workspace, terminal-only
+    tmp: tempfile.TemporaryDirectory | None = None
+    if outdir:
+        os.makedirs(outdir, exist_ok=True)
+        workdir = outdir
+        persist_outputs = True
+    else:
+        tmp = tempfile.TemporaryDirectory(prefix="patchtriage_run_")
+        workdir = tmp.name
+        persist_outputs = False
+
+    name_a = Path(binary_a).stem
+    name_b = Path(binary_b).stem
+    # Disambiguate when both binaries have the same stem (e.g. zstd vs zstd)
+    if name_a == name_b:
+        parent_a = Path(binary_a).parent.name or "a"
+        parent_b = Path(binary_b).parent.name or "b"
+        feat_a_path = os.path.join(workdir, f"{name_a}_{parent_a}_features.json")
+        feat_b_path = os.path.join(workdir, f"{name_b}_{parent_b}_features.json")
+    else:
+        feat_a_path = os.path.join(workdir, f"{name_a}_features.json")
+        feat_b_path = os.path.join(workdir, f"{name_b}_features.json")
+    diff_path = os.path.join(workdir, "diff.json")
+
+    try:
+        _run_pipeline_body(
+            binary_a, binary_b,
+            workdir=workdir,
+            persist_outputs=persist_outputs,
+            feat_a_path=feat_a_path,
+            feat_b_path=feat_b_path,
+            diff_path=diff_path,
+            llm=llm,
+            provider=provider,
+            api_key=api_key,
+            top=top,
+            html=html,
+            threshold=threshold,
+            ghidra=ghidra,
+            stripped=stripped,
+            force_extract=force_extract,
+            profile=profile,
+            backend=backend,
+        )
+    finally:
+        if tmp is not None:
+            tmp.cleanup()
+
+
+def _run_pipeline_body(binary_a: str, binary_b: str, *,
+                       workdir: str,
+                       persist_outputs: bool,
+                       feat_a_path: str,
+                       feat_b_path: str,
+                       diff_path: str,
+                       llm: bool = False,
+                       provider: str | None = None,
+                       api_key: str | None = None,
+                       top: int = 30,
+                       html: bool = False,
+                       threshold: float = 0.3,
+                       ghidra: str | None = None,
+                       stripped: bool = False,
+                       force_extract: bool = False,
+                       profile: str = "auto",
+                       backend: str = "auto"):
+    """Inner pipeline after workdir is chosen (shared by run)."""
     from .classify import classify_binary
     from .extract import run_extract
     from .light import run_light_extract
@@ -36,28 +106,6 @@ def _run_pipeline(binary_a: str, binary_b: str, *,
     from .triage import triage_diff
     from .report import generate_markdown, generate_html
     from .console import print_report, _c, DIM, CYAN, BOLD, GREEN, RED
-
-    binary_a = os.path.abspath(binary_a)
-    binary_b = os.path.abspath(binary_b)
-
-    # Determine output directory
-    if outdir:
-        os.makedirs(outdir, exist_ok=True)
-    else:
-        outdir = os.path.dirname(binary_a) or "."
-
-    name_a = Path(binary_a).stem
-    name_b = Path(binary_b).stem
-    # Disambiguate when both binaries have the same stem (e.g. zstd vs zstd)
-    if name_a == name_b:
-        parent_a = Path(binary_a).parent.name or "a"
-        parent_b = Path(binary_b).parent.name or "b"
-        feat_a_path = os.path.join(outdir, f"{name_a}_{parent_a}_features.json")
-        feat_b_path = os.path.join(outdir, f"{name_b}_{parent_b}_features.json")
-    else:
-        feat_a_path = os.path.join(outdir, f"{name_a}_features.json")
-        feat_b_path = os.path.join(outdir, f"{name_b}_features.json")
-    diff_path = os.path.join(outdir, "diff.json")
 
     class_a = classify_binary(binary_a)
     class_b = classify_binary(binary_b)
@@ -101,7 +149,8 @@ def _run_pipeline(binary_a: str, binary_b: str, *,
     print(f"{_c(DIM, 'Analyzing changes...')}")
     diff_data = analyze_diff(feat_a, feat_b, match_data)
 
-    _write_json(diff_path, diff_data)
+    if persist_outputs:
+        _write_json(diff_path, diff_data)
 
     # ── Step 3: Triage ──
     print(f"{_c(DIM, 'Running triage heuristics...')}")
@@ -122,23 +171,35 @@ def _run_pipeline(binary_a: str, binary_b: str, *,
     # ── Print to terminal ──
     print_report(diff_data, top_n=top)
 
-    # ── Write files ──
-    md_path = os.path.join(outdir, "report.md")
-    md = generate_markdown(diff_data, top_n=top)
-    with open(md_path, "w") as f:
-        f.write(md)
-    print(f"{_c(DIM, 'Report written to')} {_c(CYAN, md_path)}")
+    # ── Write files (only when user passed -o/--outdir) ──
+    if persist_outputs:
+        md_path = os.path.join(workdir, "report.md")
+        md = generate_markdown(diff_data, top_n=top)
+        with open(md_path, "w") as f:
+            f.write(md)
+        print(f"{_c(DIM, 'Report written to')} {_c(CYAN, md_path)}")
 
-    if html:
-        html_path = os.path.join(outdir, "report.html")
-        html_content = generate_html(md)
-        with open(html_path, "w") as f:
-            f.write(html_content)
-        print(f"{_c(DIM, 'HTML written to')} {_c(CYAN, html_path)}")
+        if html:
+            html_path = os.path.join(workdir, "report.html")
+            html_content = generate_html(md)
+            with open(html_path, "w") as f:
+                f.write(html_content)
+            print(f"{_c(DIM, 'HTML written to')} {_c(CYAN, html_path)}")
 
-    json_path = os.path.join(outdir, "report.json")
-    _write_json(json_path, diff_data)
-    print(f"{_c(DIM, 'Data written to')} {_c(CYAN, json_path)}")
+        json_path = os.path.join(workdir, "report.json")
+        _write_json(json_path, diff_data)
+        print(f"{_c(DIM, 'Data written to')} {_c(CYAN, json_path)}")
+    else:
+        _terminal_only_hint = (
+            "No --outdir: results printed above only. "
+            "Pass -o DIR to save report.md, report.json, and feature JSON."
+        )
+        print(f"{_c(DIM, _terminal_only_hint)}", flush=True)
+        if html:
+            print(
+                f"{_c(DIM, '--html requires --outdir (-o); no HTML file was written.')}",
+                flush=True,
+            )
 
     return diff_data
 
@@ -311,7 +372,8 @@ def main():
     p_run.add_argument("binary_a", help="Path to binary version A (before)")
     p_run.add_argument("binary_b", help="Path to binary version B (after)")
     p_run.add_argument("-o", "--outdir", default=None,
-                        help="Output directory (default: same dir as binary_a)")
+                        help="Write reports and feature JSON here; if omitted, output is terminal-only "
+                             "(temp workspace is used for extraction and removed afterward)")
     p_run.add_argument("--top", type=int, default=30, help="Number of top functions to show")
     p_run.add_argument("--html", action="store_true", help="Also generate HTML report")
     p_run.add_argument("--llm", action="store_true",

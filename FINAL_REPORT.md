@@ -143,31 +143,15 @@ pip install -e .
 
 ### 4.3 Corpus setup
 
-Most corpus binaries are checked into git under `corpus/` and are ready to use immediately after cloning:
-
-- `corpus/open_source/server_v1`, `server_v2` — synthetic test binaries
-- `corpus/jq/jq-1.7-macos-arm64`, `jq-1.7.1-macos-arm64` — pre-built release binaries
-- `corpus/yq/yq-v4.48.2-darwin-arm64`, `yq-v4.49.1-darwin-arm64` — pre-built release binaries
-- `corpus/openssl/openssl-3.0.13-darwin-arm64`, `openssl-3.0.14-darwin-arm64` — pre-built
-- `corpus/openssh/sshd-9.7p1-darwin-arm64`, `sshd-9.8p1-darwin-arm64` — pre-built
-- `corpus/sqlite/sqlite-tools-osx-arm64-*.zip` — pre-built (need unzip)
-
-SQLite requires unzipping the pre-downloaded archives:
+The corpus binaries are not checked into git directly. A setup script downloads pre-built binaries (jq, yq) and builds the others (OpenSSL, OpenSSH) from source:
 
 ```bash
-cd corpus/sqlite
-unzip -o sqlite-tools-osx-arm64-3510200.zip -d v3510200
-unzip -o sqlite-tools-osx-arm64-3510300.zip -d v3510300
+scripts/download_corpus_targets.sh
 ```
 
-zstd source is checked in but needs building:
+The script detects OS and architecture automatically. Building OpenSSL and OpenSSH from source takes several minutes. The synthetic test binaries (`corpus/open_source/server_v1`, `server_v2`) are the only ones included in the repository directly.
 
-```bash
-cd corpus/zstd/zstd-1.5.5 && make -j && cd ../../..
-cd corpus/zstd/zstd-1.5.7 && make -j && cd ../../..
-```
-
-If you want to re-download or rebuild all targets (e.g., on a different architecture), the script `scripts/download_corpus_targets.sh` handles jq, yq, OpenSSL, and OpenSSH automatically. It detects OS/architecture and downloads or builds as needed. Building OpenSSL/OpenSSH from source takes several minutes.
+SQLite and zstd require additional steps — see `README.md` for details.
 
 ### 4.4 CLI
 
@@ -303,7 +287,7 @@ SQLite distributes pre-built stripped binaries with no debug symbols — from a 
 | #1 | `FUN_100013080` | SEC-LIKELY | Error/validation strings: `"database corruption"` |
 | #2 | `FUN_10004a32c` | SEC-LIKELY | Added `"database corruption"` string, +22.3% |
 
-The functions flagged here have new corruption detection and error handling, which the triage heuristics rank as top priority for review. Without function names, the tool cannot explain what these functions do, but it can point the analyst to the right addresses.
+The functions flagged here have new corruption detection and error handling, which the triage heuristics rank as top priority for review. Without function names, the tool cannot explain what these functions do, but it can point the analyst to the right addresses. Note that Ghidra's function boundary recovery on stripped binaries is slightly nondeterministic — repeated runs may produce small variations in matched counts and labels (typically ±1).
 
 Reproduction:
 ```bash
