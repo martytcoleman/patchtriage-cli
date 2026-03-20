@@ -1,8 +1,10 @@
 # PatchTriage: Adaptive Binary Patch Triage for Likely Security Fixes
 
-Martin Coleman
-Reverse Engineering Basics Final Project
-March 19, 2026
+**Martin Coleman - Reverse Engineering Basics Final Project - March 19, 2026**
+
+GitHub Repository URL: https://github.com/martytcoleman/patchtriage-cli
+
+Demo Video: https://drive.google.com/file/d/1CR4U5G37NhrmVKooBy4Aw_cVsVQYJIw7/view?usp=sharing
 
 ## 1. Overview
 
@@ -31,11 +33,17 @@ I deliberately scoped the project around triage rather than full vulnerability d
 
 BinDiff (Google/Zynamics) is the standard for binary function matching. It uses a multi-pass algorithm (name matching, hash matching, call graph propagation) to produce a function correspondence. Diaphora (Joxean Koret) is an open-source IDA Pro plugin with a similar approach and some vulnerability-related heuristics of its own. Both tools are primarily designed around exhaustive diff exploration — the analyst browses the full correspondence and applies judgment to each entry. DarunGrim and TurboDiff are older tools in the same space.
 
-PatchTriage is aimed at a narrower problem. Rather than presenting a full diff for the analyst to explore manually, it tries to rank the changed functions by how likely they are to matter for security review. The adaptive backend selection (Ghidra, native, light) came out of practical debugging — a single analysis path worked poorly across the full corpus, so I changed the design to choose different extraction strategies for different kinds of binaries.
+PatchTriage is aimed at a narrower problem. Where BinDiff and Diaphora optimize for correspondence exploration — giving the analyst a complete map of what changed — PatchTriage optimizes for analyst attention: which changes should be reviewed first, and why. The contribution is a combination of prioritization with per-function rationale and adaptive extraction that handles different binary types without manual configuration. The adaptive backend selection (Ghidra, native, light) came out of practical debugging — a single analysis path worked poorly across the full corpus, so I changed the design to choose different extraction strategies for different kinds of binaries.
 
 ## 3. System design
 
 PatchTriage has four main stages:
+
+```
+Binary A ──> [Adaptive Extraction] ──> features_A.json ─┐
+                                                         ├──> match + analyze ──> triage ──> report
+Binary B ──> [Adaptive Extraction] ──> features_B.json ─┘
+```
 
 1. extract features from each binary
 2. match functions or coarse nodes across versions
@@ -140,8 +148,8 @@ Each function receives one of five labels: `security_fix_likely`, `security_fix_
 ### 4.2 Installation
 
 ```bash
-git clone <repo-url>
-cd patchdiff-cli
+git clone https://github.com/martytcoleman/patchtriage-cli
+cd patchtriage-cli
 pip install -e .
 ```
 
@@ -196,7 +204,15 @@ patchtriage run binary_a binary_b --llm --provider grok
 
 I evaluated the tool across seven corpus targets spanning different binary formats, languages, sizes, and known security fix profiles.
 
-### 5.1 Results summary
+### 5.1 Evaluation methodology
+
+For targets with published CVEs (OpenSSL 3.0.14, OpenSSH 9.8), I used the official security advisories to identify which functions should appear in the triage output. "CVE alignment" means that the advisory's described behavior (e.g., "excessively long DSA keys") maps to a ranked or unmatched function whose name and change signals are consistent with that description. This mapping is necessarily manual judgment — the advisories describe APIs and behavior, not specific symbol names, so I cross-referenced advisory text with the tool's output to determine whether the right area of the binary was surfaced.
+
+"Label correct" means the triage label assigned to a CVE-aligned function is appropriate: a function implementing a security fix should receive `security_fix_likely` or `security_fix_possible`, not `refactor` or `unchanged`. Match accuracy was verified by manual inspection of cross-name pairings — checking that any function matched to a differently-named counterpart was a plausible rename rather than a coincidental structural match.
+
+For targets without known CVEs (zstd, jq, yq), evaluation focused on whether the label distribution was reasonable given the nature of the release. A minor bugfix release should not produce dozens of SEC-LIKELY flags, and a release with known hardening changes should surface those changes near the top.
+
+### 5.2 Results summary
 
 | Target | Backend | Matched | SEC-LIKELY | SEC-POSSIBLE | Known CVEs Found |
 |--------|---------|---------|------------|--------------|-----------------|
@@ -208,7 +224,7 @@ I evaluated the tool across seven corpus targets spanning different binary forma
 | yq 4.48→4.49 | light | 11,154 | 0 | 0 | minor release (correct) |
 | test binaries | native | 10 | 4 | 3 | synthetic (7/7) |
 
-### 5.2 OpenSSL 3.0.13 → 3.0.14 (CVE validation)
+### 5.3 OpenSSL 3.0.13 → 3.0.14 (CVE validation)
 
 OpenSSL **3.0.14** was released **4 June 2024** with fixes for **three** CVEs, as summarized in the [OpenSSL 3.0 series release notes](https://www.openssl.org/news/openssl-3.0-notes.html) (and `CHANGES.md` in the source tree). This is the clearest evaluation case because those advisories are explicit and the patch is contained in one library pair.
 
@@ -240,7 +256,7 @@ python -m patchtriage.cli run \
     -o corpus/openssl/results
 ```
 
-### 5.3 OpenSSH 9.7p1 → 9.8p1 (CVE-2024-6387 "regreSSHion")
+### 5.4 OpenSSH 9.7p1 → 9.8p1 (CVE-2024-6387 "regreSSHion")
 
 OpenSSH 9.8p1 was released July 2024 to fix CVE-2024-6387, a critical unauthenticated RCE vulnerability in sshd's SIGALRM signal handler. This release also rearchitected sshd by splitting it into a listener process (`sshd`) and a per-session process (`sshd-session`), which reduced the sshd binary from 994KB to 578KB.
 
@@ -284,7 +300,7 @@ python -m patchtriage.cli run \
     -o corpus/openssh/results
 ```
 
-### 5.4 SQLite 3.51.2 → 3.51.3
+### 5.5 SQLite 3.51.2 → 3.51.3
 
 SQLite distributes pre-built stripped binaries with no debug symbols — from a reverse engineering perspective, this is effectively a closed-source target. The tool uses the Ghidra backend to recover function boundaries. Function names remain anonymous (`FUN_<addr>`), but the triage logic still works based on the extracted signals.
 
@@ -309,7 +325,7 @@ python -m patchtriage.cli run \
     --backend ghidra
 ```
 
-### 5.5 Zstandard (zstd) 1.5.5 → 1.5.7
+### 5.6 Zstandard (zstd) 1.5.5 → 1.5.7
 
 Zstd is a compression library where most changes are performance and algorithm optimizations. This tests whether the tool can separate security-relevant changes from codec churn.
 
@@ -335,7 +351,7 @@ python -m patchtriage.cli run \
     -o corpus/zstd/results
 ```
 
-### 5.6 jq 1.7 → 1.7.1
+### 5.7 jq 1.7 → 1.7.1
 
 jq 1.7 to 1.7.1 was a bugfix release. The binary is stripped, requiring the Ghidra backend.
 
@@ -352,7 +368,7 @@ python -m patchtriage.cli run \
     --backend ghidra
 ```
 
-### 5.7 yq v4.48.2 → v4.49.1
+### 5.8 yq v4.48.2 → v4.49.1
 
 yq is a 10MB Go binary. Standard `nm` returns 0 text symbols for Go binaries because Go uses its own symbol table format. This was one of the harder cases to get working. The tool handles it through:
 
@@ -369,7 +385,7 @@ python -m patchtriage.cli run \
     -o corpus/yq/results
 ```
 
-### 5.8 Triage quality: precision and baseline comparison
+### 5.9 Triage quality: precision and baseline comparison
 
 The main argument for the triage layer is that it produces more useful rankings than simpler approaches. To evaluate this, I looked at two things.
 
@@ -380,7 +396,7 @@ Label precision on targets with known CVEs. For OpenSSL 3.0.14 (3 known CVEs) an
 | OpenSSL | Clear alignment for DSA-validation and session-duplication changes; weaker direct symbol-level alignment for `SSL_free_buffers` | Partial — top ranks plus unmatched B | 2/3 clearly aligned at symbol level; third reflected indirectly |
 | OpenSSH | `_server_accept_loop` (rearchitected), `_grace_alarm_handler` (removed) | #1 matched, removal correctly reported | 1/1 + structural evidence |
 
-There were no false positives in the SEC-LIKELY category across either target. SEC-POSSIBLE had a small number of non-CVE functions (stack hardening additions) that are arguably security-relevant even if they are not tied to a specific CVE.
+Manual inspection found no obvious false positives in the SEC-LIKELY category across either target. SEC-POSSIBLE had a small number of non-CVE functions (stack hardening additions) that are arguably security-relevant even if they are not tied to a specific CVE.
 
 Baseline comparison: triage ranking vs. "sort by size delta." A naive baseline for patch triage is to sort functions by absolute size change percentage and review the largest changes first. I compared this against the tool's ranking for the OpenSSL target:
 
@@ -391,7 +407,7 @@ The size-delta baseline captures some of the same functions but misses `_EVP_Upd
 
 The key contribution is the triage layer. Instead of leaving the analyst with a large flat diff, it attempts to prioritize the subset of changes that look most relevant to security review and to explain why they were prioritized.
 
-### 5.9 Open-source synthetic test binaries
+### 5.10 Open-source synthetic test binaries
 
 A pair of small server binaries with known planted security fixes. The tool identifies 7 of 10 matched functions as security-relevant, with the top-ranked functions showing unsafe API replacement (strcpy to strncpy, sprintf to snprintf), stack protection, and bounds checking additions.
 
@@ -434,7 +450,7 @@ The OpenSSH target exposed the most interesting matching failure mode. When sshd
 
 In retrospect, the most important change was abandoning the assumption that one analysis path would work across all targets. The project became much more reliable once I treated backend selection as part of the problem instead of as an implementation detail.
 
-The final codebase is about 5,000 lines of Python across 15 modules, with 49 unit and integration tests that run in about a second. The test suite covers matching, triage, normalization, and report generation and runs on fixture data without requiring Ghidra or real binaries.
+The final codebase is about 5,000 lines of Python across 15 modules, with 54 unit and integration tests that run in about a second. The test suite covers matching, triage, normalization, and report generation and runs on fixture data without requiring Ghidra or real binaries.
 
 ## 8. Applying the tool to new binary pairs
 
@@ -477,11 +493,11 @@ The goal of this project was to help an analyst decide what to reverse first aft
 
 For the two targets with well-documented CVEs (OpenSSL 3.0.14 and OpenSSH 9.8), the top-ranked functions align with the known security fixes:
 
-- OpenSSL: CVE-2024-4603 and CVE-2024-2511 align clearly with ranked or unmatched symbols, while CVE-2024-4741 (`SSL_free_buffers`) is a smaller API-specific fix and appears more weakly at the symbol level. No false positives in SEC-LIKELY on the evaluated run.
-- OpenSSH: the CVE-2024-6387 fix components are ranked #1 (server_accept_loop rearchitecture), with corroborating evidence from 561 removed functions, 26 new functions, and signal handler shrinkage — and 100% match accuracy across 681 paired functions.
+- OpenSSL: all three advisories produced aligned ranked or unmatched results — CVE-2024-4603 and CVE-2024-2511 map clearly to ranked or unmatched symbols, while CVE-2024-4741 (`SSL_free_buffers`) is a smaller API-specific fix and appears more weakly at the symbol level. No obvious false positives in SEC-LIKELY on the evaluated run.
+- OpenSSH: the CVE-2024-6387 fix components are ranked #1 (server_accept_loop rearchitecture), with corroborating evidence from 561 removed functions, 26 new functions, and signal handler shrinkage. Manual inspection found no incorrect matches among the 681 paired functions.
 
-The baseline comparison in section 5.8 shows that the triage ranking outperforms naive size-delta sorting and, more importantly, provides rationale that the analyst can use to verify or override the tool's judgment. That rationale is what makes the output actionable rather than just another ranked list.
+The baseline comparison in section 5.9 shows that the triage ranking outperforms naive size-delta sorting and, more importantly, provides rationale that the analyst can use to verify or override the tool's judgment. That rationale is what makes the output actionable rather than just another ranked list.
 
 ## Appendix: reproduction
 
-See `README.md` in the repository for full installation, corpus setup, and CLI usage instructions.
+See section 4 of this report and `README.md` in the repository for full installation, corpus setup, and CLI usage instructions.

@@ -181,7 +181,7 @@ patchdiff-cli/
 │   ├── console.py                     # Colorized terminal output
 │   ├── llm_explain.py                 # Optional LLM summary generation
 │   └── evaluate.py                    # Fixture-based evaluation
-├── tests/                             # 49 unit/integration tests
+├── tests/                             # 54 unit/integration tests
 │   ├── test_matcher.py
 │   ├── test_triage.py                 # 510 lines — core heuristic coverage
 │   ├── test_normalize.py
@@ -197,7 +197,7 @@ patchdiff-cli/
 
 ```bash
 pip install -e ".[dev]"
-pytest tests/ -v    # 49 tests, ~1s
+pytest tests/ -v    # 54 tests, ~1s
 ```
 
 ## License
