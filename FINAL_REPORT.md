@@ -490,7 +490,7 @@ Any project that ships release binaries or can be built from source across two v
 
 ## 10. Conclusion
 
-The goal of this project was to help an analyst decide what to reverse first after a patch lands. Across the seven corpus targets — spanning C, C++, and Go binaries from 10 to 12,000+ functions — the triage heuristics consistently separated security-relevant changes from noise.
+The goal of this project was to help a reverse engineer / hacker decide what to reverse first after a patch lands. Across the seven corpus targets — spanning C, C++, and Go binaries from 10 to 12,000+ functions — the triage heuristics consistently separated security-relevant changes from noise.
 
 For the two targets with well-documented CVEs (OpenSSL 3.0.14 and OpenSSH 9.8), the top-ranked functions align with the known security fixes:
 
@@ -502,3 +502,30 @@ The baseline comparison in section 5.9 shows that the triage ranking outperforms
 ## Appendix: reproduction
 
 See section 4 of this report and `README.md` in the repository for full installation, corpus setup, and CLI usage instructions.
+
+## References
+
+### Tools Mentioned
+
+- BinDiff — Google/Zynamics. Binary diffing tool for function-level correspondence. https://github.com/google/bindiff
+- Diaphora — Joxean Koret. Open-source binary diff tool (IDA Pro plugin). https://github.com/joxeankoret/diaphora
+- DarunGrim — Jeong Wook Oh. Patch analysis framework. https://github.com/nicehash/DarunGrim
+- TurboDiff — Nicolas Economou (Core Security). IDA Pro binary diffing plugin. https://www.coresecurity.com/core-labs/open-source-tools/turbodiff
+- Ghidra — NSA. Software reverse engineering framework. https://ghidra-sre.org/
+
+### Evaluation targets
+
+- OpenSSL 3.0 series release notes (CVE-2024-4741, CVE-2024-4603, CVE-2024-2511). https://www.openssl.org/news/openssl-3.0-notes.html
+- OpenSSH 9.8 release notes (CVE-2024-6387 "regreSSHion"). https://www.openssh.com/txt/release-9.8
+- Qualys advisory for CVE-2024-6387. https://www.qualys.com/2024/07/01/cve-2024-6387/regresshion.txt
+- SQLite release history. https://www.sqlite.org/changes.html
+- Zstandard (zstd) releases. https://github.com/facebook/zstd/releases
+- jq releases. https://github.com/jqlang/jq/releases
+- yq releases. https://github.com/mikefarah/yq/releases
+
+### Algorithms and methods
+
+- Kuhn, H.W. "The Hungarian Method for the Assignment Problem." *Naval Research Logistics Quarterly*, 2(1-2):83–97, 1955. Implementation used: `scipy.optimize.linear_sum_assignment`. https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linear_sum_assignment.html
+- Jaccard, P. "The Distribution of the Flora in the Alpine Zone." *New Phytologist*, 11(2):37–50, 1912. Used for set similarity across strings, calls, API families, and constants.
+- Levenshtein, V.I. "Binary Codes Capable of Correcting Deletions, Insertions, and Reversals." *Soviet Physics Doklady*, 10(8):707–710, 1966. Used for function name similarity scoring.
+- Cosine similarity. Used for mnemonic histogram and instruction group comparison. https://en.wikipedia.org/wiki/Cosine_similarity
