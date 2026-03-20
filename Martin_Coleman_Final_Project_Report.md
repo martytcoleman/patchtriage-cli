@@ -62,7 +62,7 @@ The extraction stage supports three backends, selected automatically based on bi
 
 The tool performs a cheap pre-scan before extraction. That pre-scan classifies the file format, checks for Go or Rust markers, estimates binary size, and chooses a backend automatically unless the user overrides it.
 
-This ended up being the most important architectural change I made. Earlier versions assumed that Ghidra should always be the front end. When I ran it on real targets, that made the tool brittle on some real targets — yq was the worst case, where Ghidra's Go analysis was slow and noisy. Once I made backend selection adaptive, the tool became much more reliable across the full corpus.
+This ended up being the most important architectural change I made. Earlier versions assumed that Ghidra should always be the front end. When I ran it on real targets, that made the tool brittle — yq was the worst case, where Ghidra's Go analysis was slow and noisy. Once I made backend selection adaptive, the tool became much more reliable across the full corpus.
 
 #### Ghidra script (ghidra_scripts/extract_features.py)
 
