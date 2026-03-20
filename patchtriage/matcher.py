@@ -18,6 +18,8 @@ class MatchResult:
     score: float
     method: str  # how the match was found
     uncertain: bool = False
+    index_a: int = -1
+    index_b: int = -1  # internal; used for post-pass repair, omitted from JSON
 
 
 def _jaccard(a: set, b: set) -> float:
@@ -199,6 +201,101 @@ def _has_plausible_rename(name: str, candidate_names: set[str]) -> bool:
     return any(_is_plausible_rename(name, cn) for cn in candidate_names)
 
 
+# Pass 2: when both functions have real (non-FUN_) names that are not plausible
+# renames, require at least this similarity.  Cuts bogus edges like
+# ``_EVP_PKEY_CTX_set1_scrypt_salt`` ↔ ``_kdf_hkdf_settable_ctx_params`` that
+# only meet the default threshold on structural coincidence.
+CROSS_NAME_MIN_SIMILARITY = 0.52
+
+
+def _is_synthetic_symbol_name(name: str) -> bool:
+    return name.startswith("FUN_") or name.startswith("thunk_FUN_")
+
+
+def _cross_name_similarity_floor_applies(fa: dict, fb: dict, *, stripped: bool) -> bool:
+    """If True, the (fa, fb) edge needs max(threshold, CROSS_NAME_MIN_SIMILARITY)."""
+    if stripped:
+        return False
+    na = fa.get("name") or ""
+    nb = fb.get("name") or ""
+    if _is_synthetic_symbol_name(na) or _is_synthetic_symbol_name(nb):
+        return False
+    return not _is_plausible_rename(na, nb)
+
+
+def _repair_exact_b_name_mismatches(
+    matches: list[MatchResult],
+    used_a: set[int],
+    used_b: set[int],
+    funcs_a: list,
+    funcs_b: list,
+    *,
+    stripped: bool,
+) -> None:
+    """Fix absurd bipartite pairings using leftover exact names on B.
+
+    ``linear_sum_assignment`` optimizes *global* sum, so row A can be paired
+    with a wrong B column while a different B row still carries A's symbol
+    name (unmatched) — e.g. duplicate A-side entries consuming the only
+    same-name B slot in pass 1, or size blocking so the real same-name B
+    never entered the similarity matrix.  Reassign when exactly one unmatched
+    B function has ``name == name_a``.
+    """
+    max_iter = min(len(matches) + 8, 64)
+    for _ in range(max_iter):
+        unmatched_b_by_name: dict[str, list[int]] = {}
+        for j in range(len(funcs_b)):
+            if j in used_b:
+                continue
+            nm = funcs_b[j]["name"]
+            if nm.startswith("FUN_") or nm.startswith("thunk_FUN_"):
+                continue
+            unmatched_b_by_name.setdefault(nm, []).append(j)
+
+        candidates = [
+            m
+            for m in matches
+            if m.index_a >= 0
+            and m.index_b >= 0
+            and not funcs_a[m.index_a]["name"].startswith("FUN_")
+            and not funcs_a[m.index_a]["name"].startswith("thunk_FUN_")
+            and funcs_a[m.index_a]["name"] != funcs_b[m.index_b]["name"]
+        ]
+        if not candidates:
+            break
+        candidates.sort(key=lambda m: m.score)
+
+        changed = False
+        for m in candidates:
+            na = funcs_a[m.index_a]["name"]
+            js = unmatched_b_by_name.get(na, [])
+            if len(js) != 1:
+                continue
+            j_new = js[0]
+            j_old = m.index_b
+            if j_new == j_old:
+                continue
+
+            used_b.remove(j_old)
+            used_b.add(j_new)
+            fb = funcs_b[j_new]
+            m.name_b = fb["name"]
+            m.entry_b = fb["entry"]
+            m.index_b = j_new
+            m.score = compute_similarity(funcs_a[m.index_a], fb, stripped=stripped)
+            m.method = "name_repair_unmatched_b"
+            m.uncertain = False
+
+            unmatched_b_by_name[na].remove(j_new)
+            if not unmatched_b_by_name[na]:
+                del unmatched_b_by_name[na]
+            changed = True
+            break
+
+        if not changed:
+            break
+
+
 def match_functions(features_a: dict, features_b: dict,
                     threshold: float = 0.3,
                     uncertain_gap: float = 0.05,
@@ -239,6 +336,7 @@ def match_functions(features_a: dict, features_b: dict,
                         name_a=fa["name"], name_b=funcs_b[j]["name"],
                         entry_a=fa["entry"], entry_b=funcs_b[j]["entry"],
                         score=score, method="name_exact",
+                        index_a=i, index_b=j,
                     ))
                     used_a.add(i)
                     used_b.add(j)
@@ -255,6 +353,7 @@ def match_functions(features_a: dict, features_b: dict,
                             name_a=fa["name"], name_b=funcs_b[best_j]["name"],
                             entry_a=fa["entry"], entry_b=funcs_b[best_j]["entry"],
                             score=best_score, method="name_exact_multi",
+                            index_a=i, index_b=best_j,
                         ))
                         used_a.add(i)
                         used_b.add(best_j)
@@ -338,7 +437,10 @@ def match_functions(features_a: dict, features_b: dict,
                     if ratio < 0.5:
                         continue
             score = compute_similarity(fa, fb, stripped=stripped)
-            if score >= threshold:
+            eff_threshold = threshold
+            if _cross_name_similarity_floor_applies(fa, fb, stripped=stripped):
+                eff_threshold = max(threshold, CROSS_NAME_MIN_SIMILARITY)
+            if score >= eff_threshold:
                 scored_pairs.append((score, i, j))
 
     if large_match:
@@ -362,7 +464,12 @@ def match_functions(features_a: dict, features_b: dict,
             print(f"Finalizing {len(rows)} proposed assignments...", flush=True)
         for row, col in zip(rows, cols):
             score = score_matrix[row][col]
-            if score < threshold:
+            fa = remaining_a[row][1]
+            fb = remaining_b[col][1]
+            eff_threshold = threshold
+            if _cross_name_similarity_floor_applies(fa, fb, stripped=stripped):
+                eff_threshold = max(threshold, CROSS_NAME_MIN_SIMILARITY)
+            if score < eff_threshold:
                 continue
             i = remaining_a[row][0]
             j = remaining_b[col][0]
@@ -382,9 +489,15 @@ def match_functions(features_a: dict, features_b: dict,
                 score=score,
                 method="similarity_bipartite",
                 uncertain=uncertain,
+                index_a=i,
+                index_b=j,
             ))
             used_a.add(i)
             used_b.add(j)
+
+    _repair_exact_b_name_mismatches(
+        matches, used_a, used_b, funcs_a, funcs_b, stripped=stripped
+    )
 
     unmatched_a = [funcs_a[i]["name"] for i in range(len(funcs_a)) if i not in used_a]
     unmatched_b = [funcs_b[j]["name"] for j in range(len(funcs_b)) if j not in used_b]

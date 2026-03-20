@@ -1,0 +1,1676 @@
+{
+  "binary": "/Users/marty/patchdiff-cli/corpus/open_source/server_v2",
+  "arch": "aarch64",
+  "num_functions": 11,
+  "functions": [
+    {
+      "name": "_format_log_entry",
+      "entry": "0000000100000460",
+      "size": 32,
+      "instr_count": 8,
+      "block_count": 3,
+      "mnemonic_hist": {
+        "sub": 1,
+        "stp": 2,
+        "str": 1,
+        "adrp": 1,
+        "bl": 1,
+        "ldp": 1,
+        "ret": 1
+      },
+      "mnemonic_bigrams": {
+        "sub,stp": 1,
+        "stp,stp": 1,
+        "stp,str": 1,
+        "str,adrp": 1,
+        "adrp,bl": 1,
+        "bl,ldp": 1,
+        "ldp,ret": 1
+      },
+      "strings": [],
+      "constants": [
+        8,
+        32,
+        48,
+        4294967296,
+        4294971180
+      ],
+      "called_functions": [
+        {
+          "name": "_snprintf",
+          "is_external": true,
+          "entry": null
+        }
+      ],
+      "callers": [],
+      "normalized_strings": [],
+      "string_categories": [],
+      "constant_buckets": [
+        "byte",
+        "huge",
+        "small"
+      ],
+      "api_families": [
+        "string"
+      ],
+      "normalized_call_names": [
+        "snprintf"
+      ],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 0,
+        "branch": 2,
+        "memory": 4,
+        "arithmetic": 1,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 1,
+        "external_callee_count": 1,
+        "internal_callee_count": 0
+      },
+      "function_roles": [
+        "formatter",
+        "logger"
+      ],
+      "primary_role": "formatter"
+    },
+    {
+      "name": "_parse_header_line",
+      "entry": "000000010000048c",
+      "size": 156,
+      "instr_count": 39,
+      "block_count": 8,
+      "mnemonic_hist": {
+        "stp": 3,
+        "mov": 16,
+        "bl": 4,
+        "cbz": 1,
+        "sub": 2,
+        "cmn": 1,
+        "b.hs": 1,
+        "strb": 2,
+        "ldrb": 1,
+        "cmp": 2,
+        "b.eq": 1,
+        "csel": 1,
+        "ldp": 3,
+        "ret": 1
+      },
+      "mnemonic_bigrams": {
+        "stp,stp": 2,
+        "stp,mov": 1,
+        "mov,mov": 9,
+        "mov,bl": 4,
+        "bl,cbz": 1,
+        "cbz,mov": 1,
+        "mov,sub": 1,
+        "sub,sub": 1,
+        "sub,cmn": 1,
+        "cmn,b.hs": 1,
+        "b.hs,mov": 1,
+        "bl,strb": 1,
+        "strb,ldrb": 1,
+        "ldrb,cmp": 1,
+        "cmp,b.eq": 1,
+        "b.eq,mov": 1,
+        "bl,mov": 2,
+        "mov,cmp": 1,
+        "cmp,csel": 1,
+        "csel,mov": 1,
+        "mov,strb": 1,
+        "strb,ldp": 1,
+        "ldp,ldp": 2,
+        "ldp,ret": 1
+      },
+      "strings": [],
+      "constants": [
+        0,
+        1,
+        16,
+        32,
+        48,
+        58,
+        63,
+        64,
+        127,
+        4294968516,
+        4294968524,
+        4294968552,
+        4294971072,
+        4294971204,
+        4294971228,
+        4294971240
+      ],
+      "called_functions": [
+        {
+          "name": "_strchr",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "___strncpy_chk",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_strlen",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_strncpy",
+          "is_external": true,
+          "entry": null
+        }
+      ],
+      "callers": [],
+      "normalized_strings": [],
+      "string_categories": [],
+      "constant_buckets": [
+        "byte",
+        "huge",
+        "small",
+        "tiny"
+      ],
+      "api_families": [
+        "string"
+      ],
+      "normalized_call_names": [
+        "strchr",
+        "strlen",
+        "strncpy"
+      ],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 3,
+        "branch": 8,
+        "memory": 25,
+        "arithmetic": 2,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 4,
+        "external_callee_count": 4,
+        "internal_callee_count": 0
+      },
+      "function_roles": [
+        "control_heavy",
+        "parser"
+      ],
+      "primary_role": "control_heavy"
+    },
+    {
+      "name": "_parse_content_length",
+      "entry": "0000000100000534",
+      "size": 188,
+      "instr_count": 47,
+      "block_count": 10,
+      "mnemonic_hist": {
+        "sub": 1,
+        "stp": 2,
+        "mov": 6,
+        "adrp": 6,
+        "ldr": 11,
+        "str": 4,
+        "bl": 5,
+        "cbz": 1,
+        "cmp": 3,
+        "b.ne": 1,
+        "ldp": 2,
+        "ret": 1,
+        "b.eq": 1,
+        "ldrb": 1,
+        "cbnz": 1,
+        "b.ls": 1
+      },
+      "mnemonic_bigrams": {
+        "sub,stp": 1,
+        "stp,stp": 1,
+        "stp,mov": 1,
+        "mov,adrp": 1,
+        "adrp,ldr": 4,
+        "ldr,ldr": 4,
+        "ldr,str": 3,
+        "str,bl": 1,
+        "bl,str": 1,
+        "str,mov": 1,
+        "mov,mov": 1,
+        "mov,bl": 2,
+        "bl,mov": 2,
+        "bl,ldr": 1,
+        "ldr,cbz": 1,
+        "cbz,adrp": 1,
+        "str,adrp": 2,
+        "adrp,bl": 2,
+        "mov,ldr": 1,
+        "ldr,adrp": 1,
+        "ldr,cmp": 2,
+        "cmp,b.ne": 1,
+        "b.ne,mov": 1,
+        "mov,ldp": 1,
+        "ldp,ldp": 1,
+        "ldp,ret": 1,
+        "ret,ldr": 1,
+        "cmp,b.eq": 1,
+        "b.eq,ldrb": 1,
+        "ldrb,cbnz": 1,
+        "cbnz,cmp": 1,
+        "cmp,b.ls": 1,
+        "b.ls,adrp": 1
+      },
+      "strings": [],
+      "constants": [
+        1,
+        10,
+        16,
+        24,
+        32,
+        48,
+        64,
+        256,
+        4294967296,
+        4294968704,
+        4294968736,
+        4294968780,
+        4294968836,
+        4294971048,
+        4294971060,
+        4294971096,
+        4294971276,
+        4294983680
+      ],
+      "called_functions": [
+        {
+          "name": "___error",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_strtol",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "___error",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fprintf",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "___stack_chk_fail",
+          "is_external": true,
+          "entry": null
+        }
+      ],
+      "callers": [],
+      "normalized_strings": [],
+      "string_categories": [],
+      "constant_buckets": [
+        "byte",
+        "huge",
+        "pageish",
+        "small",
+        "tiny"
+      ],
+      "api_families": [
+        "file",
+        "string"
+      ],
+      "normalized_call_names": [
+        "error",
+        "fprintf",
+        "stack_chk_fail",
+        "strtol"
+      ],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 3,
+        "branch": 11,
+        "memory": 26,
+        "arithmetic": 1,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 5,
+        "external_callee_count": 5,
+        "internal_callee_count": 0
+      },
+      "function_roles": [
+        "control_heavy",
+        "formatter",
+        "io",
+        "parser"
+      ],
+      "primary_role": "control_heavy"
+    },
+    {
+      "name": "_validate_path",
+      "entry": "0000000100000608",
+      "size": 96,
+      "instr_count": 24,
+      "block_count": 6,
+      "mnemonic_hist": {
+        "sub": 2,
+        "stp": 1,
+        "cmn": 1,
+        "b.hi": 1,
+        "adrp": 5,
+        "ldr": 4,
+        "str": 1,
+        "bl": 3,
+        "cbz": 1,
+        "mov": 3,
+        "ldp": 1,
+        "ret": 1
+      },
+      "mnemonic_bigrams": {
+        "sub,stp": 1,
+        "stp,sub": 1,
+        "sub,cmn": 1,
+        "cmn,b.hi": 1,
+        "b.hi,adrp": 1,
+        "adrp,ldr": 2,
+        "ldr,ldr": 2,
+        "ldr,str": 1,
+        "str,adrp": 1,
+        "adrp,bl": 2,
+        "bl,adrp": 1,
+        "bl,cbz": 1,
+        "cbz,adrp": 1,
+        "ldr,adrp": 1,
+        "adrp,mov": 1,
+        "mov,mov": 1,
+        "mov,bl": 1,
+        "bl,mov": 1,
+        "mov,ldp": 1,
+        "ldp,ret": 1
+      },
+      "strings": [],
+      "constants": [
+        1,
+        16,
+        24,
+        32,
+        256,
+        4294967296,
+        4294968896,
+        4294968948,
+        4294971096,
+        4294971120,
+        4294971252,
+        4294971392,
+        4294983680
+      ],
+      "called_functions": [
+        {
+          "name": "_fprintf",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_strstr",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fwrite",
+          "is_external": true,
+          "entry": null
+        }
+      ],
+      "callers": [],
+      "normalized_strings": [],
+      "string_categories": [],
+      "constant_buckets": [
+        "byte",
+        "huge",
+        "pageish",
+        "small",
+        "tiny"
+      ],
+      "api_families": [
+        "file",
+        "string"
+      ],
+      "normalized_call_names": [
+        "fprintf",
+        "fwrite",
+        "strstr"
+      ],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 1,
+        "branch": 6,
+        "memory": 10,
+        "arithmetic": 2,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 3,
+        "external_callee_count": 3,
+        "internal_callee_count": 0
+      },
+      "function_roles": [
+        "formatter",
+        "io",
+        "validator"
+      ],
+      "primary_role": "formatter"
+    },
+    {
+      "name": "_parse_request_line",
+      "entry": "0000000100000680",
+      "size": 288,
+      "instr_count": 72,
+      "block_count": 12,
+      "mnemonic_hist": {
+        "sub": 4,
+        "stp": 4,
+        "mov": 22,
+        "bl": 8,
+        "cbz": 3,
+        "cmp": 2,
+        "csel": 1,
+        "sxtw": 2,
+        "strb": 3,
+        "b.lt": 1,
+        "adrp": 7,
+        "ldr": 6,
+        "str": 2,
+        "cmn": 1,
+        "b.hi": 1,
+        "ldp": 4,
+        "ret": 1
+      },
+      "mnemonic_bigrams": {
+        "sub,stp": 1,
+        "stp,stp": 3,
+        "stp,mov": 1,
+        "mov,mov": 11,
+        "mov,bl": 7,
+        "bl,cbz": 3,
+        "cbz,sub": 2,
+        "sub,mov": 1,
+        "mov,cmp": 1,
+        "cmp,csel": 1,
+        "csel,sxtw": 1,
+        "sxtw,mov": 1,
+        "bl,strb": 2,
+        "strb,mov": 2,
+        "sub,cmp": 1,
+        "cmp,b.lt": 1,
+        "b.lt,adrp": 1,
+        "adrp,ldr": 3,
+        "ldr,ldr": 3,
+        "ldr,str": 2,
+        "str,adrp": 2,
+        "adrp,sxtw": 1,
+        "sxtw,sub": 1,
+        "sub,cmn": 1,
+        "cmn,b.hi": 1,
+        "b.hi,adrp": 1,
+        "adrp,bl": 1,
+        "bl,mov": 3,
+        "mov,ldp": 1,
+        "ldp,ldp": 3,
+        "ldp,ret": 1,
+        "ret,mov": 1,
+        "mov,adrp": 1,
+        "adrp,mov": 2,
+        "cbz,adrp": 1,
+        "ldr,adrp": 1,
+        "mov,strb": 1
+      },
+      "strings": [],
+      "constants": [
+        0,
+        1,
+        15,
+        16,
+        24,
+        32,
+        48,
+        64,
+        80,
+        256,
+        287,
+        4294967296,
+        4294969112,
+        4294969156,
+        4294969184,
+        4294969244,
+        4294971072,
+        4294971096,
+        4294971120,
+        4294971204,
+        4294971240,
+        4294971252,
+        4294971392,
+        4294983680
+      ],
+      "called_functions": [
+        {
+          "name": "_strchr",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "___strncpy_chk",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_strchr",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fprintf",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_strstr",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fwrite",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "___strncpy_chk",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_strncpy",
+          "is_external": true,
+          "entry": null
+        }
+      ],
+      "callers": [],
+      "normalized_strings": [],
+      "string_categories": [],
+      "constant_buckets": [
+        "byte",
+        "huge",
+        "pageish",
+        "small",
+        "tiny"
+      ],
+      "api_families": [
+        "file",
+        "string"
+      ],
+      "normalized_call_names": [
+        "fprintf",
+        "fwrite",
+        "strchr",
+        "strncpy",
+        "strstr"
+      ],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 3,
+        "branch": 14,
+        "memory": 41,
+        "arithmetic": 4,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 8,
+        "external_callee_count": 8,
+        "internal_callee_count": 0
+      },
+      "function_roles": [
+        "control_heavy",
+        "formatter",
+        "io",
+        "parser"
+      ],
+      "primary_role": "control_heavy"
+    },
+    {
+      "name": "_log_request",
+      "entry": "00000001000007d4",
+      "size": 4,
+      "instr_count": 0,
+      "block_count": 1,
+      "mnemonic_hist": {},
+      "mnemonic_bigrams": {},
+      "strings": [],
+      "constants": [],
+      "called_functions": [],
+      "callers": [],
+      "normalized_strings": [],
+      "string_categories": [],
+      "constant_buckets": [],
+      "api_families": [],
+      "normalized_call_names": [],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 0,
+        "branch": 0,
+        "memory": 0,
+        "arithmetic": 0,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 0,
+        "external_callee_count": 0,
+        "internal_callee_count": 0
+      },
+      "function_roles": [
+        "logger"
+      ],
+      "primary_role": "logger"
+    },
+    {
+      "name": "_url_decode",
+      "entry": "00000001000007d8",
+      "size": 308,
+      "instr_count": 77,
+      "block_count": 11,
+      "mnemonic_hist": {
+        "sub": 2,
+        "stp": 4,
+        "mov": 12,
+        "adrp": 5,
+        "ldr": 10,
+        "str": 1,
+        "ldrb": 3,
+        "cmp": 6,
+        "ccmp": 2,
+        "b.eq": 3,
+        "strb": 5,
+        "b.hs": 1,
+        "b.ne": 2,
+        "ldrsb": 2,
+        "tbnz": 2,
+        "ubfx": 2,
+        "cbnz": 2,
+        "cbz": 3,
+        "ldurh": 1,
+        "sturh": 1,
+        "bl": 3,
+        "ldp": 4,
+        "ret": 1
+      },
+      "mnemonic_bigrams": {
+        "sub,stp": 1,
+        "stp,stp": 3,
+        "stp,mov": 1,
+        "mov,mov": 5,
+        "mov,adrp": 2,
+        "adrp,ldr": 4,
+        "ldr,ldr": 3,
+        "ldr,str": 1,
+        "str,sub": 1,
+        "sub,ldrb": 1,
+        "ldrb,cmp": 2,
+        "cmp,ccmp": 2,
+        "ccmp,b.eq": 1,
+        "b.eq,mov": 1,
+        "ldr,strb": 1,
+        "strb,ldrb": 2,
+        "ccmp,b.hs": 1,
+        "b.hs,cmp": 1,
+        "cmp,b.eq": 2,
+        "b.eq,cmp": 1,
+        "cmp,b.ne": 2,
+        "b.ne,ldrsb": 1,
+        "ldrsb,tbnz": 2,
+        "tbnz,ldr": 2,
+        "ldr,ubfx": 2,
+        "ubfx,cbnz": 1,
+        "cbnz,mov": 1,
+        "mov,cbz": 1,
+        "cbz,ldrsb": 1,
+        "ubfx,cbz": 1,
+        "cbz,ldurh": 1,
+        "ldurh,sturh": 1,
+        "sturh,strb": 1,
+        "strb,mov": 2,
+        "mov,bl": 2,
+        "bl,strb": 1,
+        "mov,cbnz": 1,
+        "cbnz,cmp": 1,
+        "b.eq,strb": 1,
+        "strb,strb": 1,
+        "ldrb,cbz": 1,
+        "cbz,adrp": 1,
+        "ldr,adrp": 2,
+        "adrp,mov": 1,
+        "bl,mov": 1,
+        "mov,ldr": 1,
+        "ldr,cmp": 1,
+        "b.ne,ldp": 1,
+        "ldp,ldp": 3,
+        "ldp,ret": 1,
+        "ret,bl": 1
+      },
+      "strings": [],
+      "constants": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        7,
+        8,
+        16,
+        24,
+        32,
+        36,
+        37,
+        43,
+        48,
+        60,
+        63,
+        64,
+        80,
+        4294969392,
+        4294969464,
+        4294969472,
+        4294969496,
+        4294969536,
+        4294969544,
+        4294969552,
+        4294969564,
+        4294969568,
+        4294969620,
+        4294969672,
+        4294971060,
+        4294971120,
+        4294971276,
+        4294971392,
+        4294983680
+      ],
+      "called_functions": [
+        {
+          "name": "_strtol",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fwrite",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "___stack_chk_fail",
+          "is_external": true,
+          "entry": null
+        }
+      ],
+      "callers": [],
+      "normalized_strings": [],
+      "string_categories": [],
+      "constant_buckets": [
+        "byte",
+        "huge",
+        "small",
+        "tiny"
+      ],
+      "api_families": [
+        "file",
+        "string"
+      ],
+      "normalized_call_names": [
+        "fwrite",
+        "stack_chk_fail",
+        "strtol"
+      ],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 6,
+        "branch": 17,
+        "memory": 43,
+        "arithmetic": 2,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 3,
+        "external_callee_count": 3,
+        "internal_callee_count": 0
+      },
+      "function_roles": [
+        "codec",
+        "control_heavy",
+        "io",
+        "parser"
+      ],
+      "primary_role": "codec"
+    },
+    {
+      "name": "_parse_http_request",
+      "entry": "000000010000094c",
+      "size": 684,
+      "instr_count": 171,
+      "block_count": 39,
+      "mnemonic_hist": {
+        "sub": 3,
+        "stp": 8,
+        "mov": 50,
+        "bl": 29,
+        "cbz": 10,
+        "cmp": 8,
+        "b.ls": 1,
+        "adrp": 15,
+        "ldr": 12,
+        "str": 6,
+        "ldp": 6,
+        "ret": 1,
+        "tbnz": 2,
+        "ldrb": 2,
+        "ldrsw": 2,
+        "b.ge": 1,
+        "cmn": 1,
+        "b.lo": 1,
+        "smaddl": 2,
+        "strb": 3,
+        "b.eq": 1,
+        "csel": 1,
+        "cbnz": 1,
+        "tbz": 1,
+        "b.lt": 1,
+        "b.le": 1,
+        "b.hs": 2
+      },
+      "mnemonic_bigrams": {
+        "sub,stp": 1,
+        "stp,stp": 5,
+        "stp,mov": 1,
+        "mov,mov": 13,
+        "mov,bl": 24,
+        "bl,mov": 13,
+        "mov,cbz": 2,
+        "cbz,mov": 7,
+        "bl,cmp": 2,
+        "cmp,b.ls": 1,
+        "b.ls,adrp": 1,
+        "adrp,ldr": 5,
+        "ldr,ldr": 5,
+        "ldr,str": 2,
+        "str,adrp": 2,
+        "adrp,mov": 5,
+        "bl,cbz": 6,
+        "cbz,adrp": 1,
+        "mov,ldp": 1,
+        "ldp,ldp": 5,
+        "ldp,ret": 1,
+        "ret,adrp": 1,
+        "mov,adrp": 2,
+        "adrp,adrp": 1,
+        "ldr,adrp": 1,
+        "bl,tbnz": 1,
+        "tbnz,ldr": 1,
+        "str,mov": 1,
+        "cbz,ldrb": 1,
+        "ldrb,cbz": 1,
+        "cbz,ldrsw": 1,
+        "ldrsw,cmp": 1,
+        "cmp,b.ge": 1,
+        "b.ge,mov": 1,
+        "mov,sub": 1,
+        "sub,sub": 1,
+        "sub,cmn": 1,
+        "cmn,b.lo": 1,
+        "b.lo,smaddl": 1,
+        "smaddl,mov": 2,
+        "bl,strb": 3,
+        "strb,ldrb": 1,
+        "ldrb,cmp": 1,
+        "cmp,b.eq": 1,
+        "b.eq,mov": 1,
+        "cmp,mov": 2,
+        "mov,csel": 1,
+        "csel,mov": 1,
+        "strb,ldrsw": 1,
+        "ldrsw,smaddl": 1,
+        "adrp,bl": 4,
+        "bl,cbnz": 1,
+        "cbnz,bl": 1,
+        "mov,tbnz": 1,
+        "tbnz,str": 1,
+        "str,tbz": 1,
+        "tbz,adrp": 1,
+        "ldr,mov": 2,
+        "mov,str": 1,
+        "bl,ldr": 1,
+        "ldr,cmp": 1,
+        "cmp,b.lt": 1,
+        "b.lt,cmp": 1,
+        "cmp,b.le": 1,
+        "b.le,adrp": 1,
+        "mov,stp": 1,
+        "stp,adrp": 2,
+        "bl,adrp": 1,
+        "mov,cmp": 1,
+        "cmp,b.hs": 1,
+        "b.hs,adrp": 1,
+        "ldr,stp": 1,
+        "bl,str": 1,
+        "str,cbz": 1,
+        "strb,str": 1,
+        "str,cmp": 1,
+        "mov,b.hs": 1,
+        "b.hs,mov": 1
+      },
+      "strings": [],
+      "constants": [
+        0,
+        1,
+        16,
+        31,
+        32,
+        38,
+        48,
+        58,
+        63,
+        64,
+        80,
+        96,
+        112,
+        127,
+        192,
+        6432,
+        6440,
+        6448,
+        6452,
+        6456,
+        65536,
+        4294969792,
+        4294969836,
+        4294969844,
+        4294969852,
+        4294969856,
+        4294969892,
+        4294969936,
+        4294969988,
+        4294970000,
+        4294970108,
+        4294970216,
+        4294970248,
+        4294970304,
+        4294970396,
+        4294970404,
+        4294970444,
+        4294970456,
+        4294971072,
+        4294971084,
+        4294971096,
+        4294971108,
+        4294971120,
+        4294971132,
+        4294971144,
+        4294971192,
+        4294971204,
+        4294971216,
+        4294971228,
+        4294971240,
+        4294971252,
+        4294971264,
+        4294971392,
+        4294983680
+      ],
+      "called_functions": [
+        {
+          "name": "_malloc",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_bzero",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_strlen",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fprintf",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_strdup",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_strtok",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_free",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_free",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_strtok",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fwrite",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_free",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_free",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_strtok",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_strchr",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "___strncpy_chk",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_strlen",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_strncpy",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_strcasecmp",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fprintf",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fprintf",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_strstr",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_strlen",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_fprintf",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_free",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_free",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_malloc",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_memcpy",
+          "is_external": true,
+          "entry": null
+        }
+      ],
+      "callers": [],
+      "normalized_strings": [],
+      "string_categories": [],
+      "constant_buckets": [
+        "byte",
+        "huge",
+        "small",
+        "tiny",
+        "u16",
+        "u32"
+      ],
+      "api_families": [
+        "file",
+        "memory",
+        "string"
+      ],
+      "normalized_call_names": [
+        "bzero",
+        "fprintf",
+        "free",
+        "fwrite",
+        "malloc",
+        "memcpy",
+        "strcasecmp",
+        "strchr",
+        "strdup",
+        "strlen",
+        "strncpy",
+        "strstr",
+        "strtok"
+      ],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 9,
+        "branch": 52,
+        "memory": 89,
+        "arithmetic": 3,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 27,
+        "external_callee_count": 27,
+        "internal_callee_count": 0
+      },
+      "function_roles": [
+        "allocator",
+        "control_heavy",
+        "formatter",
+        "io",
+        "memory_heavy",
+        "parser"
+      ],
+      "primary_role": "allocator"
+    },
+    {
+      "name": "_free_request",
+      "entry": "0000000100000c60",
+      "size": 44,
+      "instr_count": 11,
+      "block_count": 3,
+      "mnemonic_hist": {
+        "cbz": 1,
+        "stp": 2,
+        "ldr": 1,
+        "mov": 3,
+        "bl": 1,
+        "ldp": 2,
+        "ret": 1
+      },
+      "mnemonic_bigrams": {
+        "cbz,stp": 1,
+        "stp,stp": 1,
+        "stp,ldr": 1,
+        "ldr,mov": 1,
+        "mov,mov": 1,
+        "mov,bl": 1,
+        "bl,mov": 1,
+        "mov,ldp": 1,
+        "ldp,ldp": 1,
+        "ldp,ret": 1
+      },
+      "strings": [],
+      "constants": [
+        16,
+        32,
+        6440,
+        4294970512,
+        4294971108
+      ],
+      "called_functions": [
+        {
+          "name": "_free",
+          "is_external": true,
+          "entry": null
+        }
+      ],
+      "callers": [],
+      "normalized_strings": [],
+      "string_categories": [],
+      "constant_buckets": [
+        "byte",
+        "huge",
+        "small",
+        "u16"
+      ],
+      "api_families": [
+        "memory"
+      ],
+      "normalized_call_names": [
+        "free"
+      ],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 0,
+        "branch": 3,
+        "memory": 8,
+        "arithmetic": 0,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 1,
+        "external_callee_count": 1,
+        "internal_callee_count": 0
+      },
+      "function_roles": [
+        "allocator",
+        "memory_heavy"
+      ],
+      "primary_role": "allocator"
+    },
+    {
+      "name": "_print_request",
+      "entry": "0000000100000c94",
+      "size": 248,
+      "instr_count": 62,
+      "block_count": 14,
+      "mnemonic_hist": {
+        "stp": 7,
+        "sub": 2,
+        "mov": 5,
+        "adrp": 10,
+        "ldr": 8,
+        "stur": 1,
+        "str": 6,
+        "bl": 9,
+        "cmp": 3,
+        "b.lt": 2,
+        "ldrsw": 1,
+        "cbz": 1,
+        "ldur": 1,
+        "b.ne": 1,
+        "ldp": 4,
+        "ret": 1
+      },
+      "mnemonic_bigrams": {
+        "stp,stp": 3,
+        "stp,sub": 1,
+        "sub,mov": 1,
+        "mov,adrp": 2,
+        "adrp,ldr": 2,
+        "ldr,ldr": 2,
+        "ldr,stur": 1,
+        "stur,stp": 1,
+        "stp,mov": 2,
+        "mov,str": 1,
+        "str,adrp": 6,
+        "adrp,mov": 1,
+        "mov,bl": 2,
+        "bl,str": 4,
+        "adrp,bl": 6,
+        "bl,ldr": 2,
+        "ldr,str": 1,
+        "ldr,cmp": 2,
+        "cmp,b.lt": 2,
+        "b.lt,mov": 1,
+        "adrp,sub": 1,
+        "sub,stp": 1,
+        "bl,ldrsw": 1,
+        "ldrsw,cmp": 1,
+        "b.lt,ldr": 1,
+        "ldr,cbz": 1,
+        "cbz,ldr": 1,
+        "ldr,stp": 1,
+        "stp,adrp": 1,
+        "bl,ldur": 1,
+        "ldur,adrp": 1,
+        "cmp,b.ne": 1,
+        "b.ne,ldp": 1,
+        "ldp,ldp": 3,
+        "ldp,ret": 1,
+        "ret,bl": 1
+      },
+      "strings": [],
+      "constants": [
+        0,
+        1,
+        8,
+        16,
+        24,
+        32,
+        48,
+        56,
+        64,
+        200,
+        512,
+        544,
+        6432,
+        6440,
+        6448,
+        4294967296,
+        4294970716,
+        4294970752,
+        4294970780,
+        4294970828,
+        4294971060,
+        4294971156,
+        4294971180,
+        4294971392,
+        4294983680
+      ],
+      "called_functions": [
+        {
+          "name": "_snprintf",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_printf",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_printf",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_printf",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_printf",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_printf",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_printf",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_printf",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "___stack_chk_fail",
+          "is_external": true,
+          "entry": null
+        }
+      ],
+      "callers": [],
+      "normalized_strings": [],
+      "string_categories": [],
+      "constant_buckets": [
+        "byte",
+        "huge",
+        "pageish",
+        "small",
+        "tiny",
+        "u16"
+      ],
+      "api_families": [
+        "string"
+      ],
+      "normalized_call_names": [
+        "printf",
+        "snprintf",
+        "stack_chk_fail"
+      ],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 3,
+        "branch": 14,
+        "memory": 33,
+        "arithmetic": 2,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 9,
+        "external_callee_count": 9,
+        "internal_callee_count": 0
+      },
+      "function_roles": [
+        "formatter"
+      ],
+      "primary_role": "formatter"
+    },
+    {
+      "name": "_main",
+      "entry": "0000000100000dd0",
+      "size": 168,
+      "instr_count": 42,
+      "block_count": 14,
+      "mnemonic_hist": {
+        "sub": 1,
+        "stp": 2,
+        "adrp": 9,
+        "ldr": 5,
+        "stur": 1,
+        "bl": 11,
+        "cbz": 1,
+        "mov": 4,
+        "cbnz": 1,
+        "str": 1,
+        "ldur": 1,
+        "cmp": 1,
+        "b.ne": 1,
+        "ldp": 2,
+        "ret": 1
+      },
+      "mnemonic_bigrams": {
+        "sub,stp": 1,
+        "stp,stp": 1,
+        "stp,adrp": 1,
+        "adrp,ldr": 2,
+        "ldr,ldr": 2,
+        "ldr,stur": 1,
+        "stur,adrp": 1,
+        "adrp,bl": 6,
+        "bl,adrp": 5,
+        "bl,cbz": 1,
+        "cbz,mov": 1,
+        "mov,bl": 3,
+        "bl,ldr": 1,
+        "ldr,bl": 1,
+        "bl,mov": 1,
+        "adrp,mov": 1,
+        "bl,cbnz": 1,
+        "cbnz,str": 1,
+        "str,adrp": 1,
+        "bl,ldur": 1,
+        "ldur,adrp": 1,
+        "ldr,cmp": 1,
+        "cmp,b.ne": 1,
+        "b.ne,mov": 1,
+        "mov,ldp": 1,
+        "ldp,ldp": 1,
+        "ldp,ret": 1,
+        "ret,bl": 1
+      },
+      "strings": [],
+      "constants": [
+        0,
+        24,
+        256,
+        272,
+        288,
+        304,
+        6440,
+        4294970944,
+        4294971000,
+        4294971044,
+        4294971060,
+        4294971108,
+        4294971156,
+        4294971168,
+        4294971392,
+        4294983680
+      ],
+      "called_functions": [
+        {
+          "name": "_puts",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_puts",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_puts",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_free",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_free",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_puts",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "_printf",
+          "is_external": true,
+          "entry": null
+        },
+        {
+          "name": "___stack_chk_fail",
+          "is_external": true,
+          "entry": null
+        }
+      ],
+      "callers": [],
+      "normalized_strings": [],
+      "string_categories": [],
+      "constant_buckets": [
+        "byte",
+        "huge",
+        "pageish",
+        "tiny",
+        "u16"
+      ],
+      "api_families": [
+        "memory"
+      ],
+      "normalized_call_names": [
+        "free",
+        "printf",
+        "puts",
+        "stack_chk_fail"
+      ],
+      "normalized_callers": [],
+      "instruction_groups": {
+        "compare": 1,
+        "branch": 15,
+        "memory": 16,
+        "arithmetic": 1,
+        "logic": 0
+      },
+      "callgraph_context": {
+        "caller_count": 0,
+        "callee_count": 8,
+        "external_callee_count": 8,
+        "internal_callee_count": 0
+      },
+      "function_roles": [
+        "allocator",
+        "dispatcher",
+        "formatter",
+        "memory_heavy"
+      ],
+      "primary_role": "allocator"
+    }
+  ],
+  "feature_schema": "patchtriage.v2",
+  "source_metadata": {
+    "path": "/Users/marty/patchdiff-cli/corpus/open_source/server_v2",
+    "size": 35048,
+    "mtime": 1773946195
+  },
+  "analysis_profile": "native",
+  "classification": {
+    "path": "/Users/marty/patchdiff-cli/corpus/open_source/server_v2",
+    "format": "macho",
+    "arch": "unknown",
+    "language": "unknown",
+    "size_bytes": 35048,
+    "symbolized": true,
+    "text_symbol_count": 12,
+    "challenging": false,
+    "recommended_profile": "full",
+    "reasons": []
+  },
+  "backend": "native",
+  "imports": [
+    "__DefaultRuneLocale",
+    "___error",
+    "___stack_chk_fail",
+    "___stack_chk_guard",
+    "___stderrp",
+    "___strncpy_chk",
+    "_bzero",
+    "_fprintf",
+    "_free",
+    "_fwrite",
+    "_malloc",
+    "_memcpy",
+    "_printf",
+    "_puts",
+    "_snprintf",
+    "_strcasecmp",
+    "_strchr",
+    "_strdup",
+    "_strlen",
+    "_strncpy",
+    "_strstr",
+    "_strtok",
+    "_strtol"
+  ]
+}

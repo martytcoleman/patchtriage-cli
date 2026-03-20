@@ -1,0 +1,711 @@
+{
+  "binary_a": "/Users/marty/patchdiff-cli/corpus/open_source/server_v1",
+  "binary_b": "/Users/marty/patchdiff-cli/corpus/open_source/server_v2",
+  "total_matches": 10,
+  "unmatched_a": [],
+  "unmatched_b": [
+    "_validate_path"
+  ],
+  "functions": [
+    {
+      "name_a": "_parse_http_request",
+      "name_b": "_parse_http_request",
+      "entry_a": "00000001000006d0",
+      "entry_b": "000000010000094c",
+      "roles_a": [
+        "allocator",
+        "control_heavy",
+        "io",
+        "memory_heavy",
+        "parser"
+      ],
+      "roles_b": [
+        "allocator",
+        "control_heavy",
+        "formatter",
+        "io",
+        "memory_heavy",
+        "parser"
+      ],
+      "match_score": 0.8796,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 55.9,
+      "signals": {
+        "size_a": 396,
+        "size_b": 684,
+        "size_delta": 288,
+        "size_delta_pct": 72.7,
+        "blocks_a": 22,
+        "blocks_b": 39,
+        "blocks_delta": 17,
+        "instr_a": 99,
+        "instr_b": 171,
+        "instr_delta": 72,
+        "strings_added": [],
+        "strings_removed": [],
+        "ext_calls_added": [
+          "_fprintf",
+          "_fwrite",
+          "_strlen",
+          "_strncpy"
+        ],
+        "ext_calls_removed": [
+          "_atoi",
+          "_strcpy"
+        ],
+        "calls_added": [
+          "_fprintf",
+          "_fwrite",
+          "_strlen",
+          "_strncpy"
+        ],
+        "calls_removed": [
+          "_atoi",
+          "_strcpy"
+        ],
+        "constants_added": [
+          38,
+          63,
+          112,
+          127,
+          65536
+        ],
+        "constants_removed": [],
+        "constant_buckets_added": [
+          "u32"
+        ],
+        "constant_buckets_removed": [],
+        "api_families_added": [
+          "file"
+        ],
+        "api_families_removed": [],
+        "string_categories_added": [],
+        "string_categories_removed": [],
+        "branch_delta": 16,
+        "compare_delta": 6
+      },
+      "triage_label": "security_fix_likely",
+      "triage_rationale": [
+        "Replaced unsafe `_strcpy` with `_strncpy`",
+        "Control-flow and comparison growth suggests new guard or parser logic",
+        "Added 17 blocks, 6 cmp(s), 16 branch(es) \u2014 possible new validation paths"
+      ],
+      "triage_confidence": 0.66
+    },
+    {
+      "name_a": "_parse_content_length",
+      "name_b": "_parse_content_length",
+      "entry_a": "0000000100000508",
+      "entry_b": "0000000100000534",
+      "roles_a": [
+        "parser"
+      ],
+      "roles_b": [
+        "control_heavy",
+        "formatter",
+        "io",
+        "parser"
+      ],
+      "match_score": 0.3847,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 38.6,
+      "signals": {
+        "size_a": 4,
+        "size_b": 188,
+        "size_delta": 184,
+        "size_delta_pct": 4600.0,
+        "blocks_a": 1,
+        "blocks_b": 10,
+        "blocks_delta": 9,
+        "instr_a": 0,
+        "instr_b": 47,
+        "instr_delta": 47,
+        "strings_added": [],
+        "strings_removed": [],
+        "ext_calls_added": [
+          "___error",
+          "___stack_chk_fail",
+          "_fprintf",
+          "_strtol"
+        ],
+        "ext_calls_removed": [],
+        "calls_added": [
+          "___error",
+          "___stack_chk_fail",
+          "_fprintf",
+          "_strtol"
+        ],
+        "calls_removed": [],
+        "constants_added": [
+          1,
+          10,
+          16,
+          24,
+          32,
+          48,
+          64,
+          256
+        ],
+        "constants_removed": [],
+        "constant_buckets_added": [
+          "byte",
+          "huge",
+          "pageish",
+          "small",
+          "tiny"
+        ],
+        "constant_buckets_removed": [],
+        "api_families_added": [
+          "file",
+          "string"
+        ],
+        "api_families_removed": [],
+        "string_categories_added": [],
+        "string_categories_removed": [],
+        "branch_delta": 9,
+        "compare_delta": 3
+      },
+      "triage_label": "security_fix_likely",
+      "triage_rationale": [
+        "Added stack protection (`stack_chk_fail`)",
+        "Added bounds constant(s) ['0x10', '0x20', '0x40', '0x100'] with 3 new comparison(s)",
+        "Control-flow and comparison growth suggests new guard or parser logic",
+        "Added 9 blocks, 3 cmp(s), 9 branch(es) \u2014 possible new validation paths"
+      ],
+      "triage_confidence": 0.84
+    },
+    {
+      "name_a": "_parse_request_line",
+      "name_b": "_parse_request_line",
+      "entry_a": "000000010000050c",
+      "entry_b": "0000000100000680",
+      "roles_a": [
+        "parser"
+      ],
+      "roles_b": [
+        "control_heavy",
+        "formatter",
+        "io",
+        "parser"
+      ],
+      "match_score": 0.7802,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 31.8,
+      "signals": {
+        "size_a": 172,
+        "size_b": 288,
+        "size_delta": 116,
+        "size_delta_pct": 67.4,
+        "blocks_a": 7,
+        "blocks_b": 12,
+        "blocks_delta": 5,
+        "instr_a": 43,
+        "instr_b": 72,
+        "instr_delta": 29,
+        "strings_added": [],
+        "strings_removed": [],
+        "ext_calls_added": [
+          "_fprintf",
+          "_fwrite",
+          "_strncpy",
+          "_strstr"
+        ],
+        "ext_calls_removed": [
+          "___strcpy_chk"
+        ],
+        "calls_added": [
+          "_fprintf",
+          "_fwrite",
+          "_strncpy",
+          "_strstr"
+        ],
+        "calls_removed": [
+          "___strcpy_chk"
+        ],
+        "constants_added": [
+          24,
+          80,
+          287
+        ],
+        "constants_removed": [],
+        "constant_buckets_added": [],
+        "constant_buckets_removed": [],
+        "api_families_added": [
+          "file"
+        ],
+        "api_families_removed": [],
+        "string_categories_added": [],
+        "string_categories_removed": [],
+        "branch_delta": 5,
+        "compare_delta": 2
+      },
+      "triage_label": "security_fix_likely",
+      "triage_rationale": [
+        "Replaced unsafe `___strcpy_chk` with `_strncpy`",
+        "Control-flow and comparison growth suggests new guard or parser logic",
+        "Added 5 blocks, 2 cmp(s), 5 branch(es) \u2014 possible new validation paths"
+      ],
+      "triage_confidence": 0.66
+    },
+    {
+      "name_a": "_url_decode",
+      "name_b": "_url_decode",
+      "entry_a": "00000001000005e8",
+      "entry_b": "00000001000007d8",
+      "roles_a": [
+        "codec",
+        "control_heavy",
+        "parser"
+      ],
+      "roles_b": [
+        "codec",
+        "control_heavy",
+        "io",
+        "parser"
+      ],
+      "match_score": 0.8089,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 23.1,
+      "signals": {
+        "size_a": 180,
+        "size_b": 308,
+        "size_delta": 128,
+        "size_delta_pct": 71.1,
+        "blocks_a": 6,
+        "blocks_b": 11,
+        "blocks_delta": 5,
+        "instr_a": 45,
+        "instr_b": 77,
+        "instr_delta": 32,
+        "strings_added": [],
+        "strings_removed": [],
+        "ext_calls_added": [
+          "___stack_chk_fail",
+          "_fwrite"
+        ],
+        "ext_calls_removed": [],
+        "calls_added": [
+          "___stack_chk_fail",
+          "_fwrite"
+        ],
+        "calls_removed": [],
+        "constants_added": [
+          4,
+          5,
+          7,
+          8,
+          24,
+          36,
+          80
+        ],
+        "constants_removed": [
+          13,
+          15
+        ],
+        "constant_buckets_added": [],
+        "constant_buckets_removed": [],
+        "api_families_added": [
+          "file"
+        ],
+        "api_families_removed": [],
+        "string_categories_added": [],
+        "string_categories_removed": [],
+        "branch_delta": 4,
+        "compare_delta": 3
+      },
+      "triage_label": "security_fix_likely",
+      "triage_rationale": [
+        "Added stack protection (`stack_chk_fail`)",
+        "Control-flow and comparison growth suggests new guard or parser logic",
+        "Added 5 blocks, 3 cmp(s), 4 branch(es) \u2014 possible new validation paths"
+      ],
+      "triage_confidence": 0.59
+    },
+    {
+      "name_a": "_parse_header_line",
+      "name_b": "_parse_header_line",
+      "entry_a": "000000010000048c",
+      "entry_b": "000000010000048c",
+      "roles_a": [
+        "parser"
+      ],
+      "roles_b": [
+        "control_heavy",
+        "parser"
+      ],
+      "match_score": 0.8657,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 16.7,
+      "signals": {
+        "size_a": 112,
+        "size_b": 156,
+        "size_delta": 44,
+        "size_delta_pct": 39.3,
+        "blocks_a": 6,
+        "blocks_b": 8,
+        "blocks_delta": 2,
+        "instr_a": 28,
+        "instr_b": 39,
+        "instr_delta": 11,
+        "strings_added": [],
+        "strings_removed": [],
+        "ext_calls_added": [
+          "_strlen",
+          "_strncpy"
+        ],
+        "ext_calls_removed": [
+          "_strcpy"
+        ],
+        "calls_added": [
+          "_strlen",
+          "_strncpy"
+        ],
+        "calls_removed": [
+          "_strcpy"
+        ],
+        "constants_added": [
+          63,
+          127
+        ],
+        "constants_removed": [],
+        "constant_buckets_added": [],
+        "constant_buckets_removed": [],
+        "api_families_added": [],
+        "api_families_removed": [],
+        "string_categories_added": [],
+        "string_categories_removed": [],
+        "branch_delta": 1,
+        "compare_delta": 2
+      },
+      "triage_label": "security_fix_possible",
+      "triage_rationale": [
+        "Replaced unsafe `_strcpy` with `_strncpy`",
+        "Control-flow and comparison growth suggests new guard or parser logic"
+      ],
+      "triage_confidence": 0.47
+    },
+    {
+      "name_a": "_format_log_entry",
+      "name_b": "_format_log_entry",
+      "entry_a": "0000000100000460",
+      "entry_b": "0000000100000460",
+      "roles_a": [
+        "formatter",
+        "logger"
+      ],
+      "roles_b": [
+        "formatter",
+        "logger"
+      ],
+      "match_score": 0.87,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 6.5,
+      "signals": {
+        "size_a": 32,
+        "size_b": 32,
+        "size_delta": 0,
+        "size_delta_pct": 0.0,
+        "blocks_a": 3,
+        "blocks_b": 3,
+        "blocks_delta": 0,
+        "instr_a": 8,
+        "instr_b": 8,
+        "instr_delta": 0,
+        "strings_added": [],
+        "strings_removed": [],
+        "ext_calls_added": [
+          "_snprintf"
+        ],
+        "ext_calls_removed": [
+          "_sprintf"
+        ],
+        "calls_added": [
+          "_snprintf"
+        ],
+        "calls_removed": [
+          "_sprintf"
+        ],
+        "constants_added": [],
+        "constants_removed": [],
+        "constant_buckets_added": [],
+        "constant_buckets_removed": [],
+        "api_families_added": [],
+        "api_families_removed": [],
+        "string_categories_added": [],
+        "string_categories_removed": [],
+        "branch_delta": 0,
+        "compare_delta": 0
+      },
+      "triage_label": "security_fix_possible",
+      "triage_rationale": [
+        "Replaced unsafe `_sprintf` with `_snprintf`"
+      ],
+      "triage_confidence": 0.38
+    },
+    {
+      "name_a": "_print_request",
+      "name_b": "_print_request",
+      "entry_a": "00000001000008cc",
+      "entry_b": "0000000100000c94",
+      "roles_a": [
+        "formatter"
+      ],
+      "roles_b": [
+        "formatter"
+      ],
+      "match_score": 0.953,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 6.5,
+      "signals": {
+        "size_a": 252,
+        "size_b": 248,
+        "size_delta": -4,
+        "size_delta_pct": -1.6,
+        "blocks_a": 14,
+        "blocks_b": 14,
+        "blocks_delta": 0,
+        "instr_a": 63,
+        "instr_b": 62,
+        "instr_delta": -1,
+        "strings_added": [],
+        "strings_removed": [],
+        "ext_calls_added": [
+          "_snprintf"
+        ],
+        "ext_calls_removed": [
+          "___sprintf_chk"
+        ],
+        "calls_added": [
+          "_snprintf"
+        ],
+        "calls_removed": [
+          "___sprintf_chk"
+        ],
+        "constants_added": [],
+        "constants_removed": [],
+        "constant_buckets_added": [],
+        "constant_buckets_removed": [],
+        "api_families_added": [],
+        "api_families_removed": [],
+        "string_categories_added": [],
+        "string_categories_removed": [],
+        "branch_delta": 0,
+        "compare_delta": 0
+      },
+      "triage_label": "security_fix_possible",
+      "triage_rationale": [
+        "Replaced unsafe `___sprintf_chk` with `_snprintf`"
+      ],
+      "triage_confidence": 0.38
+    },
+    {
+      "name_a": "_main",
+      "name_b": "_main",
+      "entry_a": "0000000100000a0c",
+      "entry_b": "0000000100000dd0",
+      "roles_a": [
+        "allocator",
+        "dispatcher",
+        "formatter",
+        "memory_heavy"
+      ],
+      "roles_b": [
+        "allocator",
+        "dispatcher",
+        "formatter",
+        "memory_heavy"
+      ],
+      "match_score": 0.8904,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 10.8,
+      "signals": {
+        "size_a": 320,
+        "size_b": 168,
+        "size_delta": -152,
+        "size_delta_pct": -47.5,
+        "blocks_a": 18,
+        "blocks_b": 14,
+        "blocks_delta": -4,
+        "instr_a": 80,
+        "instr_b": 42,
+        "instr_delta": -38,
+        "strings_added": [],
+        "strings_removed": [],
+        "ext_calls_added": [],
+        "ext_calls_removed": [
+          "_putchar",
+          "_strtol"
+        ],
+        "calls_added": [],
+        "calls_removed": [
+          "_putchar",
+          "_strtol"
+        ],
+        "constants_added": [
+          256,
+          272
+        ],
+        "constants_removed": [
+          1,
+          2,
+          10,
+          16,
+          21,
+          22,
+          23,
+          32,
+          37,
+          43,
+          56,
+          60,
+          63,
+          320,
+          336,
+          352
+        ],
+        "constant_buckets_added": [],
+        "constant_buckets_removed": [
+          "small"
+        ],
+        "api_families_added": [],
+        "api_families_removed": [
+          "string"
+        ],
+        "string_categories_added": [],
+        "string_categories_removed": [],
+        "branch_delta": -10,
+        "compare_delta": -3
+      },
+      "triage_label": "refactor",
+      "triage_rationale": [
+        "Large size change (-47.5%) without clear security signals"
+      ],
+      "triage_confidence": 0.0
+    },
+    {
+      "name_a": "_log_request",
+      "name_b": "_log_request",
+      "entry_a": "00000001000005d0",
+      "entry_b": "00000001000007d4",
+      "roles_a": [
+        "formatter",
+        "logger"
+      ],
+      "roles_b": [
+        "logger"
+      ],
+      "match_score": 0.4642,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 3.3,
+      "signals": {
+        "size_a": 20,
+        "size_b": 4,
+        "size_delta": -16,
+        "size_delta_pct": -80.0,
+        "blocks_a": 2,
+        "blocks_b": 1,
+        "blocks_delta": -1,
+        "instr_a": 5,
+        "instr_b": 0,
+        "instr_delta": -5,
+        "strings_added": [],
+        "strings_removed": [],
+        "ext_calls_added": [],
+        "ext_calls_removed": [
+          "_printf"
+        ],
+        "calls_added": [],
+        "calls_removed": [
+          "_printf"
+        ],
+        "constants_added": [],
+        "constants_removed": [
+          10,
+          16
+        ],
+        "constant_buckets_added": [],
+        "constant_buckets_removed": [
+          "huge",
+          "small"
+        ],
+        "api_families_added": [],
+        "api_families_removed": [],
+        "string_categories_added": [],
+        "string_categories_removed": [],
+        "branch_delta": -1,
+        "compare_delta": 0
+      },
+      "triage_label": "refactor",
+      "triage_rationale": [
+        "Large size change (-80.0%) without clear security signals"
+      ],
+      "triage_confidence": 0.0
+    },
+    {
+      "name_a": "_free_request",
+      "name_b": "_free_request",
+      "entry_a": "0000000100000898",
+      "entry_b": "0000000100000c60",
+      "roles_a": [
+        "allocator",
+        "memory_heavy"
+      ],
+      "roles_b": [
+        "allocator",
+        "memory_heavy"
+      ],
+      "match_score": 1.05,
+      "match_method": "name_exact",
+      "uncertain": false,
+      "interestingness": 0.0,
+      "signals": {
+        "size_a": 44,
+        "size_b": 44,
+        "size_delta": 0,
+        "size_delta_pct": 0.0,
+        "blocks_a": 3,
+        "blocks_b": 3,
+        "blocks_delta": 0,
+        "instr_a": 11,
+        "instr_b": 11,
+        "instr_delta": 0,
+        "strings_added": [],
+        "strings_removed": [],
+        "ext_calls_added": [],
+        "ext_calls_removed": [],
+        "calls_added": [],
+        "calls_removed": [],
+        "constants_added": [],
+        "constants_removed": [],
+        "constant_buckets_added": [],
+        "constant_buckets_removed": [],
+        "api_families_added": [],
+        "api_families_removed": [],
+        "string_categories_added": [],
+        "string_categories_removed": [],
+        "branch_delta": 0,
+        "compare_delta": 0
+      },
+      "triage_label": "unchanged",
+      "triage_rationale": [
+        "Primarily structural churn without semantic evidence"
+      ],
+      "triage_confidence": 0.0
+    }
+  ],
+  "triage_summary": {
+    "security_fix_likely": 4,
+    "security_fix_possible": 3,
+    "refactor": 2,
+    "unchanged": 1
+  }
+}
